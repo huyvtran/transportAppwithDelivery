@@ -1,0 +1,130 @@
+<ion-header>
+
+  <ion-navbar color="sideMenu">
+      <button ion-button menuToggle >
+          <ion-icon ios="ios-list" md="md-list" class="ion-md-list"></ion-icon>
+      </button>
+    <ion-title>Book A Delivery</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      Location
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+
+        <ion-item (click)="showAddressModal('pickup')">
+          <ion-label floating>Pickup Location</ion-label>
+          <ion-input [(ngModel)]="from" type="text" disabled ></ion-input>
+        </ion-item>
+        <ion-item (click)="showAddressModal('drop')">
+          <ion-label floating>Drop Off Location</ion-label>
+          <ion-input [(ngModel)]="to" type="text" disabled ></ion-input>
+        </ion-item>
+
+      </ion-list>
+
+      <ion-list radio-group [(ngModel)]="type">
+        <div class="alg1">
+          <ion-card-header>
+            Type
+          </ion-card-header>
+        </div>
+
+        <div class="alg2">
+          <ion-item>
+            <ion-label>Document</ion-label>
+            <ion-radio value="doc" checked="true" ></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Parcel</ion-label>
+            <ion-radio value="parcel" ></ion-radio>
+          </ion-item>
+        </div>
+
+
+      </ion-list>
+      <ion-item>
+        <ion-label floating>Weight in kg</ion-label>
+        <ion-input type="number" [(ngModel)]="weight"></ion-input>
+      </ion-item>
+
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      Enter Parcel Dimensions in meter
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label floating>Length</ion-label>
+        <ion-input type="number" [(ngModel)]="length"></ion-input>
+
+
+
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Width</ion-label>
+        <ion-input type="number" [(ngModel)]="width"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Height</ion-label>
+        <ion-input type="number" [(ngModel)]="height"></ion-input>
+
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+      <ion-card-header>
+        Delivery Details
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label>There and Back?</ion-label>
+          <ion-toggle [(ngModel)]="oneway"></ion-toggle>
+        </ion-item>
+          <ion-list radio-group [(ngModel)]="delivery_type">
+            <div class="alg1">
+              <ion-card-header>
+                Type
+              </ion-card-header>
+            </div>
+        
+            <div class="alg2">
+              <ion-item>
+                <ion-label>Now</ion-label>
+                <ion-radio value="now" checked="true" ></ion-radio>
+              </ion-item>
+        
+              <ion-item>
+                <ion-label>Later</ion-label>
+                <ion-radio value="later"></ion-radio>
+              </ion-item>
+            </div>
+          </ion-list>
+        
+          <ion-list *ngIf="delivery_type == 'later'">
+            <ion-item >
+              <ion-label class="d_label" floating>Select Date</ion-label>
+              <ion-datetime displayFormat="DD/MM/YYYY" [min]="minDate" [(ngModel)]="date"></ion-datetime>
+            </ion-item>
+            <ion-item>
+              <ion-label class="d_label" floating>Select Time</ion-label>
+              <ion-datetime displayFormat="HH:mm" [(ngModel)]="time"></ion-datetime>
+            </ion-item>
+          </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+  <button ion-button block color="primary" (click)="goToSubmit()">Submit</button>
+
+</ion-content>

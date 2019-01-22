@@ -1,0 +1,352 @@
+<!--
+  Generated template for the ModalpagePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!--<ion-header>
+  <ion-navbar color="sideMenu" hideBackButton>
+    <button ion-button menuToggle >
+      <ion-icon ios="ios-list" md="md-list" class="ion-md-list"></ion-icon>
+    </button>
+    <ion-title>modalpage</ion-title>
+  </ion-navbar>
+</ion-header>-->
+
+<ion-content padding>
+  <ion-card> 
+    <!--<div text-center *ngIf="showClose == false">Loading...</div>-->
+    <ion-grid *ngIf="modalAct=='driverInfo' && display_bookingInfo == true">
+        <ion-label *ngIf="modalAct!='cashPayment'" class="close" text-right (click)="close()">
+            <ion-icon name="close"></ion-icon>
+        </ion-label>
+      <ion-row>
+        <ion-col class="profile_header" col-12 text-center>
+          <p>You've got a</p>
+          <h3>Driver</h3>
+        </ion-col>
+        <ion-col col-6>
+          <div class="profile_imgDiv">
+            <img src="{{driver.profile}}" />
+          </div>
+        </ion-col>
+        <ion-col col-6>
+          <div class="vehicle_imgDiv">
+              <img src="assets/imgs/img1.png" />
+          </div>
+        </ion-col>    
+        <ion-col col-12>
+          <div class="personalInfoDiv">
+            <div>
+              <h4>Personal Information</h4>
+            </div>
+            <ion-row>
+              <ion-col col-4>
+                <div class="Info_title">Name : </div>
+              </ion-col>
+              <ion-col col-8>
+                <div class="Info_desc">{{driver.fname}} {{driver.lname}}</div>
+              </ion-col>
+              <ion-col col-4>
+                <div class="Info_title">Phone : </div>
+              </ion-col>
+              <ion-col col-8>
+                <div class="Info_desc" (click)="callDriver(driver.phone)">{{driver.phone}}</div>
+              </ion-col>
+              <ion-col col-4>
+                <div class="Info_title">Email : </div> 
+              </ion-col>
+              <ion-col col-8>
+                <div text-wrap class="Info_desc">{{driver.email}}</div>
+              </ion-col>
+              <ion-col col-4>
+                <div class="Info_title">Ratings : </div> 
+              </ion-col>
+              <ion-col col-8>
+                <div class="Info_desc">
+                  <rating
+                      [(ngModel)]="driver.rate" 
+                      readOnly="true"
+                      max="5"
+                      emptyStarIconName="star-outline"
+                      halfStarIconName="star-half"
+                      starIconName="star"
+                      nullable="false">
+                     </rating>
+                    <!--<ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>-->
+                  </div>
+              </ion-col>
+            </ion-row>
+
+            <!--<div class="Info_title">Arrives In : </div>
+            <div class="Info_desc">5 min</div>--> 
+          </div>     
+        </ion-col>
+        <!--<ion-col class="btn_div" col-12>
+            <button class="login-btn selectDriverbtn" (click)="selectDriver(driverId)" ion-button color="primary" block >Select</button>
+        </ion-col>-->
+      </ion-row>
+    </ion-grid>
+
+
+    <ion-grid *ngIf="modalAct=='signout'">
+        <ion-label *ngIf="modalAct!='cashPayment'" class="close" text-right (click)="close()">
+            <ion-icon name="close"></ion-icon>
+        </ion-label>
+      <ion-row>
+        <ion-col col-12>
+          <div class="signoutimgdiv">
+            <img src="assets/imgs/logout.png" />
+          </div>
+        </ion-col>
+        <ion-col col-12>
+          <div class="signoutcontentdiv" text-center>
+            <h5>Do you really want to</h5>
+            <h1> Sign Out </h1>
+          </div>
+        </ion-col>
+        <ion-col col-12>
+          <ion-grid>
+            <ion-row>
+                <ion-col col-6>
+                  <button class="login-btn" (click)="signout()" ion-button color="primary" block >Yes</button>
+                </ion-col>
+                <ion-col col-6>
+                  <button class="login-btn" (click)="close()" ion-button color="primary" block >No</button>
+                </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  
+    <ion-grid *ngIf="modalAct=='getDateTime'">
+        <ion-label *ngIf="modalAct!='cashPayment'" class="close" text-right (click)="close()">
+            <ion-icon name="close"></ion-icon>
+        </ion-label>
+      <ion-row>
+        <ion-col col-12>   
+          <div class="datetimeDiv">   
+            <ion-list>
+              <ion-item >
+                  <ion-label class="d_label" floating>Select Date</ion-label>
+                  <ion-datetime displayFormat="DD/MM/YYYY" [min]="minDate" [(ngModel)]="myDate" (ngModelChange)='gotHome()'></ion-datetime>
+              </ion-item>
+              <ion-item>
+                  <ion-label class="d_label" floating>Select Time</ion-label>
+                  <ion-datetime displayFormat="HH:mm" [(ngModel)]="myTime" (ngModelChange)='gotHome()'></ion-datetime>
+              </ion-item>
+            </ion-list>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngIf="modalAct=='showBooking' && display_bookingInfo == true">
+        <ion-label *ngIf="modalAct!='cashPayment'" class="close" text-right (click)="close()">
+            <ion-icon name="close"></ion-icon>
+        </ion-label>
+      <ion-row>
+        <ion-col col-12>
+          <div class="pin_icon" text-center>
+              <ion-icon name="pin"></ion-icon>
+          </div>
+        </ion-col>
+        <ion-col col-12>
+          <div class="showBookingDiv">
+            <ion-row class="addrSection">
+              <ion-col col-12 text-left>
+                <ion-icon class="nav_left" name="navigate"></ion-icon>
+                <span>From</span>
+                <div text-left class="pickupaddr">{{booking_info.source}}</div>
+              </ion-col> 
+              <ion-col col-12 text-left >
+                <ion-icon class="nav_right" name="navigate"></ion-icon>
+                <span>To</span>
+                <div text-left class="dropaddr">{{booking_info.destination}}</div>
+              </ion-col>
+            </ion-row>
+            
+            <ion-row class="otherInfoDiv">
+                <ion-col class="otherTitle" col-6>Distance</ion-col>
+                <ion-col class="otherTitle" col-6>Cost</ion-col>
+                <ion-col class="otherDescription" col-6>{{booking_info.distance}}</ion-col>
+                <ion-col class="otherDescription" col-6>${{booking_info.cost}}</ion-col>
+            </ion-row>
+
+            <ion-row class="customerInfoDiv" *ngIf="display_relative != ''">
+              <ion-item >
+                <h2>{{display_relative}} Information</h2>
+                <div class="custInfoDiv">
+                  <h3>{{bookingInfo_name}}</h3>
+                  <p><ion-icon name="call"></ion-icon> {{bookingInfo_phone}} </p>
+                </div>
+              </ion-item>
+            </ion-row>
+
+            <!--<ion-row>
+                <ion-col col-6>
+                  <button (click)='accept_req()' class="login-btn accept_btn" ion-button color="primary" block >Accept</button>
+                </ion-col>
+                <ion-col col-6>
+                  <button (click)='reject_req()' class="login-btn decline_btn" ion-button color="primary" block >Decline</button>
+                </ion-col>
+            </ion-row>-->
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+    <ion-grid *ngIf="modalAct=='addSocialaccount'">
+        <ion-label *ngIf="modalAct!='cashPayment'" class="close" text-right (click)="close()">
+            <ion-icon name="close"></ion-icon>
+        </ion-label>
+      <ion-row>
+        <ion-col col-12>
+          <form class="social_media_form" [formGroup]="social_account" (ngSubmit)="add_social_account()"> 
+            <ion-list no-lines>
+
+              <ion-item>
+                <ion-label floating>Facebook</ion-label>
+                <ion-input [(ngModel)]="social_account_details.facebook" formControlName="facebook" type="text"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label floating>Twitter</ion-label>
+                <ion-input [(ngModel)]="social_account_details.twitter" formControlName="twitter" type="text"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label floating>Instagram</ion-label>
+                <ion-input [(ngModel)]="social_account_details.instagram" formControlName="instagram" type="text"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label floating>LinkedIn</ion-label>
+                <ion-input [(ngModel)]="social_account_details.linkedin" formControlName="linkedin" type="text"></ion-input>
+              </ion-item>
+
+              <ion-item class="submit_btn_item">
+                <button class="sign_up-btn" ion-button color="primary" block >Save</button>
+              </ion-item>
+
+            </ion-list>
+          </form>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngIf="modalAct=='showFeedback'">
+        <ion-label *ngIf="modalAct!='cashPayment'" class="close" text-right (click)="close()">
+            <ion-icon name="close"></ion-icon>
+        </ion-label>
+      <ion-row>
+        <ion-col col-12 class="showFeedback">
+          <h1>Feedback</h1>
+          <h2>{{feedback}}</h2>
+        </ion-col>
+        <ion-col col-12>
+          <ion-icon name="star" [ngClass]="rating > 0 ? 'r_star' : 'n_start'"></ion-icon>
+          <ion-icon name="star" [ngClass]="rating > 1 ? 'r_star' : 'n_start'"></ion-icon>
+          <ion-icon name="star" [ngClass]="rating > 2 ? 'r_star' : 'n_start'"></ion-icon>
+          <ion-icon name="star" [ngClass]="rating > 3 ? 'r_star' : 'n_start'"></ion-icon>
+          <ion-icon name="star" [ngClass]="rating > 4 ? 'r_star' : 'n_start'"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+    <ion-grid *ngIf="modalAct=='leaveAlert'">
+      <ion-row>
+        <ion-col col-12>
+          <div class="signoutimgdiv">
+            <img src="assets/imgs/logout.png" />
+          </div>
+        </ion-col>
+        <ion-col col-12>
+          <div class="signoutcontentdiv" text-center>
+            <h5>Do you really want to</h5>
+            <h1> Leave this page? </h1>
+          </div>
+        </ion-col>
+        <ion-col col-12>
+          <ion-grid>
+            <ion-row>
+                <ion-col col-6>
+                  <button class="login-btn" (click)="leavePage('yes')" ion-button color="primary" block >Yes</button>
+                </ion-col>
+                <ion-col col-6>
+                  <button class="login-btn" (click)="leavePage('no')" ion-button color="primary" block >No</button>
+                </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngIf="modalAct=='cashPayment' && display_bookingInfo == true">
+        <ion-label *ngIf="modalAct!='cashPayment'" class="close" text-right (click)="close()">
+            <ion-icon name="close"></ion-icon>
+        </ion-label>
+      <ion-row>
+        <ion-col col-12>
+          <div class="pin_icon" text-center>
+              <ion-icon name="pin"></ion-icon>
+          </div>.
+        </ion-col>
+        <ion-col col-12>
+          <div class="showBookingDiv cashDiv">
+            <ion-row class="addrSection">
+              <ion-col col-12 text-left>
+                <ion-icon class="nav_left" name="navigate"></ion-icon>
+                  <span>From</span>
+                  <div text-left class="pickupaddr">{{booking_info.source}}</div>
+                </ion-col> 
+                <ion-col col-12 text-left >
+                  <ion-icon class="nav_right" name="navigate"></ion-icon>
+                  <span>To</span>
+                  <div text-left class="dropaddr">{{booking_info.destination}}</div>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="otherInfoDiv">
+                <ion-col class="otherTitle" col-6>Distance</ion-col>
+                <ion-col class="otherTitle" col-6>Cost</ion-col>
+                <ion-col class="otherDescription" col-6>{{booking_info.distance}}</ion-col>
+                <ion-col class="otherDescription" col-6>${{booking_info.cost}}</ion-col>
+            </ion-row>
+
+            <!--<ion-row class="customerInfoDiv">
+              <ion-card >
+                <h2>Customer Information</h2>
+                <div class="custInfoDiv">
+                  <h3>Swapnil Pathade</h3>
+                  <p><ion-icon name="call"></ion-icon> 9876543234 </p>
+                </div>
+              </ion-card>
+            </ion-row>-->
+            <ion-row>
+              <ion-col col-12>
+                <br/>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col col-12>
+                  <button (click)='cashPaymentReceived("yes")' class="login-btn accept_btn" ion-button color="primary" block >Payment Received</button>
+                </ion-col>
+                <!--<ion-col col-6>
+                  <button (click)='reject_req()' class="login-btn decline_btn" ion-button color="primary" block >Decline</button>
+                </ion-col>-->
+            </ion-row>
+          </div>
+        </ion-col>
+        </ion-row>
+    </ion-grid>
+
+  </ion-card>    
+</ion-content>

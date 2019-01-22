@@ -1,0 +1,272 @@
+.ios,.md{
+    page-modalpage {
+        .profile_header p{
+            font-size: 16px;
+            letter-spacing: 1px;
+            font-style: italic;
+            color: #f0b812;
+        }
+        .profile_header h3{
+            font-size: 24px;
+            padding: 5px;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            color: #2196F3;
+            border-bottom: 2px solid;
+        }
+        .vehicle_imgDiv {
+            background: #c65c44;
+            padding: 25px 12px;
+            border-radius: 50%;
+        }
+        .profile_imgDiv img{
+            border-radius: 50% !important;
+            width: 100%;
+            height: 135px !important;
+        }
+        .personalInfoDiv {
+            padding: 20px 15px;
+        }
+        .personalInfoDiv h4 {
+            font-size: 24px;
+            color: #615959;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        .Info_title{
+            font-size: 16px;
+            float: left;
+            padding: 5px;
+            color: #4f4949;
+            word-break: break-word !important;
+        }
+           
+        .Info_desc{
+            padding: 5px;   
+            font-size: 14px;
+            float: left !important;
+            color: #4f4949;
+            word-break: break-word !important;
+        }
+
+        ul.rating li {
+            padding: 0 !important;
+        }  
+        
+        ul.rating {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        button.login-btn {
+            background-color: #efb511;
+            color: #000;
+            margin : 0 auto;
+            padding: 24px !important;
+            font-size: 16px !important;
+            margin-top: 20px !important;
+            border-radius: 5px;
+            width: auto;
+        }
+        .selectDriverbtn{
+            width: 100% !important;
+        }
+        .Info_desc ion-icon {
+            color: #efdb2c;
+        }
+        .signoutimgdiv img {
+            width: 32%;
+            margin: 15px auto;
+        }
+        .signoutcontentdiv h5 {
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            color: #b1afaf;
+        }
+        .signoutcontentdiv h1 {
+            padding: 10px;
+            letter-spacing: 0.5px;
+            font-size: 26px;
+        }
+        .ride_btn{
+            width: 100% !important;
+        }
+        .addrSection {
+            //background: aliceblue;
+           // padding: 10px;
+            text-align: center;
+           // box-shadow: 0px 0px 2px #c5daed;
+        }
+        .addrSection span {
+            color: #67696a;
+            font-size: 12px;
+            letter-spacing: 1px;
+            font-style: italic;
+        }
+        .pickupaddr, .dropaddr{
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            color: #67696a;
+            padding: 5px;
+            overflow-y: scroll;
+            max-height: 80px !important;
+        }
+        .pin_icon{
+            width: 32%;
+            margin: 0 auto;
+            font-size: 45px;
+            color: #fff;
+            background: yellowgreen;
+            border-radius: 50%;
+            padding: 18px 0px;
+            -webkit-box-shadow: 0px 0px 1px #577c0c;
+            box-shadow: 0px 0px 1px #577c0c;
+            display: none;
+        }
+        .nav_left {
+            display: inline-block;
+            text-align: left;
+            transform: rotate(90deg);
+            color: #2196f4;
+            padding: 5px;
+            font-size: 20px;
+        }
+        .nav_right {
+            display: inline-block;
+            text-align: left;
+            transform: rotate(-90deg);
+            color: #2196f4;
+            padding: 5px;
+            font-size: 20px;
+        }    
+        .otherInfoDiv{
+            text-align: center;
+            padding: 15px;
+            background: #5f64a2;
+            margin-top: 30px !important;
+            color: #fff !important;
+        }
+        .otherTitle {
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            color: #fff;
+        }
+        .otherDescription {
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            color: #fff;
+        }
+        .customerInfoDiv h2 {
+            text-align: center;
+            font-size: 18px;
+            letter-spacing: 0.5px;
+            color: #b8b4b4;
+            padding: 10px 0;
+        }
+        .custInfoDiv h3 {
+            font-size: 16px;
+            padding: 5px;
+            color: #6c6565;
+            letter-spacing: 0.5px;
+        }
+        .custInfoDiv p {
+            font-size: 14px;
+            color: #6c6565;
+            padding: 0 5px;
+            letter-spacing: 0.5px;
+        }
+        .customerInfoDiv p ion-icon {
+            padding: 2px;
+        }
+        .customerInfoDiv ion-card {
+            padding: 10px;
+        }
+        .accept_btn,.decline_btn{
+            width: 100% !important;   
+        }
+
+        button.sign_up-btn {
+            //background-color: #efb511;
+            background: #1A237E;
+            color: #fff;
+            padding: 24px !important;
+            font-size: 16px !important;
+            margin-top: 20px !important;
+            border-radius: 5px;
+        }
+
+        .r_star{
+            color: #ead704;
+            font-size: 65px;
+        }
+
+        .n_start{
+            color: #a09d9d;
+            font-size: 65px;
+        }
+
+        .showFeedback h2 {
+            text-align: center;
+            padding: 30px 5px 5px 5px;
+        }
+        
+        .showFeedback h1 {
+            text-align: center;
+            background: #c0bfbf;
+            padding: 5px;
+        }
+
+        .datetimeDiv {
+            margin: -16px;
+         }
+         .d_label{
+             margin: 0 !important;
+         }
+         .item {
+             margin: 5px 0;
+             box-shadow: 0 -2px 4px #1A237E;
+         }
+         .item-datetime .label-md {
+             color: #1A237E;
+         }     
+         ion-datetime.datetime {
+             padding: 10px;
+         }
+         .datetime-text {
+            color: #1A237E;
+        }
+
+        .social_media_form ion-item {
+            box-shadow: none !important;
+        }
+        .customerInfoDiv ion-item {
+            box-shadow: unset !important;
+        }
+        .cashDiv{
+            .otherInfoDiv {
+                background: #cfd3f7 !important;
+                color: #000 !important;
+                .otherTitle {
+                    color: #000 !important;
+                }
+                .otherDescription {
+                    color: #000 !important;
+                }
+            }
+            
+            .login-btn {
+                background-color: #1A237E !important;
+                color: #fff !important;
+            }
+        }
+        .personalInfoDiv h4::after {
+            content: '';
+            position: absolute;
+            background: #2196F3;
+            width: 15%;
+            height: 1px;
+            display: block;
+            top: 60px;
+            left: 10%;
+        }
+    }
+}

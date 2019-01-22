@@ -1,0 +1,70 @@
+.ios,.md{
+    page-notifications {
+        .list_item{
+            padding: 0 !important;
+        }
+
+        .list_item  item-inner{
+            padding: 0 !important;
+        }
+        .list_item div {
+            //background: #dceaf6;
+            padding: 0px 3px;
+        }
+        .list_item h4 {
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            color: #636369;
+            word-spacing: 1px;
+        }
+        .list_item span {
+            font-size: 13px;
+        }
+        .bc_blue div{
+            //background: #dceaf6;
+        }
+        .bc_white div{
+            background: #ffffff;
+        }
+        .c_icon_div {
+            padding: 10px 0px !important;
+            background: #e5e6f1;
+            height: 45px;
+            width: 45px;
+            text-align: center;
+            border-radius: 50%;
+            box-shadow: 0 0 1px #a6a8bb;
+        }
+        .span_left{
+            float: left;
+        }
+        .span_right{
+            float: right;
+        }
+        .span_left, .span_right {
+            padding-top: 8px;
+            color: #a0a2b3;
+        }
+        .list_item ion-label {
+            margin: 8px 8px 8px 0px;
+        }
+        ion-col.list_content {
+            padding-left: 12px;
+        }
+        .emptyDiv {
+            text-align: center;
+            margin: 50px 0;
+            padding: 40px 0;
+            font-size: 18px;
+            letter-spacing: 0.5px;
+            color: #aebcc9;
+            img {
+              display: block;
+              margin: 40px auto;
+              padding: 10px;
+              box-shadow: 0 0 5px #aebcc9;
+          }
+        }
+    }
+}
+

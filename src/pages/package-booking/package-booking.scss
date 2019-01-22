@@ -1,0 +1,25 @@
+.ios,.md
+{
+    page-package-booking {
+
+        .alg1{
+            margin-top: 20px;
+           
+        }
+        .alg2{
+            margin-top: 10px;
+            .item-inner .input-wrapper {
+                border-bottom: unset;
+            }
+        }
+        .input-wrapper {
+            border-bottom: 1px solid #807272;
+        }
+        .item-toggle .item-inner .input-wrapper {
+            border-bottom: none !important;
+        }
+        .text-input[disabled] {
+            opacity: 1;
+        }
+    }
+}

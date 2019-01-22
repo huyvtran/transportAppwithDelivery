@@ -1,0 +1,80 @@
+.ios,.md{
+    page-payment {
+       /* button.profile-btn {
+            width: 100%;
+            padding: 25px 30px !important;
+            margin: 15px auto;
+            font-size: 20px !important;
+            //background-color: #ffec19;
+            background: #1A237E;
+            color: #fff;
+            font-weight: 500;
+            -webkit-box-shadow: 1px 2px #1A237E;
+            box-shadow: 1px 2px #1A237E;
+        }*/
+        button.profile-btn {
+            width: 70%;
+            padding: 25px 50px !important;
+            font-size: 20px !important;
+            font-weight: 500;
+            -webkit-box-shadow: 1px 2px #1A237E;
+            box-shadow: 1px 2px #a0a6e3;
+            /* color: #1A237E; */
+            /* background: #fff; */
+            position: relative;
+            margin: 0 auto;
+            display: block;
+            top: -75px;
+        }   
+        .desc img {
+            max-width: 100%;
+            border: 0;
+            height: 200px;
+            width: 100%;
+        }
+        .desc h3 {
+            margin-top: 0px !important;
+            padding: 0px 0px;
+            text-align: center;
+            font-size: 20px !important;
+            font-style: oblique;
+            letter-spacing: 0.5px;
+            word-spacing: 1px;
+            color: #1A237E !important;
+        }
+        .scroll-content {
+            //background: #eaebf3;
+            //background: #7d7d7d;
+            margin-top: 56px;
+        }
+        ion-item.desc.item.item-block{
+            //background: #eaebf3;
+            //background: #7d7d7d;
+            padding: 50px 0;
+            padding-top: 38px !important;
+        }
+        .desc .item-inner {
+            border: none !important;
+        }
+        span.cost {
+            color: #fff;
+            background: #61647d;
+            position: relative;
+            display: block;
+            top: -95px;
+            font-size: 26px;
+            text-align: center;
+            padding: 30px 25px;
+            text-shadow: 2px 2px #4d516c;
+            width: fit-content;
+            margin: 24px auto 10px;
+            border-radius: 50%;
+        }
+        .thumbImg{
+            width: auto !important;
+            height: auto !important;
+            padding-bottom: 20px !important;
+        }
+    }
+}
+

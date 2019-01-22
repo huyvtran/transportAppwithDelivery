@@ -1,0 +1,76 @@
+<!--
+  Generated template for the CustomerProfilePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle >
+        <ion-icon ios="ios-list" md="md-list" class="ion-md-list"></ion-icon>
+    </button>
+    <ion-title>Profile</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>  
+    <div *ngIf="display_data == true">
+        <ion-card>
+            <ion-list>
+                <ion-item class="profile_edit_list">
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col col-4>
+                                <ion-avatar item-start (click)="gotoAvatarPage()">
+                                    <img src="{{user_details.avatar}}">
+                                </ion-avatar>  
+                            </ion-col>
+                            <ion-col col-6> 
+                                <h2 class="profile_name">
+                                    {{user_details.fname}} {{user_details.lname}}
+                                </h2>
+                                <h3>{{user_details.email}}</h3>
+                                <p>{{user_details.phone}}</p>
+                            </ion-col>
+                            <ion-col col-2 text-center class="profile_edit_icon" (click)="gotoeditProfile()">
+                                <ion-icon ios="ios-create" md="md-create" class="ion-md-create profile_edit_icon_main"></ion-icon>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+            </ion-list>
+        </ion-card>
+        <ion-card *ngIf='role==3' class="Saved_places_card vehicle_details_header">
+            <ion-card-header> 
+            Vehicle Details
+            </ion-card-header>
+            <ion-card-content class="vehicle_details">
+                <h3>Type : </h3>
+                <span>{{user_details.vehicle_type}}</span>
+                <h3>Number : </h3>
+                <span>{{user_details.vehicle_number}}</span>
+            </ion-card-content>
+        </ion-card>
+        <ion-list class="menu-list" no-lines>
+            <button class="sideMenuItem change_pass_btn" menuClose ion-item (click)="gotoChangePass()">
+                <ion-icon ios="ios-lock" md="md-lock" class="lock-icon"></ion-icon>
+                <span class="change_pass_text">Change Password</span>
+            </button>   
+        </ion-list>
+
+        <ion-card class="Saved_places_card">
+            <ion-card-header> 
+            Home
+            </ion-card-header>
+            <ion-card-content>
+                {{user_details.address}}        
+            </ion-card-content>
+        </ion-card>
+    </div>
+</ion-content>
+<div class="last_div" (click)="signOut()">  
+    <div class="inner_last_div">
+      <p><!--<ion-icon ios="ios-power" md="md-power"></ion-icon>--> Sign Out </p>
+    </div>
+</div> 

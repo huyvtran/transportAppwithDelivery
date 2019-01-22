@@ -1,0 +1,99 @@
+.ios, .md{
+    page-autocomplete {
+        ion-item{
+            padding-bottom: 15px !important;
+    
+            ion-icon{
+                font-size: 2.2rem !important;
+                color: #278DF8;
+            }
+    
+            ion-label{
+                font-size: 14px !important;
+                color: gray;
+                letter-spacing: 0.7px;
+                text-transform: capitalize;
+            }
+    
+            ion-input{
+                border-bottom: 1px solid lightgray;
+            }
+
+            .favLoc_label {
+                display: inline;    
+                margin-left: 24px;
+            }
+        }
+    
+        .text-input-ios{
+            margin: 0 !important;
+            padding: 4px !important;
+            font-size: 18px !important;
+        }
+    
+        .text-input-md{
+            margin: 0 !important;
+            padding: 4px !important;
+            font-size: small !important;
+        }
+    
+        ion-item.pickup{
+            ion-icon{
+                transform: rotate(150deg);
+                padding: 5px;
+            }
+
+
+            button{
+                margin-bottom: 0px !important;
+                margin-top: 10px !important;
+                background: transparent;
+
+                ion-icon{
+                    transform: none;
+                    margin-bottom: 0px;
+                    margin-top: 10px;
+                    font-size: 20px !important;
+                    color: gray;
+                }
+            }
+
+        }
+
+        ion-item.drop{
+            button{
+                margin-bottom: 0px !important;
+                margin-top: 10px !important;
+                background: transparent;
+
+                ion-icon{
+                    transform: none;
+                    margin-bottom: 0px;
+                    margin-top: 10px;
+                    font-size: 20px !important;
+                    color: gray;
+                }
+            }
+        }    
+
+        .close{
+            font-size: 18px;
+            padding: 10px;
+            padding-bottom: 0;
+        }    
+
+        .list-ios > .item-block:last-child {
+            border-bottom: none !important;
+         }
+         .list-ios > .item-block:first-child {
+            border-top: none !important;
+        }
+    }
+}
+.ios {
+    page-autocomplete {
+        .scroll-content {
+            margin-top: 100px !important;
+        }
+    }
+}

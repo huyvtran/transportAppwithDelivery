@@ -1,0 +1,131 @@
+<!--
+  Generated template for the SignupPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!--<ion-header>
+
+  <ion-navbar align-title="center" color="primary">
+    <ion-title>
+	    <h2>Sign Up</h2>
+	</ion-title>
+  </ion-navbar>
+
+</ion-header>-->
+
+
+<ion-content padding>
+
+  <div class="login-container">
+  	<ion-icon name="close" navPop></ion-icon>
+  	<div class="title_div">
+      <!-- <h2 class="head_title">TFH</h2> -->
+      <h2 class="sub_title">Sign Up</h2>
+    </div>
+    <!-- Sign up form-->
+    <form class="sign_up_form" [formGroup]="signup" (ngSubmit)="SignupForm()"> 
+      <ion-list no-lines>
+      	<ion-item>
+          <ion-label stacked>First Name</ion-label>
+          <ion-input type="text" [(ngModel)]="fname" formControlName="fname" [class.invalid]="!signup.valid && (signup.controls.fname.dirty || submitAttempt)" ></ion-input>
+        </ion-item>
+        <div class="error" *ngIf="signup.get('fname').hasError('required')  && signup.get('fname').touched">
+            Please fill out this field
+        </div>
+
+        <ion-item>
+          <ion-label stacked>Last Name</ion-label>
+          <ion-input type="text" [(ngModel)]="lname" formControlName="lname" [class.invalid]="!signup.valid && (signup.controls.lname.dirty || submitAttempt)" ></ion-input>
+        </ion-item>
+        <div class="error" *ngIf="signup.get('lname').hasError('required')  && signup.get('lname').touched">
+            Please fill out this field
+        </div>
+
+        <ion-item>
+          <ion-label stacked>Email</ion-label>
+          <ion-input type="email" [(ngModel)]="email" formControlName="email" [class.invalid]="!signup.valid && (signup.controls.email.dirty || submitAttempt)" ></ion-input>
+        </ion-item>
+        <div class="error" *ngIf="signup.get('email').hasError('required') && signup.get('email').touched">
+            Please fill out this field.
+        </div>
+            
+        <div class="error" *ngIf="!signup.get('email').hasError('required') && (signup.get('email').hasError('email') && signup.get('email').dirty )">
+            Please enter valid Email address
+        </div>
+
+        <ion-item>
+            <ion-label stacked>Password</ion-label>
+            <ion-input type="password" [(ngModel)]="password" minlength="6" formControlName="password" [class.invalid]="!signup.valid && (signup.controls.password.dirty || submitAttempt)"  ></ion-input>
+        </ion-item>
+        <div class="error" *ngIf="signup.get('password').hasError('required')  && signup.get('password').touched">
+            Please fill out this field
+        </div>
+        <div class="error" *ngIf="signup.get('password').hasError('minlength')  && signup.get('password').touched">
+            Minimum Length of password must be 6
+        </div>
+
+        <ion-item>
+          <ion-label stacked>Confirm Password</ion-label>
+          <ion-input type="password" [(ngModel)]="c_password" formControlName="c_password" [class.invalid]="!signup.valid && (signup.controls.c_password.dirty || submitAttempt)" ></ion-input>
+        </ion-item>
+        <div class="error" *ngIf="signup.get('c_password').hasError('required') && signup.get('c_password').hasError('mismatchedPasswords') && signup.get('c_password').touched">
+            Please fill out this field
+        </div>
+
+        <ion-item>
+            <ion-label stacked></ion-label>
+            <ion-select placeholder="Role"  [(ngModel)]="role" formControlName="role" [class.invalid]="!signup.valid && (signup.controls.role.dirty || submitAttempt)"  >
+                <ion-option *ngFor="let role of roles" value="{{role.id}}">{{role.name}}</ion-option>
+                <!--<ion-option value="2">Customer</ion-option>
+                <ion-option value="3">Driver</ion-option>-->
+            </ion-select>
+        </ion-item>
+        <div class="error" *ngIf="signup.get('role').hasError('required')  && signup.get('role').touched">
+            Please fill out this field
+        </div>
+
+        <ion-list  *ngIf="role == 3" radio-group [(ngModel)]="type" formControlName="type">
+            <div class="alg1">
+                <ion-card-header>
+                    Type
+                </ion-card-header>
+            </div>
+                            
+            <div class="alg2">
+                <ion-item>
+                    <ion-label>Ride</ion-label>
+                    <ion-radio value="ride" checked="true" ></ion-radio>
+                </ion-item>
+                            
+                <ion-item>
+                    <ion-label>Delivery</ion-label>
+                    <ion-radio value="delivery"></ion-radio>
+                </ion-item>
+            </div>
+        </ion-list>
+
+        <ion-item *ngIf="role == 3 && type == 'ride'">
+                <ion-label stacked></ion-label>
+                <ion-select placeholder="Vehicle Type"  [(ngModel)]="vehicle_type" formControlName="vehicle_type" [class.invalid]="!signup.valid && (signup.controls.vehicle_type.dirty || submitAttempt)"  >
+                    <ion-option *ngFor="let types of vehicle_types" value="{{types.id}}">{{types.type}}</ion-option>
+                </ion-select>
+            </ion-item>
+    
+            <ion-item *ngIf="role == 3 && type == 'delivery'">
+                <ion-label stacked></ion-label>
+                <ion-select placeholder="Vehicle Type"  [(ngModel)]="vehicle_type" formControlName="vehicle_type" [class.invalid]="!signup.valid && (signup.controls.vehicle_type.dirty || submitAttempt)"  >
+                    <ion-option *ngFor="let types of delivery_vehicle_types" value="{{types.id}}">{{types.vehicle_name}}</ion-option>
+                </ion-select>
+            </ion-item>
+
+        <ion-item class="submit_btn_item">
+            <button class="sign_up-btn" ion-button color="primary" block [disabled]="!this.signup.valid">Get Started</button>
+        </ion-item>
+ 
+      </ion-list>  
+    </form>
+
+  </div>
+
+</ion-content>

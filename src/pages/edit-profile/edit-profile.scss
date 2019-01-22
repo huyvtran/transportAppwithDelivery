@@ -1,0 +1,60 @@
+.ios,.md{
+    page-edit-profile {
+        .list-ios > .item-block:first-child {
+            border-top: none;
+        }
+        .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block {
+            border-bottom: none;
+        }
+        ion-item {
+            padding: 10px !important;
+        }
+        .label-ios[stacked] {
+            margin-bottom: 4px;
+            font-size: 1.4rem;
+        }
+        button.profile-btn {
+            width: 100%;
+            padding: 25px 30px !important;
+            margin: 15px auto;
+            font-size: 20px !important;
+            //background-color: #ffec19;
+            background: #1A237E;
+            color: #fff;
+            font-weight: 500;
+            -webkit-box-shadow: 1px 2px #1A237E;//#e2d10a;
+            box-shadow: 1px 2px #1A237E;//#e2d10a;
+        }
+        form.profile_form {
+            margin-top: 9px;
+            padding: 10px;   
+        }
+
+        .social_icons ion-item{	   
+            padding: 0;
+            padding-bottom: 12px;
+            color: #5f5656;
+            margin-left: 11%;
+            border-bottom: 1px solid #b4aeae !important;
+            width: 78%;
+        }
+            
+        .social_icons span.add_social_link {
+            font-size: 16px;
+            margin-left: 10px;
+            top: 25px;
+            position: absolute;
+            letter-spacing: 0.5px;
+        }
+
+        .submit_btn_item ion-label {
+            margin: 0;
+        }
+        ion-item.social_icons {
+            border-bottom: 1px solid #dcd9d9;
+            box-shadow: 0 0 2px #d4d2d2;
+            margin-top: 15px;
+        }
+    }
+    
+}

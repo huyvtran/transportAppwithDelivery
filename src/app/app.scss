@@ -1,0 +1,226 @@
+// http://ionicframework.com/docs/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+.ios,.md{
+    @font-face {
+        font-family: 'Conv_Lato-Regular';
+        src: url('../../www/assets/Lato-Regular/fonts/Lato-Regular.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+    body {
+        //font-family: "Conv_Lato-Regular" !important;
+        font-family: 'Lato', sans-serif;
+    }
+    .toolbar-background {
+        background: #1A237E;  //#FFEC19;// #efb511;
+    }
+    .toolbar-background button ion-icon,.toolbar-title {
+        color: #fff;
+    }
+    .bar-buttons {
+        color: #fff !important;
+        background-color: transparent;
+    }
+    button.back-button {
+        color: #fff !important;
+    }
+    [icon-left] ion-icon, [icon-start] ion-icon {
+        line-height: inherit;
+    }
+    .menu_header_avtar {
+        height: 100px !important;
+        width: 100px !important;
+        margin: 0 auto;
+        margin-bottom: 10px;
+    }
+    .menu-card {
+        margin: 0 !important;
+        width: 100% !important;
+        padding: 5px 25px 0 25px !important;
+    }
+    .menu-list .item-ios {
+        padding-left: 0px;
+        padding: 15px 15px 15px 21px;
+        border-bottom: 0.55px solid #c8c7cc;
+    }
+
+    .menu-list [icon-left] ion-icon, [icon-start] ion-icon {
+        font-size: 1.6em;
+        line-height: .67;
+        pointer-events: none;
+        padding: 0 0.7em;
+    }
+    .list_item_icon{
+        height: 25px;
+        width: 25px
+    }
+    .list_item_title{
+        padding-top: 3px;
+        font-size: 17px;
+        letter-spacing: 0.5px;
+    }
+    .sideMenuItem ion-grid {
+        padding: 0;
+    }
+    .menu-list [col-3] {
+        text-align: center;
+        width: 20% !important;
+        flex: 0 0 22%;
+    }
+    .menu-list .item-ios, .md .menu-list .item-ios {
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+    .menu-list button .label-ios {
+        margin: 7px 8px 2px 0;
+    }
+    .menu-list .label-md {
+        margin: 0 8px 0px 0;
+    }
+
+    .loading-wrapper {
+        border-radius: 2px;
+        max-width: inherit;
+        max-height: inherit;
+        color: rgba(0, 0, 0, 0.5);
+        -webkit-box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+        padding: 24px;
+        width: 100%;
+        margin: 0 auto;
+        display: block;
+        height: 100vh;
+        opacity: 0.8 !important;
+        color: #fff;
+        background: transparent;
+    }
+    .loading-spinner + .loading-content {
+        top: 200px;
+        position: relative;
+        margin: 0 auto;
+        display: block;
+        width: 33%;
+    }
+    .loading-spinner {
+        top: 200px;
+        position: relative;
+        margin: 0 auto;
+        display: block;
+        width: 15%;
+    }
+    .picker-prefix, .picker-suffix, .picker-opt.picker-opt-selected {
+        color: #fbfbfb;
+        opacity: 1;
+        border-top: 1px solid;
+        border-bottom: 1px solid;
+    }
+    .picker-opt {
+        margin: 0;
+        height: 4.3rem;
+        font-size: 22px;
+        line-height: 42px;
+        color: #000;
+        background: transparent;
+        -webkit-transition-timing-function: ease-out;
+        transition-timing-function: ease-out;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        pointer-events: auto;
+        padding: 0;
+        color: #fff;
+        opacity: 0.5;
+    }
+    .picker-button,.picker-button.activated {
+        color: #fff;
+    }
+    .picker-toolbar {
+        background: #040c5d !important;
+        border-bottom: 1px solid #454d95;
+    }
+    .picker-columns {
+        background: #040c5d;
+    }
+    .b_r_request .alert-message .c_name {
+        font-size: 20px;
+        text-transform: capitalize;
+        color: #131185;
+    }
+
+    .b_r_request .alert-message .title{
+        width: 50%;
+        //display: inline;
+        float: left;
+        word-wrap: break-word;
+        padding: 10px 0;
+        color: #adb5c0;
+    }
+    .b_r_request .alert-message .desc{
+        width: 50%;
+        //display: inline;
+        float: left;
+        word-wrap: break-word;
+        padding: 10px 0;
+        color: #848c97;
+    }
+    .b_r_request .alert-head,.b_r_request .alert-button-group,.b_r_request .alert-button {
+        background: #1A237E;
+        color: #fff !important;
+    }
+    .b_r_request .alert-message {
+        padding-top: 24px !important;
+    }
+
+    
+    .cancel_booking_alert .alert-message .c_name {
+        font-size: 20px;
+        text-transform: capitalize;
+        color: #131185;
+    }
+    .cancel_booking_alert .alert-head, .alert-button-group, .alert-button {
+        background: #1A237E;
+        color: #fff !important;
+    }
+    .cancel_booking_alert .alert-message {
+        padding-top: 24px !important;
+    }
+
+    .cancel_booking_alert .info {
+        font-size: 16px;
+        letter-spacing: 0.5px;
+        padding: 0 0 15px 0;
+        color: #1a237e;
+    }
+    .cancel_booking_alert .min {
+        width: 50%;
+        float: left;
+        padding: 5px;
+        color: #575961;
+    }
+    .cancel_booking_alert .charge {
+        width: 50%;
+        float: left;
+        padding: 5px;
+        color: #575961;
+    }
+    .cancel_booking_alert .que {
+        font-size: 16px;
+        letter-spacing: 0.5px;
+        display: inline-block;
+        padding: 15px 0 0px 0;
+        color: #1a237e;
+    }
+} 

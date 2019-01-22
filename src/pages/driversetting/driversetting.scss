@@ -1,0 +1,19 @@
+.ios,.md{
+    page-driversetting {
+        ion-item {
+            padding: 18px !important;
+            border-bottom: 1px solid #eee !important;
+            box-shadow: 0px 1px #eee;
+        }
+        .item-inner {
+            border: none !important;
+        }
+        ion-label {
+            font-size: 20px;
+            letter-spacing: 0.5px;
+            color: #615656;
+            border: 0;
+        }
+    }
+}
+

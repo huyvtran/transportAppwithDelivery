@@ -1,0 +1,61 @@
+<!--
+  Generated template for the NotificationsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+      <button ion-button menuToggle >
+          <ion-icon ios="ios-list" md="md-list" class="ion-md-list"></ion-icon>
+      </button>
+    <ion-title>Notifications</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    
+    <!--<ion-card *ngFor="let item of lazy_notifications; let i = index">
+        <div class="abs_div">
+          <span>{{item.message}}</span>
+        </div>
+    </ion-card>-->
+  <ion-list>
+    <!--<ion-item [ngClass]="item.status === '1' ? 'bc_blue' : 'bc_white'" class="list_item" *ngFor="let item of users">
+      <div>
+        <h4>{{item.message}}</h4>  
+        <span>{{item.created_at | date:'dd/MM/yyyy H:mm'}}</span>
+      </div>
+    </ion-item>-->
+    <ion-item [ngClass]="item.status === '1' ? 'bc_blue' : 'bc_white'" class="list_item" *ngFor="let item of users">
+        <div>
+          <ion-grid>
+            <ion-row>
+              <ion-col col-2>
+                <div class="c_icon_div">
+                  <img class="list_item_icon" src="assets/imgs/comment.png"/>
+                </div> 
+              </ion-col>
+              <ion-col class="list_content" col-10>
+                  <h4 text-wrap>{{item.message}}</h4>
+                  <span class="span_left">{{item.created_at | date:'dd MMM, yyyy'}}</span>  
+                  <span class="span_right">{{item.created_at | date:'H:mm'}}</span> 
+              </ion-col>
+            </ion-row>
+          </ion-grid>  
+        </div>
+      </ion-item>
+      <div class="nulldiv emptyDiv" *ngIf='isNotification == true'>
+          <img src="assets/imgs/empty_notification.png" />
+          There is no notifications yet.
+      </div>
+  </ion-list>
+  
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+         

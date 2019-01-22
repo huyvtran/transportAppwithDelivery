@@ -1,0 +1,99 @@
+.ios,.md{
+    page-confirm-payment {
+        ion-content {
+            //margin: 40px 0;
+        }
+        .scroll-content{
+            margin-top: 40px !important;
+        }
+        .signoutcontentdiv {
+            padding: 12px;
+            border-bottom: 2px solid #c2c2c2;
+        }
+        .signoutimgdiv {
+            text-align: center;
+        }
+        .signoutimgdiv .live_trak {
+            height: 200px;
+            padding: 20px;
+            box-shadow: 0px 0px 25px #eee;
+            border-radius: 50%;
+            margin: 40px auto;
+        }
+        .signoutcontentdiv {
+            padding: 10px;
+            border-bottom: 2px solid #c2c2c2;
+            padding-bottom: 0;
+        }
+        .signoutcontentdiv h1 {   
+            font-size: 18px;    
+            letter-spacing: 0.7px;
+            color:#1a237e;//#edb101;
+        }
+        button.login-btn {      
+            //background-color: #ffe508;
+            background: #1A237E;
+            color: #fff;
+            padding: 20px 18px !important;
+            font-size: 18px !important;
+            margin: 0 auto;
+            margin-top: 15px !important;
+            //border-radius: 5px;
+            width: 100%;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: capitalize;
+            position: absolute;
+            bottom: 0;
+        }   
+        .driver_status {
+            height: 25px;
+            width: 25px;
+            border-radius: 50%;
+            float: right;
+            border: 1px solid #a2a19d;
+        } 
+        .bg_reject{
+            background: #ff1515;
+        }
+        .bg_accept{
+            background: #60d206;    
+        }
+        .trak_image {
+            display: block;
+            margin-top: 85px !important;
+        }
+        .no_trak_image{
+            display: none;
+        }
+        .trak_div{
+            display: block;
+        }
+        .no_trak_div{
+            display: none;
+        }
+        #map {
+            height: 67vh;
+            padding: 20px;
+            margin: 0px -20px;
+            bottom: 42px;
+        }
+        div#distance{
+            position: absolute;
+            color: #504b4b;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 10px;
+            top: -1px;
+            letter-spacing: 1px;
+            width: 100%;
+            text-align: center;
+            margin-left: -25px;
+          }
+        .callIcon{
+            color: #fff;
+            height: 38px;
+            width: 38px;
+        }
+    }    
+}

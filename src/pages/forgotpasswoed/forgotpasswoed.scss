@@ -1,0 +1,61 @@
+.ios,.md{
+    page-forgotpasswoed {
+        .toolbar-background {
+            background: #fff;
+        }
+        input[type="email"] {
+            width: 85%;
+            padding: 17px;
+            background: #eeeeeeb5;
+            margin: 10px;
+            font-size: 20px;
+            letter-spacing: 1px;
+            border: none;
+        }
+        h2 {
+            font-size: 26px;
+            line-height: 1.5;
+            letter-spacing: 0.5px;
+        }
+        p {
+            font-size: 16px;
+            width: 80%;
+            margin: 0 auto;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+        img{
+            margin-top: 25px;
+        }
+        button.login-btn {
+            //background-color: #ffe508;
+            background: #1A237E;
+            color: #000;
+            padding: 28px 40px !important;
+            font-size: 20px !important;
+            margin: 0 auto;
+            margin-top: 20px !important;
+            border-radius: 5px;
+            width: auto;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        .error{
+            text-align: center;
+            color: red;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+        }
+        .toolbar-background {
+            background: transparent !important;
+            border: none !important;
+        }
+        ion-header:after{
+            background: none;
+        }
+        .back-button {
+            color: #000 !important;
+        }
+    }
+}
+

@@ -1,0 +1,54 @@
+.ios,.md{
+    page-emailverification {
+       /* ion-content.content.content-ios{
+            background: url(../../assets/imgs/verify_email_attachment.jpg);
+            background-position: top;
+            background-size: cover;
+            background-position-x: 0px;
+        }*/
+        .back-button {
+            color: #000 !important;
+        }
+        .emptydiv{
+            height : 150px;
+        }
+        .emptydiv img{
+            width: 85px;
+            padding-top: 20px;
+        }
+        h2 {
+            font-size: 26px;
+            letter-spacing: 0.5px;
+            margin: 40px 0px;
+        }
+        p {
+            font-size: 18px;
+            padding: 5px 20px;
+            letter-spacing: 0.5px;
+        }
+        button.login-btn {
+            color: #1A237E;
+            padding: 10px 10px !important;
+            font-size: 20px !important;
+            margin: 0 auto;
+            margin-top: 10px !important;
+            /* border-radius: 5px; */
+            width: auto;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid;
+        }
+        .contentdiv{
+            padding: 15px;
+            padding-top: 30px;
+        }
+        .toolbar-background {
+            background: transparent !important;
+            border: none !important;
+        }
+        ion-header:after{   
+            background: none;
+        }
+    }
+}
+

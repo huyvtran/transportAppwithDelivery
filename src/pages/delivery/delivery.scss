@@ -1,0 +1,232 @@
+.ios,.md{
+    page-delivery {
+        .toolbar-title {
+            letter-spacing: 0.7px;
+        }
+    
+        .toolbar-background,.toolbar-background{
+            //background: #FFEC19;
+            background: #1A237E;
+        }
+    
+        .last_div{
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            z-index: 10;
+        }
+    
+    
+        .inner_last_div{
+            text-align: center;
+            //background: #FFEC19;
+            background: #1A237E;
+            font-weight: 500;
+            //padding: 10px;
+            p{
+                margin: 0;
+            }
+        }
+        .inner_last_div ion-grid.grid {
+            padding: 0;
+        }
+        
+        .ride_now{
+            border-right : 1px solid #babec3;
+            color: #fff;
+        };
+        .ride_now,.ride_later{
+            padding: 12px;
+            letter-spacing: 0.7px;
+        }
+    
+        ion-card{
+            border-radius: 8px !important;
+            box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2) !important;
+        }
+    
+    
+        ion-item{
+            padding-bottom: 15px !important;
+    
+            ion-icon{
+                font-size: 2.2rem !important;
+                color: #278DF8;
+            }
+    
+            ion-label{
+                font-size: 14px !important;
+                color: gray;
+                letter-spacing: 0.7px;
+            }
+    
+            ion-input{
+                border-bottom: 1px solid lightgray;
+            }
+        }
+    
+        .text-input-ios{
+            margin: 0 !important;
+            padding: 4px !important;
+            font-size: 18px !important;
+        }
+    
+        .text-input-md{
+            margin: 0 !important;
+            padding: 4px !important;
+            font-size: small !important;
+        }
+    
+        ion-item:first-child{
+            ion-icon{
+                transform: rotate(150deg);
+                padding: 5px;
+            }
+        }
+        #map{  
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            bottom: 0px;
+            top: 0px;   
+        }
+        #please-connect {
+            position: absolute;
+            background-color: #000;
+            opacity: 0.5;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+          }
+         
+          #please-connect p {
+              color: #fff;
+              font-weight: bold;
+              text-align: center;
+              position: relative;
+              font-size: 1.6em;
+              top: 30%;
+          }
+         
+          .scroll-content {
+              overflow: hidden;
+          }
+          .directionsPanel{
+            margin: 0!important;
+            height: 0;
+          }
+          .item-md ion-icon[item-start] + .item-inner {
+            margin-left: 6px !important;
+          }
+          div#distance {
+            background: #2b8ff8;
+            padding: 12px;
+            position: absolute;
+            left: 38%;
+            color: #fff;
+            z-index: 10000000 !important;
+            font-size: 20px;
+            font-weight: 700;
+            border-radius: 10px;
+          }
+          button.type_btn {
+            border-radius: 10px;
+            background: #eeeeeed6;
+            box-shadow: 0px 0px 5px #b8b1b1;
+            width: 100%;
+          }
+          .type_btn_div p {
+            margin: 0;
+            padding: 5px;
+            font-size: 16px;
+            letter-spacing: 0.7px;
+            //color: #6e6464;
+            font-weight: 600;
+          }
+          .type_btn_div {
+            background: #e7e9fb;
+            border-top: 2px solid #a4a8d3;
+          }
+          .appx_cost {
+            font-size: 12px;
+            //background: #fff;
+            padding: 5px;
+            border-radius: 10px;
+            //color: #2b8ff8;
+            letter-spacing: 0.5px;
+          }
+          .vehicle_info {
+            text-align: center;
+            padding: 10px;
+            color: #1a237e;
+        }
+          .type_btn img {
+            max-width: 80%;
+          }
+          .ios page-home button.type_btn:active, .md page-home button.type_btn:active {
+            background: #000 !important;
+          }
+          .info_avtar{
+              height: 50px;
+              width : 50px !important;
+          }
+          .info_info{
+            padding: 0px 8px;
+            float: left;
+          }
+          .info_info h6{
+              margin: 0;
+          }
+          .info_info p{
+            margin: 5px 0;  
+          }
+         .rating_p{
+            margin: 5px 0;
+            /* margin: 0 !important; */
+            font-size: 13px;
+            float: left;
+         }
+         .arrival_p{
+            font-size: 13px;
+            float: right;
+            margin-left: 15px !important;
+         }
+         .active_payment{
+            background: #f0fbfc !important;
+            border: 2px solid #ccf3f8;
+         }
+         .paymentMethodDiv ion-grid{
+            padding: 0 !important;
+        }
+        
+        .paymentMethodDiv ion-row{
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            border-radius: 15px;
+            //padding: 10px 0;
+           // background: linear-gradient(45deg, rgb(209, 242, 255) 0%, rgb(150, 212, 234) 64%, rgb(127, 224, 255) 97%, rgb(51, 170, 216) 100%);
+        }
+        .paymentMethodDiv .list_item_icon{
+            left: 0px !important;
+            position: relative;
+            height: 30px;
+            width: 30px;
+        }
+        .paymentMethodDiv ion-label{
+            margin: 0 !important;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: #055696;
+            padding: 2px;
+            font-size: 12px;
+        }  
+        .paymentMethodDiv{
+            background: #cbceea;
+        }
+        .login-btn{
+            margin: 0 !important;
+        }
+    }
+    
+}

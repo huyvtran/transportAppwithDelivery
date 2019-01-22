@@ -1,0 +1,49 @@
+<!--
+  Generated template for the FeedbackPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Feedback</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <div class="forgetPass-img" text-center>
+    <img src="assets/imgs/website-rating-feedback-and-review.png" />
+    <ion-item *ngIf="role==2"> 
+        <button *ngIf="favDriver !=''" class="fav_driver" (click)="notify(isfav)">{{favDriver}}</button>
+    </ion-item>
+  </div>
+  <form [formGroup]="feedback_form" text-center>      
+    <h2>Feedback</h2>
+    <p>Please help us to serve you better by feeling out a feedback form</p>
+    <ion-textarea formControlName="feedback" [(ngModel)]="feedback" [class.invalid]="!feedback_form.valid && (feedback_form.controls.feedback.dirty || submitAttempt)"></ion-textarea>
+    <div class="error" *ngIf="feedback_form.get('feedback').hasError('required')  && feedback_form.get('feedback').touched">
+      Please fill out this field
+    </div>
+
+    <rating formControlName="rate" [(ngModel)]="rate" 
+        readOnly="false"
+        max="5"
+        emptyStarIconName="star-outline" 
+        halfStarIconName="star-half"
+        starIconName="star"
+        nullable="false"
+        [class.invalid]="!feedback_form.valid && (feedback_form.controls.rate.dirty || submitAttempt)"
+        >
+    </rating>
+    <div class="error" *ngIf="feedback_form.get('feedback').hasError('required')  && feedback_form.get('feedback').touched">
+      Please fill out this field
+    </div>
+
+    <button class="login-btn" ion-button color="primary" [disabled]="!this.feedback_form.valid" (click)="sendFeedback(feedback,rate)" block >Send</button>
+  </form>
+
+</ion-content>

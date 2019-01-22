@@ -1,0 +1,124 @@
+.ios,.md{
+    page-booking-list {
+        .emptyDiv {
+            text-align: center;
+            margin: 50px 0;
+            padding: 40px 0;
+            font-size: 18px;
+            letter-spacing: 0.5px;
+            color: #aebcc9;
+            img {
+              display: block;
+              margin: 40px auto;
+              padding: 10px;
+              box-shadow: 0 0 5px #aebcc9;
+          }
+        }
+        ion-content{
+            background-color: #f7f7f7 !important;
+        }
+    
+        ion-card{
+            position: relative;
+            overflow: visible !important;
+            margin: 30px 12px !important;
+        }
+    
+        ion-card .price{
+            float: right;
+            padding: 10px 15px;
+            font-weight: 600;
+        }
+    
+        ion-card .abs_div{
+            height: 50px;
+            width: 120px;
+            background-color: #1a237e;
+            margin-left: 20px;
+            position: absolute;
+            top: -19px;
+            z-index: 999;
+            border-radius: 10px;
+            text-align: center;
+            padding: 10px;
+            opacity: 0.6;
+        }
+        ion-card .abs_div span{
+            color: white;
+        }   
+        ion-item ion-icon{
+            font-size: 20px;
+        }
+        ion-item span{
+            font-size: 16px;    
+            padding-left: 10px;     
+            display: table-cell;           
+        }
+        ion-item .src_pin{
+            color:#d40000;
+        }
+        ion-item .dest_pin{
+            color:#065f06;
+        }    
+        ion-item:last-child{
+            padding-bottom: 10px;
+        }
+        .last_div{
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            z-index: 10;
+        }
+   
+        .inner_last_div{
+            text-align: center;
+            background: #1A237E;
+            font-weight: 500;  
+            padding: 7px 0 !important;
+            p{
+                margin: 0;
+                padding: 15px;
+                font-size: 16px;
+                letter-spacing: 1px;
+                color: #fff;
+            }
+        }
+        .inner_last_div ion-grid.grid {
+            padding: 0;
+        }
+        .nulldiv {
+            text-align: center;
+            font-size: 21px;
+            letter-spacing: 0.5px;
+            word-spacing: 1px;
+        }
+        .r_star{
+            color: #ead704;
+        }
+        .n_start{
+            color: #a09d9d;
+        }
+        .not_rated_item span{
+            font-size: 12px;
+            color: #1455ec;
+            letter-spacing: 0.7px;
+            float: right;
+            margin-right: 20px;
+            margin-top: 2px;	
+        }
+        .not_rated_item ion-label{
+            margin: 0;
+            padding: 12px 2px 12px 20px;
+            background: #eee;
+        }
+        .not_rated_item .item-inner{
+            padding : 0 !important;     
+        }
+        .not_rated_item{
+            padding : 0 !important;
+        }
+        .container_div ion-label{
+            display: table;
+        }
+    }        
+}

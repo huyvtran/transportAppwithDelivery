@@ -1,0 +1,53 @@
+<!--
+  Generated template for the BookingListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="sideMenu" hideBackButton>
+    <button ion-button menuToggle >
+      <ion-icon ios="ios-list" md="md-list" class="ion-md-list"></ion-icon>
+    </button>
+    <ion-title>Booking List</ion-title>
+  </ion-navbar>
+
+</ion-header>
+             
+<ion-content padding>
+    <div>
+        <div *ngIf='booking_history != ""'>
+          <ion-card *ngFor="let item of booking_history; let i = index">
+            <div class="abs_div">
+              <span>{{item.booking_details.created_at | date : 'dd MMM, yyyy hh:mm:ss'}}</span>
+            </div>
+            <span class="price">${{item.booking_details.cost}}</span> 
+            <ion-item class="container_div" (click)='showBooking(i)'>
+              <ion-icon class="src_pin" name="pin"></ion-icon>
+              <span text-wrap>{{item.booking_details.source}}</span>
+            </ion-item> 
+            <ion-item class="container_div" (click)='showBooking(i)'>
+              <ion-icon class="dest_pin" name="pin"></ion-icon>
+              <span text-wrap>{{item.booking_details.destination}}</span>
+            </ion-item>
+            <ion-item *ngIf="item?.feedback?.rating > 0">
+              <ion-icon name="star" [ngClass]="item.feedback.rating > 0 ? 'r_star' : 'n_start'"></ion-icon>
+              <ion-icon name="star" [ngClass]="item.feedback.rating > 1 ? 'r_star' : 'n_start'"></ion-icon>
+              <ion-icon name="star" [ngClass]="item.feedback.rating > 2 ? 'r_star' : 'n_start'"></ion-icon>
+              <ion-icon name="star" [ngClass]="item.feedback.rating > 3 ? 'r_star' : 'n_start'"></ion-icon>
+              <ion-icon name="star" [ngClass]="item.feedback.rating > 4 ? 'r_star' : 'n_start'"></ion-icon>
+            </ion-item>
+            <ion-item class="not_rated_item" *ngIf="item?.feedback == null">
+              Not Rated 
+            </ion-item>
+          </ion-card>
+          <ion-infinite-scroll (ionInfinite)="loadMoreHistory($event)">
+              <ion-infinite-scroll-content></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+        </div>
+        <div class="nulldiv emptyDiv" *ngIf='noHistory == true'>
+            <img src="assets/imgs/empty_booking.png"/>
+            You haven't taken a ride yet.
+        </div>
+      </div>
+</ion-content>

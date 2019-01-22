@@ -1,0 +1,56 @@
+<!--
+  Generated template for the IntroPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!--<ion-header>
+
+  <ion-navbar>
+    <ion-title>Intro</ion-title>
+  </ion-navbar>
+
+</ion-header>-->
+
+
+<ion-content >
+    <!--<ion-slides  pager="true" autoplay="4000" speed="2000">-->
+        <ion-slides  pager="true" #slides>
+        <ion-slide >
+          <div class="slider-1-img">
+              <img src="assets/imgs/taxi.png" />
+          </div>
+          <div text-center class="slider-1-content">
+              <h2>Plan a Trip</h2>
+              <p>Choose your pickup and drop location. Choose cab of your choice, we have car for everything. Ride now or later.</p>
+          </div>
+        </ion-slide>
+        <ion-slide >
+            <div class="slider-2-img">
+                <img src="assets/imgs/taxi-driver.png" />
+            </div>
+            <div text-center class="slider-1-content">
+                <h2>Near By Driver</h2>
+                <p>Select near by driver of your pickup location. We give you the best price. We guaranteed!</p>
+            </div>
+        </ion-slide>
+        <ion-slide >
+            <div class="slider-3-img">
+                <img src="assets/imgs/payment-method.png" />
+            </div>
+            <div text-center class="slider-1-content">
+                <h2>Secure Payment</h2>
+                <p>Do your payment as per your convenient. Pay in Cash or Wallet at departure.</p>
+              </div>
+        </ion-slide>
+      </ion-slides>
+</ion-content>
+<ion-footer>
+
+        <button  ion-button icon-only clear (click)="skip()" class="arrow-back">SKIP<!--<ion-icon name="arrow-back"></ion-icon>--></button>
+    <!-- <button *ngIf='last_slide==2 || last_slide==1' ion-button icon-only clear (click)="getPrev()" class="arrow-back">Prev<ion-icon name="arrow-back"></ion-icon></button> -->
+    
+    <button *ngIf='last_slide!=1' ion-button icon-only clear (click)="getNext()" class="arrow-forward">NEXT<!--<ion-icon name="arrow-forward"></ion-icon>--></button>
+    <button *ngIf='last_slide==1' ion-button icon-only clear (click)="getNext()" class="arrow-forward">DONE<!--<ion-icon name="arrow-forward"></ion-icon>--></button>
+</ion-footer>
+     

@@ -1,0 +1,108 @@
+.ios,.md{
+    page-ride-later {
+        .scroll-content {
+            background: #eeeded !important;//#d9d7d773 !important;
+        }
+        .nav_icon{
+                transform: rotate(150deg);
+                padding: 5px;
+        }
+        .srcpt .addr_row.row {
+            background: #fff;
+            padding: 5px;
+        }
+        .srcpt .addr {
+            text-align: left;
+            padding: 6px;
+            letter-spacing: 0.7px;
+        }
+        .srcpt ion-icon {
+            display: inline-block;
+            font-size: 1.6em;
+            color: #1a237e;
+        }
+        .srcpt.grid {
+            padding: 16px 16px 0px 16px;
+        }
+        button.login-btn {
+            //background-color: #ffe508;
+            background: #1A237E;
+            color: #fff;
+            padding: 25px 18px !important;
+            font-size: 20px !important;
+            margin: 0 auto;
+            margin-top: 15px !important;
+            border-radius: 5px;
+            width: 100%;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: capitalize;
+            position: absolute;
+            bottom: 0;
+        } 
+        .moreInfo{
+            padding: 20px 16px;
+        }
+        .moreInfo .title_col{
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            font-size: 15px;
+        }
+        .moreInfo .value_col{
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            font-size: 15px;
+        }   
+
+        .paymentMethodDiv ion-grid{
+            padding: 0 !important;
+        }
+        
+        .paymentMethodDiv ion-row{
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            border-radius: 15px;
+            //padding: 10px 0;
+           // background: linear-gradient(45deg, rgb(209, 242, 255) 0%, rgb(150, 212, 234) 64%, rgb(127, 224, 255) 97%, rgb(51, 170, 216) 100%);
+        }
+        .paymentMethodDiv .list_item_icon{
+            left: 0px !important;
+            position: relative;
+            height: 50px;
+            width: 50px;
+        }
+        .paymentMethodDiv ion-label{
+            margin : 0 !important;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: #055696;
+            padding: 5px;
+        }  
+        .innerDiv{
+            margin: 4px;
+            padding: 10px;
+            background: #d0d1de;//#1a237e24;
+            -webkit-box-shadow: 0px 0px 6px #ccf3f8;//#2196f34f;
+            box-shadow: 0px 0px 6px #ccf3f8;//#2196f34f;
+        } 
+        .active_payment{
+            background: #f0fbfc;
+            border: 2px solid #ccf3f8;
+        }
+        .paymentMethodDiv{
+            text-align: center;
+            margin-top: 25px !important;
+        }
+        ion-grid.warnMessage.grid {
+            background: #c2c4da;
+            color: #1a237e;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            word-spacing: 1px;
+            line-height: 1.5;
+        }
+    }
+}   

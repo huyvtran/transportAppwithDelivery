@@ -1,0 +1,65 @@
+<!--
+  Generated template for the ConfirmPaymentPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="sideMenu" >
+    <ion-buttons end icon-only *ngIf="traking === 'div'">
+      <button ion-button (click)="showSelectDriverModal(driver_id)">
+       <!--<ion-icon class="callIcon" name="call"></ion-icon>-->
+       <img class="callIcon" src="assets/imgs/taxi-driver.png" />
+      </button>
+    </ion-buttons>
+    <ion-title *ngIf ='rideType == "now"'>Ride Tracking</ion-title>
+    <ion-title *ngIf ='rideType == "later"'>Ride Information</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding *ngIf ='rideType == "now"'>
+  <ion-grid >
+    <ion-row>
+      <ion-col col-12>
+        <div class="signoutcontentdiv" text-center>
+          <h1> Your Ride Confirmation Successful! </h1>
+        </div>
+      </ion-col>
+     
+      <ion-col col-12>
+        <div class="signoutimgdiv">
+          <img [ngClass]="traking === 'image' ? 'trak_image' : 'no_trak_image'" class="live_trak" src="assets/imgs/checked-symbol.png" />
+          <div [ngClass]="traking === 'div' ? 'track_div' : 'no_trak_div'" class="live_trak">
+              <div id="distance">
+                 {{duration}}
+              </div>
+            <div #map id="map"></div>
+            <div #directionsPanel id="directionsPanel"></div>
+          </div>
+        </div>
+        <div class="driver_status" [ngClass]="active === 'reject' ? 'bg_reject' : 'bg_accept'"></div>
+      </ion-col> 
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-content padding *ngIf='rideType == "later"'>
+  <ion-grid >
+    <ion-row>     
+      <ion-col col-12>
+        <div class="signoutcontentdiv" text-center>
+          <h1> Your Ride Request saved successfully. </h1>
+          <p>
+            Driver information will send to you 10 minutes before your Ride
+          </p>
+        </div>
+        <button (click)='RideLaterOk()' class="login-btn" ion-button color="primary" block >OK</button>
+      </ion-col>
+      </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <button (click)='confirm_cancel()' class="login-btn" ion-button color="primary" block >Cancel Booking</button>
+</ion-footer>

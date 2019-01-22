@@ -1,0 +1,79 @@
+.ios,.md{
+page-signin { 
+  .title_div {
+        text-align: center;
+        padding: 15px;
+    }
+    h2.head_title {
+        font-size: 68px;
+        font-weight: 600;
+        line-height: 1.5;
+        letter-spacing: 8px;
+        color:#1A237E;// #efb511;
+    }
+    h3.sub_title {
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        margin: 0;
+    }
+    p.title_info {
+        margin: 0;
+        padding-top: 5px;
+        //color: #908c8c;
+        color: #1A237E;//#efb511;
+    }
+    ion-input.input.input-md {
+        font-size: 20px !important;
+    }
+    button.login-btn {
+        //background-color: #efb511;
+        background: #1A237E;
+        color: #fff;
+        padding: 24px !important;
+        font-size: 16px !important;
+        margin-top: 20px !important;
+        border-radius: 5px;
+    }
+    .sign_in_form {
+        padding: 0px 5px;
+    }
+    ion-label {
+        color: #484444 !important;
+        letter-spacing: 1.5px;
+        font-size: 18px !important;
+        margin-bottom: 5px !important;
+    }
+    a.forgot_pass {
+        text-decoration: none;
+        text-align: center;
+    }
+    p.new_acc {
+        padding: 15px;
+        text-align: center;
+        margin-top: 10px;
+    }  
+    ion-item {
+        margin: 18px 0 !important;
+    }
+    ion-item.submit_btn_item {
+        margin: 0 !important;
+    }
+    .error{
+		text-align: center;
+        color: red;
+        font-size: 15px;
+        letter-spacing: 0.5px;
+	}
+
+	ion-input{
+		border: 1px solid #867e7e;
+		padding-left: 7px;
+    }
+    .checkbox-icon {
+        top: 6px;
+    }
+    ion-item {
+        margin: 10px 0 !important;
+    }
+}
+}

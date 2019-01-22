@@ -1,0 +1,63 @@
+<!--
+  Generated template for the DriverTransactionsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+      <button ion-button menuToggle >
+          <ion-icon ios="ios-list" md="md-list" class="ion-md-list"></ion-icon>
+      </button>
+    <ion-title>Transactions</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div>
+    <ion-list>
+      <ion-item class="list_item" *ngFor="let item of transactions">
+          <div>
+            <ion-grid>
+              <ion-row>
+                <ion-col col-2>
+                  <div class="c_icon_div">
+                    <img *ngIf="item.payment_method == 'wallets'" class="list_item_icon" src="assets/imgs/wallet.png"/>
+                    <img *ngIf="item.payment_method == 'cash_payments'" class="list_item_icon" src="assets/imgs/notes.png"/>
+                    <img *ngIf="item.payment_method == 'paypal'" class="list_item_icon" src="assets/imgs/credit-card.png"/>
+                  </div> 
+                </ion-col>
+                <ion-col class="list_content" col-8>
+                    <h4 text-wrap *ngIf="item.payment_method == 'wallets'">Payment By Wallet</h4>
+                    <h4 text-wrap *ngIf="item.payment_method == 'cash_payments'">Payment By Cash</h4>
+                    <h4 text-wrap *ngIf="item.payment_method == 'paypal'">Payment By Paypal</h4>
+                    <span class="span_left">{{item.created_at | date:'dd MMM yyyy, H:mm'}}</span>  
+                    <!--<span class="span_right">6.56</span>-->
+                </ion-col>
+                <ion-col col-2>
+                  <div [ngClass]="item?.transaction_status == 'Credited' ? 'g_color' : 'g_color'" *ngIf="item.payment_method == 'cash_payments'" class="t_amount">
+                    <span>-</span>${{item.amount}}
+                  </div>  
+                  <div [ngClass]="item?.transaction_status == 'Credited' ? 'g_color' : 'g_color'" *ngIf="item.payment_method != 'cash_payments'" class="t_amount">
+                    <span *ngIf="item?.transaction_status == 'Credited'">+</span>
+                    <span *ngIf="item?.transaction_status != 'Credited'">-</span>
+                    ${{item.balance}}
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>  
+          </div>
+        </ion-item>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <div class="nulldiv emptyDiv" *ngIf='noTransaction == true'>
+      <img src="assets/imgs/empty_booking.png"/>
+      There is not any transactions yet.
+  </div>
+  </div>
+</ion-content>

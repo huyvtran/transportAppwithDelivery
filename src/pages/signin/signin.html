@@ -1,0 +1,58 @@
+<!--<ion-header>
+  <ion-navbar align-title="center" color="primary">
+    <ion-title>
+      <h2>Sign In</h2>
+    <!--   <p>Sign In</p> --
+    </ion-title>
+  </ion-navbar>
+</ion-header>-->
+
+<ion-content padding> 
+
+  <div class="login-container">
+
+    <div class="title_div">
+      <h2 class="head_title">TFH</h2>
+      <h3 class="sub_title">Welcome Back!</h3>
+      <p class="title_info">Sign In to continue to TaXI App</p>
+    </div>
+    <!-- Login form-->
+    <form class="sign_in_form" [formGroup]="signin" > 
+      <ion-list no-lines>
+        <ion-item>
+          <ion-label stacked>Email Address</ion-label>
+          <ion-input type="email" [(ngModel)]="uname" formControlName="email" [class.invalid]="!signin.valid && (signin.controls.email.dirty || submitAttempt)" ></ion-input>
+        </ion-item>
+
+        <div class="error" *ngIf="signin.get('email').hasError('required') && signin.get('email').touched">
+            Please fill out this field.
+        </div>
+            
+        <div class="error" *ngIf="!signin.get('email').hasError('required') && (signin.get('email').hasError('email') && signin.get('email').dirty )">
+            Please enter valid Email address
+        </div>
+
+        <ion-item>
+            <ion-label stacked>Password</ion-label>
+            <ion-input type="password" [(ngModel)]="pass" formControlName="password" [class.invalid]="!signin.valid && (signin.controls.password.dirty || submitAttempt)" ></ion-input>
+        </ion-item>
+
+        <div class="error" *ngIf="signin.get('password').hasError('required')  && signin.get('password').touched">
+            Please fill out this field
+        </div>
+
+        <ion-item>
+            <ion-label>Remember Me</ion-label>
+            <ion-checkbox (ionChange)="notify(isRemember)"></ion-checkbox>
+        </ion-item>
+    
+        <ion-item class="submit_btn_item">
+          <a class="forgot_pass" (click)="gotoForgotPass()"><p>Forgot password?</p></a>
+          <button class="login-btn" ion-button color="primary" block  (click)="signIn(uname, pass)" [disabled]="!this.signin.valid">SIGN IN</button>
+          <p class="new_acc" (click)='red_list()'>Create New Account</p>
+        </ion-item>
+      </ion-list> 
+    </form>
+  </div>
+</ion-content>      
+

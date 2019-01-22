@@ -1,0 +1,167 @@
+<!--
+  Generated template for the SettingsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+   <ion-navbar color="sideMenu" hideBackButton="{{hideBackButton}}">   
+    <!--<button ion-button menuToggle >
+        <ion-icon name="arrow-back"></ion-icon>     
+    </button>-->
+    <button ion-button menuToggle >
+        <ion-icon ios="ios-list" md="md-list" class="ion-md-list"></ion-icon>
+    </button>
+    <ion-title>
+        Settings
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <div *ngIf="showmainpage == true">
+      <ion-list class="set_list">
+        <ion-item (click)="movetoFavlocations()">
+          <ion-grid>
+            <ion-row>
+              <ion-col col-2>
+                <img class="list_item_icon" src="assets/imgs/s_placeholder.png"/>
+              </ion-col>
+              <ion-col col-10>
+                Favorite Locations
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+
+        <ion-item (click)="movetoFavdrivers()">
+          <ion-grid>
+            <ion-row>
+              <ion-col col-2>
+                <img class="list_item_icon" src="assets/imgs/s_user.png"/>
+              </ion-col>
+              <ion-col col-10>
+                Favorite Drivers
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+
+        <ion-item (click)="movetoNotifications()">
+          <ion-grid>
+            <ion-row>
+              <ion-col col-2>
+                <img class="list_item_icon" src="assets/imgs/s_notification.png"/>
+              </ion-col>
+              <ion-col col-10>
+                Notifications
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+    </div>
+   
+
+  <div *ngIf="showlocation == true">
+    <ion-item class="setting_label">
+      <ion-label>Favorite Places</ion-label>
+    </ion-item>
+    <div class="favlocDiv">
+      <ion-grid>
+          <ion-row>
+            <ion-col col-1 text-center>
+              <ion-icon class="setting_icons" name="home"></ion-icon>
+            </ion-col>
+            <ion-col class="setting_title" col-11>
+              <h3 *ngIf="homelocation == ''" (click)="addAddr('home')">Add Home</h3>
+              <h3 *ngIf="homelocation != ''" (click)="addAddr('home')">Home</h3>
+              <span *ngIf="homelocation != ''">
+                {{homelocation?.location}}
+                <p class="delete_op" (click)="removeAddr(homelocation?.id)">Delete</p>
+              </span>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-1 text-center>
+              <ion-icon class="setting_icons" name="briefcase"></ion-icon>
+            </ion-col>
+            <ion-col class="setting_title" col-11>
+              <h3 *ngIf="worklocation == ''" (click)="addAddr('work')">Add Work</h3>
+              <h3 *ngIf="worklocation != ''" (click)="addAddr('work')">Work</h3>
+              <span *ngIf="worklocation != ''">
+                {{worklocation?.location}}
+                <p class="delete_op" (click)="removeAddr(worklocation?.id)">Delete</p>     
+              </span>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        
+
+        <ion-grid  *ngFor="let item of otherlocations; let i = index">
+          <ion-row>
+            <ion-col col-1 text-center>
+              <ion-icon class="setting_icons" name="star"></ion-icon>
+            </ion-col>
+            <ion-col class="setting_title" col-11>
+              <h3>{{item?.location_type}}</h3>
+              <span>
+                {{item?.location}}
+                <p class="delete_op" (click)="removeAddr(item?.id)">Delete</p>     
+              </span>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-grid (click)="addAddr('other')" class="addLocGrid">
+          <ion-row>
+            <ion-col col-1 text-center>
+              <ion-icon class="setting_icons" name="add"></ion-icon>
+            </ion-col>
+            <ion-col class="setting_title" col-11>
+              <h3>Add another favorite places</h3>
+              <span>Get to your Favorite Destinations faster</span>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+    </div>
+  </div>
+
+
+  <div *ngIf="showdrivers == true">
+    <ion-item class="setting_label">
+      <ion-label>Favorite Drivers</ion-label>
+    </ion-item>
+    <div class="favDriverDiv">
+      <ion-grid *ngFor="let item of fav_drivers; let i = index">
+        <ion-row>
+          <ion-col col-3>
+            <ion-avatar><img src="assets/imgs/s_user.png"/></ion-avatar>
+          </ion-col>
+          <ion-col col-9>
+            <h2>{{item.first_name}} {{item.last_name}}</h2>
+            <span>{{item.email}}</span>
+            <span>{{item.phone}}</span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+
+  <div class="notification" *ngIf="showNotifications == true">
+    <ion-item>
+      <ion-label>Silent Notifications</ion-label>
+      <ion-toggle [(ngModel)]="isNotificationOff" (ionChange)="notificationOff()"></ion-toggle>  
+    </ion-item>
+  </div>
+
+</ion-content>
+<div *ngIf="showmainpage != true" class="last_div" (click)="goBack()">  
+    <div class="inner_last_div">
+      <p><ion-icon name="arrow-back"></ion-icon> Go Back </p>
+    </div>
+</div> 
