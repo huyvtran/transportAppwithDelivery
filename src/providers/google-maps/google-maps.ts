@@ -34,6 +34,10 @@ export class GoogleMapsProvider {
   circle : any;
   currentMapTrack = null;
 
+  myloc = "";
+  latitude : any;
+  longitude : any;
+
   constructor(public eve: Events,public events: Events, public connectivityService: ConnectivityServiceProvider, public geolocation: Geolocation, public platform: Platform) {
     this.directionsService = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsRenderer({ polylineOptions:{/*strokeColor:"#4a4a4a",*/strokeOpacity: 0.8,strokeWeight:3,strokeColor: '#278DF8' }, suppressMarkers:true });
@@ -78,9 +82,11 @@ export class GoogleMapsProvider {
         if(this.connectivityService.isOnline()){
           this.initMap();
           this.enableMap();
+          resolve(true);
         }    
         else {
           this.disableMap();
+          resolve(true);
         }
         resolve(true);
       }
@@ -103,7 +109,12 @@ export class GoogleMapsProvider {
         distanceFilter: 1
       };
       this.geolocation.getCurrentPosition(options).then((position) => {
+
         let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+
         console.log('latLng==>'+latLng);
         //alert(latLng);
         let mapOptions = {
@@ -119,7 +130,11 @@ export class GoogleMapsProvider {
         this.map = new google.maps.Map(this.mapElement, mapOptions);
         resolve(this.map);
         console.log("I am called");   
-        this.addMarker();
+        this.addMarker().then(data=>{
+          this.addInfoWindow(this.marker, data);
+        })
+
+
       },err=>{console.log(JSON.stringify(err));this.initMap();});
     });
   }
@@ -165,6 +180,9 @@ export class GoogleMapsProvider {
   }
 
   addMarker(){
+
+    return new Promise((resolve,reject)=>{
+
       this.marker = new google.maps.Marker({
         map: this.map,
         animation: google.maps.Animation.DROP,
@@ -187,10 +205,29 @@ export class GoogleMapsProvider {
       });*/
         
 
-      let content = "<h4>Your Current Location !</h4>";         
+
+
+      var geocoder = new google.maps.Geocoder();
+
+        var latlng = {lat: this.latitude, lng:this.longitude};
+        geocoder.geocode({'location': latlng}, function(results, status) {
+          if (status === 'OK') {
+            var address = results[0].formatted_address;
+            this.myloc = address;
+            console.log("###########");
+            console.log(this.myloc);
+            console.log("###########");
+            let content = this.myloc;         
      
-      this.addInfoWindow(this.marker, content);
+            //this.addInfoWindow(this.marker, content);
+            resolve(content);
+          }        
+        });
+    });
+
   }
+
+
 
   addInfoWindow(marker, content){
     let infoWindow = new google.maps.InfoWindow({

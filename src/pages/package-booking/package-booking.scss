@@ -2,9 +2,15 @@
 {
     page-package-booking {
 
+        .scroll-content{
+            padding-bottom: 0px !important;
+        }
+
         .alg1{
             margin-top: 20px;
-           
+            font-size: 1.6rem;
+            border-bottom: 0.55px solid lightgray;
+            padding-bottom: 10px;
         }
         .alg2{
             margin-top: 10px;
@@ -20,6 +26,13 @@
         }
         .text-input[disabled] {
             opacity: 1;
+        }
+
+        .cust-btn-div{
+            button{
+                margin: 0;
+                border-radius: 0;
+            }
         }
     }
 }

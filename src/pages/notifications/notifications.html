@@ -54,8 +54,8 @@
       </div>
   </ion-list>
   
-  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
-    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  <ion-infinite-scroll  (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content *ngIf='isEmpty == true?false:true'></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
          

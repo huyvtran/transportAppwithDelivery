@@ -105,7 +105,10 @@ export class DeliveryPage {
 
       let param = new FormData();
       let x = this.calculated_distance.split("km");
-      param.append("distance",x[0]);
+      x = x[0].replace(",","");
+      console.log("!@#!@#")
+      console.log(this.calculated_distance+" "+x[0]+" "+x);
+      param.append("distance",x);
       if(this.oneway)
       {
         param.append("oneway",'0');
@@ -119,10 +122,12 @@ export class DeliveryPage {
       param.append("height",this.height);
       param.append("source_lat",this.source_lat);
       param.append("source_lng",this.source_lng);
-      this.data.getCostandVehicle(param).subscribe(result=>{                          
+      this.data.getCostandVehicle(param).subscribe(result=>{   
+        console.log("########");
+        console.log(result);
         if(result.status == "ERROR")
         {
-            this.data.presentToast('eRROR');
+            this.data.presentToast(result.error);
             return false;
         }
         else
@@ -175,7 +180,7 @@ export class DeliveryPage {
         address[i]['lat'] = this.nearbyDrivers[i].latitude;
         address[i]['lng'] = this.nearbyDrivers[i].longitude;
         this.drivers[i] = this.nearbyDrivers[i].driver_id;
-        this.addMarker(address[i]['lat'],address[i]['lng'],this.drivers[i]);    
+        this.addMarker(address[i]['lat'],address[i]['lng'],this.drivers[i]);
       }
     }
   }
@@ -238,13 +243,15 @@ export class DeliveryPage {
                 this.data.presentToast("Your wallet balance is in minus, So you can't take Ride");
               }
               else{
-                //this.isnowenabled = false;      
+                //this.isnowenabled = false;
+                let temp = this.calculated_distance.replace(",","");
+                temp = temp.split(" ");      
                 let param = new FormData();
                 param.append("isRide",this.data.isRide);
                 param.append("customer_id",this.id);
                 param.append("schedule","0");
                 param.append("schedule_time",null);
-                param.append("distance",this.calculated_distance);
+                param.append("distance",temp[0]);
                 param.append("vehicle_type",this.vehicle_type);
                 param.append("source",this.from);
                 param.append("source_lat",this.pick_up_lt);
@@ -260,6 +267,12 @@ export class DeliveryPage {
                 param.append("cost",this.cost);   
                 param.append("driver_id",'');
                 param.append("payment_method",this.active);
+                param.append("type","delivery");
+                param.append("parcel_type",this.type);
+                param.append("height",this.height);
+                param.append("weight",this.weight);
+                param.append("length",this.length);
+                param.append("width",this.width);
 
                 this.data.bookingRequest(param).subscribe(result=>{
                     console.log(result);    
@@ -273,10 +286,10 @@ export class DeliveryPage {
                     else 
                     {
                       //this.storage.set("customer_data",data.msg[0]);
-                      this.data.presentToast('Booking Request Successfull!');
+                      this.data.presentToast('Booking request sent Successfully!');
 
                       let param1 = new FormData();
-                      param1.append("driver_Id",this.drivers);
+                      param1.append("driver_id",this.drivers);
                       param1.append("customer_id",this.id);
                       param1.append("booking_id",result.success.booking_request.id);
                       param1.append("pick_up",'now');
@@ -318,6 +331,8 @@ export class DeliveryPage {
               this.data.presentToast("Your wallet balance is in minus, So you can't book Ride");
             }
             else{
+              let temp = this.calculated_distance.replace(",","");
+              temp = temp.split(" "); 
               this.isnowenabled = false;
               let param = new FormData();
               
@@ -326,15 +341,16 @@ export class DeliveryPage {
               param.append("customer_id",this.id);
               param.append("schedule","0");
               param.append("pickup_date",this.date);
-              param.append("schedule_time",date);
-              param.append("distance",this.calculated_distance);
+              //param.append("schedule_time",date);
+              param.append("schedule_time",this.date + ' ' + this.time);
+              param.append("distance",temp[0]);
               param.append("vehicle_type",this.vehicle_type);
               param.append("source",this.from);
               param.append("source_lat",this.pick_up_lt);
               param.append("source_long",this.pick_up_lg);
               param.append("destination_lat",this.drop_lt);  
               param.append("destination_long",this.drop_lg);  
-              param.append("destination",this.to);  
+              param.append("destination",this.to);
               param.append("total",null);
               param.append("is_cancelled","0");
               param.append("is_completed","0");
@@ -342,6 +358,12 @@ export class DeliveryPage {
               param.append("status","0");
               param.append("cost",this.cost);   
               param.append("driver_id",'');
+              param.append("type","delivery");
+              param.append("parcel_type",this.type);
+              param.append("height",this.height);
+              param.append("weight",this.weight);
+              param.append("length",this.length);
+              param.append("width",this.width);
 
               this.data.rideLaterbookingRequest(param).subscribe(result=>{
                   console.log(result);    
@@ -353,8 +375,11 @@ export class DeliveryPage {
                   }
                   else
                   {
-                    this.data.presentToast('Booking Request Successfull!');
-                    this.navCtrl.setRoot(HomePage);
+                    this.data.presentToast('Booking request sent Successfully!');
+                    setTimeout(()=>{
+                      this.navCtrl.setRoot(HomePage);
+                    },3000);
+                    
                   }                                   
               });
             }

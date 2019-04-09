@@ -22,7 +22,7 @@
     <h2>Verify your email address</h2>
     <p>{{first_name}} {{last_name}} to start using TFH, we need to verify your email ID : {{email}}.</p>
     <p>Check your email & click the verification link to activate your account.</p>
-    <button ion-button class="login-btn" clear class="gotoSignIn()">Sign In</button>     
+    <button ion-button class="login-btn" clear (click)="gotoSignIn()">Sign In</button>     
   </div>
 </ion-content>
    

@@ -88,12 +88,16 @@ export class PaymentwalletPage {
               content :"Please wait...",
               spinner : 'crescent'
             });
-        
-            loader.present();
+
+            this.data.presentToast('Top-Up successfull!');
+
+            setTimeout(()=>{
+
+              loader.present();
             //console.log(payment)
   
             //alert(JSON.stringify(result.response));
-            this.data.presentToast('Top-Up Successfull!');
+            
 
             let param = new FormData();
             param.append("response_type",result.response_type);
@@ -140,6 +144,10 @@ export class PaymentwalletPage {
             //     "intent": "sale"
             //   }
             // }
+
+            },3000);
+        
+            
           }, (error) => {
             console.log(error);
             // Error or render dialog closed without being successful
@@ -174,7 +182,7 @@ export class PaymentwalletPage {
             text: 'Cancel',
             handler: data => {
               console.log(data);
-              this.data.presentToast('Please add amount Top-Up.');
+            //  this.data.presentToast('Please add amount Top-Up.');
               prompt.dismiss();
               return false;
             }

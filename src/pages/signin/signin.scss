@@ -66,14 +66,22 @@ page-signin {
 	}
 
 	ion-input{
-		border: 1px solid #867e7e;
-		padding-left: 7px;
+		//border: 1px solid #867e7e;
+        padding-left: 7px;
+        border-bottom: 1px solid #867e7e;
     }
     .checkbox-icon {
         top: 6px;
     }
     ion-item {
         margin: 10px 0 !important;
+    }
+    .passwordIcon{
+        font-size:2rem !important;
+        position: relative !important;
+        top: 22px !important;
+        margin: 0 auto !important;
+        //border-bottom: 1px solid #867e7e;
     }
 }
 }

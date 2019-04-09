@@ -9,20 +9,21 @@
             height: 74px !important;
         }
         .card {
-            margin: 9px;
+            margin: 12px 0;
             border-radius: 5px;
-            width: calc(100% - 20px);
-            font-size: 1.4rem;
-            background: #fff;
-            -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-            box-shadow: 1px 1px 1px rgba(195, 195, 195, 0.3);
+            width: 100% ;
+        //     font-size: 1.4rem;
+        //     background: #fff;
+        //     -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        //     box-shadow: 1px 1px 1px rgba(195, 195, 195, 0.3);
         }
         .profile_edit_list {
             padding: 0;
         }
         .profile_name{
-            font-size: 17px !important;
+            //font-size: 18px !important;
             margin-top: 12px;
+            font-size: 1.7rem !important;
         }
         .profile_edit_list .label-ios {
             margin: 11px 8px 11px 5px;
@@ -43,9 +44,9 @@
         }
         .change_pass_btn {
             border: 0.55px solid #c8c7cc !important;
-            margin: 9px;
+            //margin: 9px;
             border-radius: 5px;
-            width: calc(100% - 20px);
+            width: 100%;
             padding: 0px !important;
             margin-top: 20px;
             box-shadow: 1px 1px 1px rgba(195, 195, 195, 0.3);
@@ -70,7 +71,7 @@
             font-size: 16px !important;
         }
         ion-card.Saved_places_card {
-            box-shadow: 0px 0px 3px 2px rgba(195, 195, 195, 0.3) !important;
+            //box-shadow: 0px 0px 3px 2px rgba(195, 195, 195, 0.3) !important;
             margin: 15px auto !important;
         }
         p.add_new_places {
@@ -87,7 +88,7 @@
         }
         .Saved_places_card ion-card-header.card-header.card-header {
             font-size: 16px;
-            padding-bottom: 10px;
+           // padding-bottom: 10px;
         }
         .last_div{
             position: absolute;
@@ -125,6 +126,8 @@
             letter-spacing: 0.5px;
             color: #8c8787;
             display: block;
+            margin-top: 0;
+            margin-bottom: 10px;
         }
         .vehicle_details span {
             font-size: 14px;
@@ -154,6 +157,72 @@
             top: 25px;
             position: absolute;
             letter-spacing: 0.5px;
+        }
+
+        .img-div{
+
+            img{
+                height: 100px;
+                width: 100px;
+                border-radius: 50%;
+                margin: 0 auto;
+            }
+        }
+
+        .edit-ic{
+            background-color: transparent;
+            color: #fff;
+        }
+
+        .personal_info{
+            ion-card-header{
+                background: #eee;
+            }
+
+            ion-card-content{
+                padding-bottom: 0;
+            }
+
+            .home-item{
+                border-bottom: 0.55px solid #ededed;
+            }
+
+            ion-icon{
+                font-size: 2.5em;
+                //padding: 18px;
+                padding: 5px 0px;            
+            }
+
+            .info-div{
+                padding: 5px 0;
+                p{
+                    color: #000;
+                }
+            }
+        }
+
+        .social-media{
+            ion-icon{
+                font-size:2.5em;
+            }
+
+            .social-link{
+                color:lightgray;
+            }
+        }
+
+
+        ion-footer{
+            button{
+                margin: 0;
+                border-radius: 0;
+                padding: 10px 0;
+            }
+        }
+
+        .title-color{
+            color: #666;
+            font-size: 14px;
         }
     }
 }

@@ -106,7 +106,7 @@
         <ion-col col-12>
           <div class="signoutcontentdiv" text-center>
             <h5>Do you really want to</h5>
-            <h1> Sign Out </h1>
+            <h1> Sign out </h1>
           </div>
         </ion-col>
         <ion-col col-12>
@@ -214,24 +214,36 @@
                 <ion-label floating>Facebook</ion-label>
                 <ion-input [(ngModel)]="social_account_details.facebook" formControlName="facebook" type="text"></ion-input>
               </ion-item>
+              <div class="error" *ngIf="social_account.get('facebook').hasError('pattern') ">
+                Please enter valid link
+              </div>
 
               <ion-item>
                 <ion-label floating>Twitter</ion-label>
                 <ion-input [(ngModel)]="social_account_details.twitter" formControlName="twitter" type="text"></ion-input>
               </ion-item>
+              <div class="error" *ngIf="social_account.get('twitter').hasError('pattern') ">
+                Please enter valid link
+              </div>
 
               <ion-item>
                 <ion-label floating>Instagram</ion-label>
                 <ion-input [(ngModel)]="social_account_details.instagram" formControlName="instagram" type="text"></ion-input>
               </ion-item>
+              <div class="error" *ngIf="social_account.get('instagram').hasError('pattern') ">
+                Please enter valid link
+              </div>
 
               <ion-item>
                 <ion-label floating>LinkedIn</ion-label>
                 <ion-input [(ngModel)]="social_account_details.linkedin" formControlName="linkedin" type="text"></ion-input>
               </ion-item>
+              <div class="error" *ngIf="social_account.get('linkedin').hasError('pattern') ">
+                Please enter valid link
+              </div>
 
               <ion-item class="submit_btn_item">
-                <button class="sign_up-btn" ion-button color="primary" block >Save</button>
+                <button class="sign_up-btn" ion-button color="primary" block [disabled]="!this.social_account.valid">Save</button>
               </ion-item>
 
             </ion-list>

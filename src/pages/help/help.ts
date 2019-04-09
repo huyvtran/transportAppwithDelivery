@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import { DataProvider } from '../../providers/data/data';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
+import { ServiceProvider } from '../../providers/service/service';
 
 /**
  * Generated class for the HelpPage page.
@@ -32,7 +33,7 @@ export class HelpPage {
   showDiv : any = 1;
   msg : any;
 
-  constructor(public navCtrl: NavController, private loading: LoadingController, public navParams: NavParams, public data : DataProvider, private storage: Storage) {
+  constructor(public navCtrl: NavController, private loading: LoadingController, public navParams: NavParams, public data : DataProvider, private storage: Storage, public service:ServiceProvider) {
 
     let loader = this.loading.create({
       content :"Please wait...",
@@ -124,23 +125,29 @@ export class HelpPage {
     }
     let param = new FormData();
     param.append("suggestion",msg);
-     
+      this.service.presentLoader("Please wait...");
       this.data.addSuggestion(param).subscribe(result=>{
         console.log(result);    
         //this.userData = result; 
-        //loader.dismiss();   
+        //loader.dismiss();
+           
         if(result.status == "ERROR")
         {
+            this.service.dismissLoader();
             this.data.presentToast(result.error.email);
             return false;
         }
         else
         {   
+          this.service.dismissLoader();
           //this.storage.set("customer_data",data.msg[0]);
-          this.data.presentToast('Suggestion added successfully Successfully!');
+          this.data.presentToast('Suggestion added successfully!');
           //this.navCtrl.setRoot('');  
           this.msg = '';
         }                    
+      },err=>{
+          this.service.dismissLoader();
+          this.data.presentToast('Something went wrong.');
       });
   }
 }

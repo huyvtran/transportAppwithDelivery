@@ -56,10 +56,12 @@ export class DriverTransactionsPage {
       this.data.getDriverTransactions(param,this.page).subscribe(result=>{                          
         if(result.status == "OK")  
         {   
-          if(result.success.Transaction == null)
+          console.log("result.success.Transaction ");
+          console.log(result.success.Transaction);
+          if(result.success.Transaction == null || result.success.Transaction == "")
           {
             this.loadinCtrl.dismiss();
-            if(this.transactions == null){
+            if(this.transactions == null || this.transactions.length == 0){
               this.noTransaction = true;
             }
             this.data.presentToast('There is no more data available');

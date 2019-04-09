@@ -21,7 +21,16 @@ import { CustomerProfilePage } from '../customer-profile/customer-profile';
 export class PasswordResetPage {
   password = [];
   change_pass : any;  
-  customer_id : any;     
+  customer_id : any;  
+  
+  passwordType1: string = 'password';
+  passwordIcon1: string = 'eye-off';
+  passwordType2: string = 'password';
+  passwordIcon2: string = 'eye-off';
+  passwordType3: string = 'password';
+  passwordIcon3: string = 'eye-off';
+  
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public data : DataProvider,private loading: LoadingController, private storage: Storage) {
     this.change_pass = new FormGroup({    
       current_pass: new FormControl('', [Validators.required,Validators.minLength(6)]),
@@ -41,6 +50,10 @@ export class PasswordResetPage {
       if(this.password['new_pass'] !== this.password['confirm_new_pass'])
       {
         this.data.presentToast('New Password and Confirm New Password must match!');
+        return false;
+      }else if(this.password['new_pass'] == this.password['current_pass']){
+
+        this.data.presentToast('Old Password and New Password are same.');
         return false;
       }       
       
@@ -78,14 +91,17 @@ export class PasswordResetPage {
               loader.dismiss();   
               if(result.status == "ERROR")
               {
-                  this.data.presentToast('Something Went Wrong!');
+                  this.data.presentToast(result.error.password);
                   return false;
               }
               else
               {
                 //this.storage.set("customer_data",data.msg[0]);
-                this.data.presentToast('Changed Password Successfully!');
-                this.navCtrl.setRoot(HomePage);     
+                this.data.presentToast('Password changed  successfully!');
+                setTimeout(()=>{
+                  this.navCtrl.setRoot(CustomerProfilePage);
+                },3000)
+                     
               }                    
             });
           }
@@ -97,20 +113,36 @@ export class PasswordResetPage {
               loader.dismiss();   
               if(result.status == "ERROR")
               {
-                  this.data.presentToast('Something Went Wrong!');
+                  this.data.presentToast(result.error.password);
                   return false;
               }
               else
               {
                 //this.storage.set("customer_data",data.msg[0]);
-                this.data.presentToast('Changed Password Successfully!');
-                this.navCtrl.setRoot(CustomerProfilePage);     
+                this.data.presentToast('Password Changed successfully!');
+                setTimeout(()=>{
+                  this.navCtrl.setRoot(CustomerProfilePage);
+                },3000);
+                     
               }                    
             });
           }
           
       });
 
+  }
+
+  hideShowPassword(type){
+      if(type == 0){
+        this.passwordType1 = this.passwordType1 === 'text' ? 'password' : 'text';
+        this.passwordIcon1 = this.passwordIcon1 === 'eye-off' ? 'eye' : 'eye-off';
+      }else if(type == 1){
+        this.passwordType2 = this.passwordType2 === 'text' ? 'password' : 'text';
+        this.passwordIcon2 = this.passwordIcon2 === 'eye-off' ? 'eye' : 'eye-off';
+      }else{
+        this.passwordType3 = this.passwordType3 === 'text' ? 'password' : 'text';
+        this.passwordIcon3 = this.passwordIcon3 === 'eye-off' ? 'eye' : 'eye-off';
+      }
   }
 
 }

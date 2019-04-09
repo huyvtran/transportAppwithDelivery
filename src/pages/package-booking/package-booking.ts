@@ -65,6 +65,40 @@ export class PackageBookingPage {
       });
     });
   }
+
+  showAlert(){
+
+    const confirm = this.alertCtrl.create({
+      title: 'Confirm Booking Request!',
+      message: 'Do you want to book a ride?',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            //this.goToSubmit();
+            if(this.delivery_type == 'later')
+            {
+              this.navCtrl.push(DeliveryPage,{"from":this.from,"to":this.to,"type":this.type,"oneway": this.oneway,"weight":this.weight,"length":this.length,"width":this.width,"height":this.height,"delivery_type":this.delivery_type,"date":this.date, "time":this.time});
+            }
+            else{
+              this.navCtrl.push(DeliveryPage,{"from":this.from,"to":this.to,"type":this.type,"oneway": this.oneway,"weight":this.weight,"length":this.length,"width":this.width,"height":this.height,"delivery_type":this.delivery_type});
+            }
+          }
+        }
+      ]
+    });
+    confirm.present();
+
+  }
+
+
+
   goToSubmit() {
     if(this.validate()) {
       /*let param = new FormData();
@@ -78,13 +112,7 @@ export class PackageBookingPage {
       param.append("height",this.height); 
       param.append("user_id",this.user_id)   */
       
-      if(this.delivery_type == 'later')
-      {
-        this.navCtrl.push(DeliveryPage,{"from":this.from,"to":this.to,"type":this.type,"oneway": this.oneway,"weight":this.weight,"length":this.length,"width":this.width,"height":this.height,"delivery_type":this.delivery_type,"date":this.date, "time":this.time});
-      }
-      else{
-        this.navCtrl.push(DeliveryPage,{"from":this.from,"to":this.to,"type":this.type,"oneway": this.oneway,"weight":this.weight,"length":this.length,"width":this.width,"height":this.height,"delivery_type":this.delivery_type});
-      }
+      this.showAlert();
     }
   }
 
@@ -113,45 +141,63 @@ export class PackageBookingPage {
   validate() {
     let result = true;
     if (this.from == null || this.from == undefined || this.from == "") {
-      this.service.validator('from field is required')
+      this.service.validator('Please select your pick up location.')
       result = false
     }
     else if (this.to == null || this.to == undefined || this.to == "") {
-      this.service.validator('to field is required')
+      this.service.validator('Please select your drop off location.')
       result = false
     }
     else if (this.type == null || this.type == undefined || this.type == "") {
-      this.service.validator('type field is required')
-      result = false
-    }
-    else if (this.weight == null || this.weight == undefined || this.weight == "") {
-      this.service.validator('weight field is required')
-      result = false
-    }
-    else if (this.height == null || this.height == undefined || this.height == "") {
-      this.service.validator('height field is required')
-      result = false
-    }
-    else if (this.width == null || this.width == undefined || this.width == "") {
-      this.service.validator('width field is required')
+      this.service.validator('Please choose delivery type.')
       result = false
     }
     else if (this.length == null || this.length == undefined || this.length == "") {
-      this.service.validator('length field is required')
+      this.service.validator('Enter approx. length.')
+      result = false
+    }
+    else if (this.width == null || this.width == undefined || this.width == "") {
+      this.service.validator('Enter approx. width.')
+      result = false
+    }
+    else if (this.height == null || this.height == undefined || this.height == "") {
+      this.service.validator('Enter approx. height.')
+      result = false
+    }
+    else if (this.weight == null || this.weight == undefined || this.weight == "") {
+      this.service.validator('Enter approx. weight.')
       result = false
     }
     else if (this.delivery_type == null || this.delivery_type == undefined || this.delivery_type == "") {
-      this.service.validator('Delivery type field is required')
+      this.service.validator('Please choose your time.')
       result = false
     }
     else if(this.delivery_type == 'later') {
       if (this.date == null || this.date == undefined || this.date == "") {
-        this.service.validator('Date field is required')
+        this.service.validator('Select pick up date.')
         result = false
       }
       else if(this.time == null || this.time == undefined || this.time == "") {
-        this.service.validator('Time field is required')
+        this.service.validator('Select pick up time.')
         result = false
+      }
+    }
+    else{
+      if(this.length < 0){
+        this.service.validator('Length must be greater than 0');
+        result = false;
+      }
+      else if(this.width < 0){
+        this.service.validator('Width must be greater than 0');
+        result = false;
+      }
+      else if(this.height < 0){
+        this.service.validator('Height must be greater than 0');
+        result = false;
+      }
+      else if(this.weight < 0){
+        this.service.validator('Weight must be greater than 0');
+        result = false;
       }
     }
 

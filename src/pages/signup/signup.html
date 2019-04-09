@@ -33,6 +33,9 @@
         <div class="error" *ngIf="signup.get('fname').hasError('required')  && signup.get('fname').touched">
             Please fill out this field
         </div>
+        <div class="error" *ngIf="signup.get('fname').hasError('pattern') && !signup.get('fname').hasError('required')  && signup.get('fname').touched">
+            Please enter valid Firstname
+        </div>
 
         <ion-item>
           <ion-label stacked>Last Name</ion-label>
@@ -40,6 +43,9 @@
         </ion-item>
         <div class="error" *ngIf="signup.get('lname').hasError('required')  && signup.get('lname').touched">
             Please fill out this field
+        </div>
+        <div class="error" *ngIf="signup.get('lname').hasError('pattern') && !signup.get('lname').hasError('required')  && signup.get('lname').touched">
+            Please enter valid Lastname
         </div>
 
         <ion-item>

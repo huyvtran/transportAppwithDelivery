@@ -26,6 +26,7 @@ export class BookingListPage {
   maximumPages : any;
   loadingCtr : any;
   noHistory : boolean = false;
+  isEmpty : boolean = false;
 
   constructor(public navCtrl: NavController, private loading: LoadingController, public navParams: NavParams,public data : DataProvider, private storage: Storage, private modalCtrl: ModalController) {
     this.storage.get('user').then(data=>{        
@@ -76,6 +77,8 @@ export class BookingListPage {
               {
                 this.noHistory = true;
               }
+
+              this.isEmpty = true;
               this.data.presentToast('There is no more data available');
               return false;
             }
@@ -84,7 +87,7 @@ export class BookingListPage {
               for (var key in history) {
                 this.booking_history[key]=history[key];
               }
-              console.log("this.booking_history==>"+this.booking_history);
+              console.log(this.booking_history);
               this.loadingCtr.dismiss();
               if(infiniteScroll) {
                 infiniteScroll.complete();

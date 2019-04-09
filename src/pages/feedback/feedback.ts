@@ -1,5 +1,5 @@
 import { NgModule, Component } from '@angular/core';
-import { IonicPageModule, IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPageModule, IonicPage, NavController, NavParams, LoadingController, Events } from 'ionic-angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import { DataProvider } from '../../providers/data/data';
@@ -31,7 +31,7 @@ export class FeedbackPage {
   id : any;
   role : any;
 
-  constructor(public navCtrl: NavController,public service:ServiceProvider, private loading: LoadingController, public navParams: NavParams, private storage : Storage, public data : DataProvider) {
+  constructor(public navCtrl: NavController,public service:ServiceProvider, private loading: LoadingController, public navParams: NavParams, private storage : Storage, public data : DataProvider, public event:Events) {
     
     let loader = this.loading.create({
       content :"Please wait...",
@@ -121,7 +121,11 @@ export class FeedbackPage {
           {
             this.service.dismissLoader();
             this.data.presentToast('Feedback sent successfully');
-            this.navCtrl.setRoot(HomePage);
+            setTimeout(()=>{
+              this.navCtrl.setRoot(HomePage);
+              this.event.publish('activeItem');
+            },3000);
+            
           }
           else   
           {
@@ -137,7 +141,9 @@ export class FeedbackPage {
           {
             this.service.dismissLoader();
             this.data.presentToast('Feedback sent successfully');
-            this.navCtrl.setRoot(HomePage);
+            setTimeout(()=>{
+              this.navCtrl.setRoot(HomePage);
+            },3000);
           }
           else    
           {

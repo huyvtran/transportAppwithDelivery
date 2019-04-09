@@ -21,7 +21,7 @@
 
 
 <ion-content>
-    <div *ngIf="showmainpage == true">
+    <div *ngIf="showmainpage == true" padding>
       <ion-list class="set_list">
         <ion-item (click)="movetoFavlocations()">
           <ion-grid>
@@ -30,7 +30,7 @@
                 <img class="list_item_icon" src="assets/imgs/s_placeholder.png"/>
               </ion-col>
               <ion-col col-10>
-                Favorite Locations
+                Favourite Locations
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -43,7 +43,7 @@
                 <img class="list_item_icon" src="assets/imgs/s_user.png"/>
               </ion-col>
               <ion-col col-10>
-                Favorite Drivers
+                Favourite Drivers
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -67,7 +67,7 @@
 
   <div *ngIf="showlocation == true">
     <ion-item class="setting_label">
-      <ion-label>Favorite Places</ion-label>
+      <ion-label>Favourite Places</ion-label>
     </ion-item>
     <div class="favlocDiv">
       <ion-grid>
@@ -75,13 +75,19 @@
             <ion-col col-1 text-center>
               <ion-icon class="setting_icons" name="home"></ion-icon>
             </ion-col>
-            <ion-col class="setting_title" col-11>
-              <h3 *ngIf="homelocation == ''" (click)="addAddr('home')">Add Home</h3>
-              <h3 *ngIf="homelocation != ''" (click)="addAddr('home')">Home</h3>
+            <ion-col class="setting_title" col-10 (click)="addAddr('home')">
+              <h3 *ngIf="homelocation == ''">Add Home</h3>
+              <h3 *ngIf="homelocation != ''">Home</h3>
               <span *ngIf="homelocation != ''">
                 {{homelocation?.location}}
-                <p class="delete_op" (click)="removeAddr(homelocation?.id)">Delete</p>
+                <!-- <p class="delete_op" (click)="removeAddr(homelocation?.id)">Delete</p> -->
               </span>
+              <span *ngIf="homelocation == ''">
+                Not added yet.
+              </span>
+            </ion-col>
+            <ion-col *ngIf="homelocation != ''" col-1 text-center>    
+              <ion-icon class="trash-ic" name="trash" (click)="removeAddr(homelocation?.id)"></ion-icon>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -90,13 +96,19 @@
             <ion-col col-1 text-center>
               <ion-icon class="setting_icons" name="briefcase"></ion-icon>
             </ion-col>
-            <ion-col class="setting_title" col-11>
-              <h3 *ngIf="worklocation == ''" (click)="addAddr('work')">Add Work</h3>
-              <h3 *ngIf="worklocation != ''" (click)="addAddr('work')">Work</h3>
+            <ion-col class="setting_title" col-10 (click)="addAddr('work')">
+              <h3 *ngIf="worklocation == ''">Add Work</h3>
+              <h3 *ngIf="worklocation != ''">Work</h3>
               <span *ngIf="worklocation != ''">
                 {{worklocation?.location}}
-                <p class="delete_op" (click)="removeAddr(worklocation?.id)">Delete</p>     
+                <!-- <p class="delete_op" (click)="removeAddr(worklocation?.id)">Delete</p>      -->
               </span>
+              <span *ngIf="worklocation == ''">
+                Not added yet.
+              </span>
+            </ion-col>
+            <ion-col *ngIf="worklocation != ''" col-1 text-center>
+              <ion-icon class="trash-ic" name="trash" (click)="removeAddr(worklocation?.id)"></ion-icon>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -107,12 +119,15 @@
             <ion-col col-1 text-center>
               <ion-icon class="setting_icons" name="star"></ion-icon>
             </ion-col>
-            <ion-col class="setting_title" col-11>
+            <ion-col class="setting_title" col-10>
               <h3>{{item?.location_type}}</h3>
               <span>
                 {{item?.location}}
-                <p class="delete_op" (click)="removeAddr(item?.id)">Delete</p>     
+                <!-- <p class="delete_op" (click)="removeAddr(item?.id)">Delete</p>      -->
               </span>
+            </ion-col>
+            <ion-col col-1 text-center>
+              <ion-icon class="trash-ic" name="trash" (click)="removeAddr(item?.id)"></ion-icon>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -123,8 +138,8 @@
               <ion-icon class="setting_icons" name="add"></ion-icon>
             </ion-col>
             <ion-col class="setting_title" col-11>
-              <h3>Add another favorite places</h3>
-              <span>Get to your Favorite Destinations faster</span>
+              <h3>Add another favourite places</h3>
+              <span>Get to your Favourite Destinations faster</span>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -133,8 +148,8 @@
 
 
   <div *ngIf="showdrivers == true">
-    <ion-item class="setting_label">
-      <ion-label>Favorite Drivers</ion-label>
+    <ion-item class="setting_label" *ngIf="fav_drivers == ''? false:true">
+      <ion-label>Favourite Drivers</ion-label>
     </ion-item>
     <div class="favDriverDiv">
       <ion-grid *ngFor="let item of fav_drivers; let i = index">
@@ -142,17 +157,21 @@
           <ion-col col-3>
             <ion-avatar><img src="assets/imgs/s_user.png"/></ion-avatar>
           </ion-col>
-          <ion-col col-9>
+          <ion-col col-8>
             <h2>{{item.first_name}} {{item.last_name}}</h2>
             <span>{{item.email}}</span>
             <span>{{item.phone}}</span>
           </ion-col>
+          <ion-col col-1 text-center>
+            <ion-icon class="trash-ic" name="trash" (click)="removeDriver(item?.id)"></ion-icon>
+          </ion-col>
         </ion-row>
       </ion-grid>
     </div>
+    <h6 *ngIf="fav_drivers == ''? true:false" class="no_drivers">No drivers added yet.</h6>
   </div>
 
-  <div class="notification" *ngIf="showNotifications == true">
+  <div padding class="notification" *ngIf="showNotifications == true">
     <ion-item>
       <ion-label>Silent Notifications</ion-label>
       <ion-toggle [(ngModel)]="isNotificationOff" (ionChange)="notificationOff()"></ion-toggle>  

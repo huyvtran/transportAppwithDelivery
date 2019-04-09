@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, MenuController } from 'ionic-angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataProvider } from '../../providers/data/data';
 import { HomePage } from '../home/home';
@@ -19,11 +19,19 @@ import { SigninPage } from '../signin/signin';
 })
 export class ForgotpasswoedPage {
   forgetpass : any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public data : DataProvider, private loading: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public data : DataProvider, private loading: LoadingController, public menu:MenuController) {
     this.forgetpass = new FormGroup({
       email: new FormControl('', [Validators.required,Validators.email]),
       });	     
-  }    
+  }
+  
+  ionViewCanLeave(){
+    this.menu.swipeEnable(true);
+  }
+
+  ionViewWillEnter(){
+    this.menu.swipeEnable(false);
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ForgotpasswoedPage');
@@ -46,10 +54,10 @@ export class ForgotpasswoedPage {
  
            // console.log(result);  
             loader.dismiss();   
-
+            console.log(result);
             if(result.status == "ERROR")    
             {
-              this.data.presentToast(result.error);
+              this.data.presentToast(result.error.email);
             }
             else   
             {
@@ -57,6 +65,9 @@ export class ForgotpasswoedPage {
               this.navCtrl.setRoot(SigninPage); 
             }                      
  
+     },err=>{
+          loader.dismiss();
+          this.data.presentToast("Something went wrong");
      });
   }
 

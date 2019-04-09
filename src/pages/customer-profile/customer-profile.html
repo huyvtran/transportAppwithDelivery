@@ -10,6 +10,11 @@
         <ion-icon ios="ios-list" md="md-list" class="ion-md-list"></ion-icon>
     </button>
     <ion-title>Profile</ion-title>
+    <ion-buttons end>
+        <button icon-only class="edit-ic" (click)="gotoeditProfile()">
+            <ion-icon ios="md-create" md="md-create" ></ion-icon>
+        </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -17,7 +22,7 @@
 <ion-content padding>  
     <div *ngIf="display_data == true">
         <ion-card>
-            <ion-list>
+            <!-- <ion-list>
                 <ion-item class="profile_edit_list">
                     <ion-grid>
                         <ion-row>
@@ -39,17 +44,91 @@
                         </ion-row>
                     </ion-grid>
                 </ion-item>
-            </ion-list>
+            </ion-list> -->
+            <div class="img-div" padding-vertical>
+                <img src="{{user_details.avatar}}" (click)="gotoAvatarPage()">
+                <h2 class="profile_name txt-capt" text-center>
+                    {{user_details.fname}} {{user_details.lname}}
+                </h2>
+                <h3 text-center>{{user_details.email}}</h3>
+            </div>
+            
+            
         </ion-card>
+
+        <!-- <ion-card class="personal_info">
+            <ion-card-header>Personal Information</ion-card-header>
+            <ion-item class="home-item">
+                <ion-thumbnail item-start>
+                    <ion-icon name="home"></ion-icon>
+                </ion-thumbnail>
+                    <h2>Home</h2>
+                    <p>{{user_details.address}}</p>
+            </ion-item>
+            <ion-item>
+                <ion-thumbnail item-start>
+                    <ion-icon name="call"></ion-icon>
+                </ion-thumbnail>
+                    <h2>Contact Number</h2>
+                    <p>{{user_details.phone}}</p>
+            </ion-item>
+        </ion-card> -->
+        <ion-card class="personal_info">
+            <ion-card-header>Personal Information</ion-card-header>
+            <ion-card-content>
+            
+                <ion-row>
+                    <ion-col col-2>
+                        <ion-icon name="home"></ion-icon>
+                    </ion-col>
+                    <ion-col col-10>
+                        <div class="info-div">
+                            <h2 class="title-color">Home</h2>
+                            <p>{{user_details.address}}</p>
+                        </div>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-2>
+                        <ion-icon name="call"></ion-icon>
+                    </ion-col>
+                    <ion-col col-10>
+                        <div class="info-div">
+                            <h2 class="title-color">Contact Number</h2>
+                            <p>{{user_details.phone}}</p>
+                        </div>
+                    </ion-col>
+                </ion-row>
+                    
+            </ion-card-content>
+        </ion-card>
+
+
         <ion-card *ngIf='role==3' class="Saved_places_card vehicle_details_header">
             <ion-card-header> 
             Vehicle Details
             </ion-card-header>
             <ion-card-content class="vehicle_details">
-                <h3>Type : </h3>
-                <span>{{user_details.vehicle_type}}</span>
-                <h3>Number : </h3>
+                <ion-row>
+                    <ion-col col-5 class="title-color">
+                        Type
+                    </ion-col>
+                    <ion-col col-1>:</ion-col>
+                    <ion-col col-6 text-capitalize>
+                        {{user_details.vehicle_type}}
+                    </ion-col>
+                    <ion-col col-5 class="title-color">
+                        Number
+                    </ion-col>
+                    <ion-col col-1>:</ion-col>
+                    <ion-col col-6>
+                        {{user_details.vehicle_number}}
+                    </ion-col>
+                </ion-row>
+                <!-- <h3>Number : </h3>
                 <span>{{user_details.vehicle_number}}</span>
+                <h3>Type : </h3>
+                <span>{{user_details.vehicle_type}}</span> -->
             </ion-card-content>
         </ion-card>
         <ion-list class="menu-list" no-lines>
@@ -59,7 +138,7 @@
             </button>   
         </ion-list>
 
-        <ion-card class="Saved_places_card">
+        <!-- <ion-card class="Saved_places_card">
             <ion-card-header> 
             Home
             </ion-card-header>
@@ -67,10 +146,46 @@
                 {{user_details.address}}        
             </ion-card-content>
         </ion-card>
+
+        <ion-card class="Saved_places_card">
+            <ion-card-header> 
+            Contact Number
+            </ion-card-header>
+            <ion-card-content>
+                {{user_details.phone}}        
+            </ion-card-content>
+        </ion-card> -->
+
+        <ion-row class="social-media">
+            <ion-col col-3 text-center>
+                <a [href]="user_details.facebook_profile">
+                <ion-icon [ngClass]="user_details.facebook_profile == '#'? 'social-link':''" name="logo-facebook"></ion-icon></a>
+            </ion-col>
+            <ion-col col-3 text-center>
+                <a [href]="user_details.instagram_profile">
+                <ion-icon [ngClass]="user_details.instagram_profile == '#'? 'social-link':''" name="logo-instagram"></ion-icon></a>
+            </ion-col>
+            <ion-col col-3 text-center>
+                <a [href]="user_details.twitter_profile">
+                <ion-icon [ngClass]="user_details.twitter_profile == '#'? 'social-link':''" name="logo-twitter"></ion-icon></a>
+            </ion-col>
+            <ion-col col-3 text-center>
+                <a [href]="user_details.linkedin_profile">
+                <ion-icon [ngClass]="user_details.linkedin_profile == '#'? 'social-link':''" name="logo-linkedin"></ion-icon></a>
+            </ion-col>
+        </ion-row>
+        
     </div>
 </ion-content>
-<div class="last_div" (click)="signOut()">  
+<!-- <div class="last_div" (click)="signOut()">  
     <div class="inner_last_div">
-      <p><!--<ion-icon ios="ios-power" md="md-power"></ion-icon>--> Sign Out </p>
+      <p> Sign Out </p>
     </div>
-</div> 
+</div>  -->
+
+<ion-footer>
+  <!-- <ion-toolbar>
+    <ion-title text-center>Sign Out</ion-title>
+  </ion-toolbar> -->
+  <button ion-button block color="primary" (click)="signOut()">Sign out</button>
+</ion-footer>

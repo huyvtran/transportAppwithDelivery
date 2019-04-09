@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController, ModalController, ActionSheetController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController, ModalController, ActionSheetController, LoadingController, Events } from 'ionic-angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataProvider } from '../../providers/data/data';
 import { Storage } from '@ionic/storage';
@@ -36,52 +36,73 @@ export class CustomerProfilePage {
   avtarPath : any;
   display_data : boolean = false;
   
-  constructor(private oneSignal: OneSignal,private androidPermissions: AndroidPermissions, public navCtrl: NavController, private loading: LoadingController, public actionSheetCtrl: ActionSheetController, public navParams: NavParams, public data : DataProvider, private storage: Storage,private DomSanitizer: DomSanitizer, private camera: Camera, public http : HttpClient,private alertCtrl: AlertController, private modalCtrl: ModalController) {
+  constructor(private oneSignal: OneSignal,private androidPermissions: AndroidPermissions, public navCtrl: NavController, private loading: LoadingController, public actionSheetCtrl: ActionSheetController, public navParams: NavParams, public data : DataProvider, private storage: Storage,private DomSanitizer: DomSanitizer, private camera: Camera, public http : HttpClient,private alertCtrl: AlertController, private modalCtrl: ModalController,public events:Events) {
     
   }
     
   ionViewDidLoad() {
     console.log('ionViewDidLoad CustomerProfilePage');
+    this.getProfile();
   }
 
   ionViewWillEnter()
   {
+    
+  }
+
+
+  getProfile(){
     let loader = this.loading.create({
       content :"Please wait...",
       spinner : 'crescent'
     });
 
       loader.present();
-      this.storage.get('user').then(data=>{   
+      this.storage.get('user').then(data=>{
+        console.log(data);
           let param = data[0].id;
           this.role = data[0].role;
         if(data[0].role==2){
-          this.data.getCustomerProfile(param).subscribe(result=>{
-            if(result.status == 'OK')
-            {
-              //console.log(result.success.profile[0].first_name);
-              loader.dismiss();
-              this.display_data = true;
-              this.user_details.fname = result.success.profile.first_name;
-              this.user_details.lname = result.success.profile.last_name;
-              this.user_details.email = result.success.profile.email;
-              this.user_details.phone = result.success.profile.customer_details.phone;
-              this.user_details.address = result.success.profile.customer_details.address;
-              //this.user_details.avatar = 'http://transport.walstarmedia.com/public/storage/images/customer/profile_image/'+result.success.profile[0].profile;
 
-              if(result.success.profile.customer_details.profile == null || result.success.profile.customer_details.profile == undefined || result.success.profile.customer_details.profile == '')
+          this.storage.get('token').then(token=>{
+            this.data.getCustomerProfile(token).subscribe(result=>{
+
+              console.log(result);
+  
+              if(result.status == 'OK')
               {
-                this.user_details.avatar = 'assets/imgs/kisspng-user-profile-computer-icons-girl-customer-5af32956696762.8139603615258852704317.png';
+                //console.log(result.success.profile[0].first_name);
+                console.log("!!!!!!")
+                console.log(result.success.profile);
+                loader.dismiss();
+                this.display_data = true;
+                this.user_details.fname = result.success.profile.first_name;
+                this.user_details.lname = result.success.profile.last_name;
+                this.user_details.email = result.success.profile.email;
+                this.user_details.phone = result.success.profile.customer_details.phone;
+                this.user_details.address = result.success.profile.customer_details.address;
+                this.user_details.facebook_profile = result.success.profile.customer_details.facebook_profile == null || result.success.profile.customer_details.facebook_profile == "undefined" ? "#":result.success.profile.customer_details.facebook_profile;
+                this.user_details.instagram_profile = result.success.profile.customer_details.instagram_profile == null || result.success.profile.customer_details.instagram_profile == "undefined" ? "#": result.success.profile.customer_details.instagram_profile;
+                this.user_details.twitter_profile = result.success.profile.customer_details.twitter_profile == null ||result.success.profile.customer_details.twitter_profile == "undefined" ? "#":result.success.profile.customer_details.twitter_profile;
+                this.user_details.linkedin_profile = result.success.profile.customer_details.linkedin_profile == null || result.success.profile.customer_details.linkedin_profile == "undefined" ? "#":result.success.profile.customer_details.linkedin_profile;
+                //this.user_details.avatar = 'http://transport.walstarmedia.com/public/storage/images/customer/profile_image/'+result.success.profile[0].profile;
+  
+                if(result.success.profile.customer_details.profile == null || result.success.profile.customer_details.profile == undefined || result.success.profile.customer_details.profile == '')
+                {
+                  this.user_details.avatar = 'assets/imgs/kisspng-user-profile-computer-icons-girl-customer-5af32956696762.8139603615258852704317.png';
+                }
+                else{
+                //  this.user_details.avatar = 'http://transport.walstarmedia.com/public/storage/images/customer/profile_image/'+result.success.profile.customer_details.profile;
+                this.user_details.avatar = this.data.imgURL+"customer/profile_image/"+result.success.profile.customer_details.profile;
+                }
+                
               }
               else{
-                this.user_details.avatar = 'http://transport.walstarmedia.com/public/storage/images/customer/profile_image/'+result.success.profile.customer_details.profile;
+                loader.dismiss();
               }
-              
-            }
-            else{
-              loader.dismiss();
-            }
-         });
+           });
+          });
+          
         }else if(data[0].role==3){    
           this.data.getRideVehicleTypes().subscribe(result=>{
         
@@ -89,40 +110,65 @@ export class CustomerProfilePage {
             {
               this.vehicle_types = result.success;
 
-              this.data.getDriverProfile(param).subscribe(result=>{
-                if(result.status == 'OK')    
-                {
-                  loader.dismiss();
-                  this.display_data = true;
-                  //console.log(result.success.profile[0].first_name);
-                  this.user_details.fname = result.success.profile.first_name;
-                  this.user_details.lname = result.success.profile.last_name;
-                  this.user_details.email = result.success.profile.email;
-                  this.user_details.phone = result.success.profile.driver_details.phone;
-                  this.user_details.address = result.success.profile.driver_details.address;
-                  if(result.success.profile.driver_details.profile == null || result.success.profile.driver_details.profile == undefined || result.success.profile.driver_details.profile == '')
+              this.storage.get('token').then(token=>{
+                this.data.getDriverProfile(token).subscribe(result=>{
+                  if(result.status == 'OK')    
                   {
-                    this.user_details.avatar = 'assets/imgs/kisspng-user-profile-computer-icons-girl-customer-5af32956696762.8139603615258852704317.png';
-                  }
+                    console.log("!!!!!!")
+                    console.log(result.success.profile);
+
+                    loader.dismiss();
+                    this.display_data = true;
+                    //console.log(result.success.profile[0].first_name);
+                    this.user_details.fname = result.success.profile.first_name;
+                    this.user_details.lname = result.success.profile.last_name;
+                    this.user_details.email = result.success.profile.email;
+                    this.user_details.phone = result.success.profile.driver_details.phone;
+                    this.user_details.address = result.success.profile.driver_details.address;
+                    
+                    this.user_details.facebook_profile = result.success.profile.driver_details.facebook_profile == null || result.success.profile.driver_details.facebook_profile == "undefined" ? "#":result.success.profile.driver_details.facebook_profile;
+                    this.user_details.instagram_profile = result.success.profile.driver_details.instagram_profile == null || result.success.profile.driver_details.instagram_profile == "undefined" ? "#": result.success.profile.driver_details.instagram_profile;
+                    this.user_details.twitter_profile = result.success.profile.driver_details.twitter_profile == null ||result.success.profile.driver_details.twitter_profile == "undefined" ? "#":result.success.profile.driver_details.twitter_profile;
+                    this.user_details.linkedin_profile = result.success.profile.driver_details.linkedin_profile == null || result.success.profile.driver_details.linkedin_profile == "undefined" ? "#":result.success.profile.driver_details.linkedin_profile;
+
+
+
+
+
+                    if(result.success.profile.driver_details.profile == null || result.success.profile.driver_details.profile == undefined || result.success.profile.driver_details.profile == '')
+                    {
+                      this.user_details.avatar = 'assets/imgs/kisspng-user-profile-computer-icons-girl-customer-5af32956696762.8139603615258852704317.png';
+                    }
+                    else{
+                    //  this.user_details.avatar = 'http://transport.walstarmedia.com/public/storage/images/driver/profile_image/'+result.success.profile.driver_details.profile;
+                    this.user_details.avatar = this.data.imgURL+"driver/profile_image/"+result.success.profile.driver_details.profile;
+                    }
+                    //this.user_details.avatar = 'http://transport.walstarmedia.com/public/storage/images/driver/profile_image/'+result.success.profile[0].profile;
+
+                    console.log("!@!#!@!#!#@!#!");
+                    console.log(this.user_details.avatar);
+                    console.log(this.user_details.type);
+                    console.log(result.success.profile.driver_details.type);
+                    console.log(this.user_details);
+                    
+                    //if(this.user_details.type == 'ride')
+                    if(result.success.profile.driver_details.type == 'ride')
+                    {
+                      this.user_details.vehicle_type = result.success.profile.driver_details.vehicle_type.type;
+                    }
+                    else{
+                      //this.user_details.vehicle_type = result.success.profile.driver_details.deliver_vehicle.vehicle_name;
+                      this.user_details.vehicle_type = result.success.profile.driver_details.deliver_vehicles.vehicle_name;
+                    }
+                    //this.user_details.vehicle_type = result.success.profile.driver_details.vehicle_type.type;
+                    this.user_details.vehicle_number = result.success.profile.driver_details.vehicle_number;
+                  }   
                   else{
-                    this.user_details.avatar = 'http://transport.walstarmedia.com/public/storage/images/driver/profile_image/'+result.success.profile.driver_details.profile;
+                    loader.dismiss();
                   }
-                  //this.user_details.avatar = 'http://transport.walstarmedia.com/public/storage/images/driver/profile_image/'+result.success.profile[0].profile;
-                  
-                  if(this.user_details.type == 'ride')
-                  {
-                    this.user_details.vehicle_type = result.success.profile.driver_details.vehicle_type.type;
-                  }
-                  else{
-                    this.user_details.vehicle_type = result.success.profile.driver_details.deliver_vehicle.vehicle_name;
-                  }
-                  //this.user_details.vehicle_type = result.success.profile.driver_details.vehicle_type.type;
-                  this.user_details.vehicle_number = result.success.profile.driver_details.vehicle_number;
-                }   
-                else{
-                  loader.dismiss();
-                }
-             });
+               });
+              });
+              
               
             }
             else{
@@ -135,7 +181,6 @@ export class CustomerProfilePage {
         }
           
       });
-      
   }
 
   gotoChangePass()
@@ -196,7 +241,7 @@ export class CustomerProfilePage {
           console.log(role);    
           if(role == 3)
           {
-            this.oneSignal.deleteTag('customer_id');
+            this.oneSignal.deleteTag('driver_id');
             this.data.getDriverToggle(param).subscribe(result=>{
               if(result.status == 'OK')
               {
@@ -215,14 +260,18 @@ export class CustomerProfilePage {
                 }
               }
               else{
-                this.oneSignal.deleteTag('driver_id');
+                this.oneSignal.deleteTag('customer_id');
               }
             });
           }
-        });
+
         this.storage.set('user',undefined);
         this.storage.set('token',undefined);
-        this.navCtrl.setRoot(SigninPage); 
+        this.navCtrl.setRoot(SigninPage);
+
+
+        });
+         
       }  
       else{
         //this.selectdId = '';            
@@ -289,16 +338,25 @@ export class CustomerProfilePage {
             
                 if(result.status == "ERROR")
                 {
-                    this.data.presentToast('eRROR');
-                    return false;
+                  loader.dismiss();
+                  this.data.presentToast('ERROR');
+                  return false;
                 }
                 else
                 {   
-                  this.data.presentToast('Profile Updated Successfully!');
-                  loader.dismiss();   
-                  this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                  loader.dismiss();
+                  console.log(result.success.imagename);
+                  this.imgEvent(result.success.imagename,'customer');
+                  this.data.presentToast('Profile Updated Successfully!');   
+                  setTimeout(()=>{
+                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                  },3000);
+                  
                   //this.navCtrl.setRoot(CustomerProfilePage);
                 }                    
+              },err=>{
+                loader.dismiss();
+                this.data.presentToast('ERROR');
               }); 
             }
             if(this.role == 3)
@@ -307,19 +365,32 @@ export class CustomerProfilePage {
             
                 if(result.status == "ERROR")
                 {
-                    this.data.presentToast('eRROR');
-                    return false;
+                  loader.dismiss();
+                  this.data.presentToast('eRROR');
+                  return false;
                 }
                 else
                 {   
-                  this.data.presentToast('Profile Updated Successfully!');
                   loader.dismiss();   
-                  this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                  this.imgEvent(result.success.imagename,'driver');
+                  this.data.presentToast('Profile Updated Successfully!');
+                  setTimeout(()=>{
+                    this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                  },3000);
                   //this.navCtrl.setRoot(CustomerProfilePage);
                 }                    
+              },err=>{
+                loader.dismiss();
+                this.data.presentToast('ERROR');
               }); 
             }
           });
+  }
+
+
+  imgEvent(url,role){
+
+    this.events.publish('profile_changed',url,role);
   }
 
 }    

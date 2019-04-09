@@ -29,6 +29,7 @@ import { ModalpagePage } from '../pages/modalpage/modalpage';
 import { PackageBookingPage } from '../pages/package-booking/package-booking';
 import { NotificationsPage } from '../pages/notifications/notifications';
 import { DriverTransactionsPage } from '../pages/driver-transactions/driver-transactions';
+import { ServiceProvider } from '../providers/service/service';
 
 const config = {         
   apiKey: 'AIzaSyD_mkig8BYCj7PJlCj4-yN4w6QPmJjxFbg',
@@ -52,16 +53,41 @@ export class MyApp {
   id :any;
   avatar : any = 'assets/imgs/kisspng-user-profile-computer-icons-girl-customer-5af32956696762.8139603615258852704317.png';
 
-  constructor(private backgroundMode: BackgroundMode,private androidPermissions: AndroidPermissions, private modalCtrl: ModalController, private oneSignal: OneSignal,  platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public data : DataProvider, private storage: Storage,public events: Events,private alertCtrl: AlertController) {
+  activePage:any = HomePage;
+
+  constructor(private backgroundMode: BackgroundMode,private androidPermissions: AndroidPermissions, private modalCtrl: ModalController, private oneSignal: OneSignal,  platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public data : DataProvider, private storage: Storage,public events: Events,private alertCtrl: AlertController, public service:ServiceProvider) {
     /* Initialize firebase */
     firebase.initializeApp(config);
-
+    
     /* background mode enable settings */
     this.backgroundMode.enable();
     this.backgroundMode.setDefaults({'hidden':false}); 
     this.data.getToken();
 
-    /* Is app installed first time = display intro slides OR residect to nect page */
+    this.events.subscribe('profile_changed',(url,role)=>{
+          if(role == "driver"){
+            this.avatar = this.data.imgURL+"driver/profile_image/"+url;
+          }else{
+            this.avatar = this.data.imgURL+"customer/profile_image/"+url;
+          }
+    });
+
+    this.events.subscribe('name_changed',(fname,lname)=>{
+          this.fname = fname ;
+          this.lname = lname ;
+          this.storage.get('user').then(user=>{
+              user[0].first_name = fname;
+              user[0].last_name = lname;
+              this.storage.set('user',user);
+              console.log("!@#!@#!@#");
+              console.log(user);
+              console.log("!@#!@#!@#");
+          });
+    });
+
+    
+    platform.ready().then(() => {
+      /* Is app installed first time = display intro slides OR residect to nect page */
     this.storage.get('showSlide').then(data=>{
       if(data == null || data == undefined)
       {
@@ -96,59 +122,73 @@ export class MyApp {
               {
                 this.oneSignal.sendTag('customer_id',user[0].id);
                 /* Get Customer Profile */
-                let param = user[0].id; 
-                this.data.getCustomerProfile(param).subscribe(result=>{
-                  if(result.status == 'OK')
-                  {
-                    if(result.success.profile.customer_details.profile == null || result.success.profile.customer_details.profile == undefined || result.success.profile.customer_details.profile == '')
+                let param = user[0].id;
+                this.storage.get('token').then(token=>{
+                  this.data.getCustomerProfile(token).subscribe(result=>{
+                    if(result.status == 'OK')
                     {
-                      this.avatar = 'assets/imgs/kisspng-user-profile-computer-icons-girl-customer-5af32956696762.8139603615258852704317.png';
+                      if(result.success.profile.customer_details.profile == null || result.success.profile.customer_details.profile == undefined || result.success.profile.customer_details.profile == '')
+                      {
+                        this.avatar = 'assets/imgs/kisspng-user-profile-computer-icons-girl-customer-5af32956696762.8139603615258852704317.png';
+                      }
+                      else{
+                      //  this.avatar = 'http://transport.walstarmedia.com/public/storage/images/customer/profile_image/'+result.success.profile.customer_details.profile;
+
+                      this.avatar = this.data.imgURL+"customer/profile_image/"+result.success.profile.customer_details.profile;
+                      } 
                     }
-                    else{
-                      this.avatar = 'http://transport.walstarmedia.com/public/storage/images/customer/profile_image/'+result.success.profile.customer_details.profile;
-                    } 
-                  }
-                  else{ }
-                });  
+                    else{ }
+                  });
+                });
+                  
                 /* End Get Customer Profile */
                 this.rootPage = HomePage;
+                this.activePage = HomePage;
               }
               else if(user[0].role==3)
               {
                 this.oneSignal.sendTag('driver_id',user[0].id);
                 /* Get Driver Profile */
                 let param = user[0].id;
-                  this.data.getDriverProfile(param).subscribe(result=>{
-                    if(result.status == 'OK')
-                    {
-                      if(result.success.profile.driver_details.profile == null || result.success.profile.driver_details.profile == undefined || result.success.profile.driver_details.profile == '')
+                  this.storage.get('token').then(token=>{
+                    this.data.getDriverProfile(token).subscribe(result=>{
+                      if(result.status == 'OK')
                       {
-                        this.avatar = 'assets/imgs/kisspng-user-profile-computer-icons-girl-customer-5af32956696762.8139603615258852704317.png';
-                      }
-                      else{
-                        this.avatar = 'http://transport.walstarmedia.com/public/storage/images/driver/profile_image/'+result.success.profile.driver_details.profile;
-                      }
-                      if(result.success.profile.is_completed == 0)
-                      {
-                        this.rootPage = EditProfilePage;
-                      }
-                      else
-                      {
-                        this.rootPage = HomePage;
-                      }
-                    }
-                    else{ 
-                      this.storage.get('isProfile_Complete').then(data1=>{
-                        if(data1 == null || data1 == undefined || data1 == false)
+                        if(result.success.profile.driver_details.profile == null || result.success.profile.driver_details.profile == undefined || result.success.profile.driver_details.profile == '')
                         {
-                          this.rootPage = EditProfilePage;       
-                        }    
-                        else{
-                          this.rootPage = HomePage;
+                          this.avatar = 'assets/imgs/kisspng-user-profile-computer-icons-girl-customer-5af32956696762.8139603615258852704317.png';
                         }
-                      });
-                    }
-                }); 
+                        else{
+                        //  this.avatar = 'http://transport.walstarmedia.com/public/storage/images/driver/profile_image/'+result.success.profile.driver_details.profile;
+                        this.avatar = this.data.imgURL+"driver/profile_image/"+result.success.profile.driver_details.profile;
+                        }
+                        // if(result.success.profile.is_completed == 0)
+                        // {
+                        //   this.rootPage = EditProfilePage;
+                        // }
+                        // else
+                        // {
+                        //   this.rootPage = HomePage;
+                        // }
+                        this.rootPage = HomePage;
+                        this.activePage = HomePage;
+                      }
+                      else{ 
+                        // this.storage.get('isProfile_Complete').then(data1=>{
+                        //   if(data1 == null || data1 == undefined || data1 == false)
+                        //   {
+                        //     this.rootPage = EditProfilePage;       
+                        //   }    
+                        //   else{
+                        //     this.rootPage = HomePage;
+                        //   }
+                        // });
+                        this.rootPage = HomePage;
+                        this.activePage = HomePage;
+                      }
+                    });
+                  })
+                   
                 /* End Get Driver Profile */  
               }
             });
@@ -160,8 +200,10 @@ export class MyApp {
         });  
       }
     });
+    });
     
-    events.subscribe('user:created', (user, time) => {
+    
+    events.subscribe('user:created', (user, time, token) => {
       console.log('Welcome', user, 'at', time);
       this.fname = user[0].first_name;
       this.lname = user[0].last_name;
@@ -173,7 +215,7 @@ export class MyApp {
       {
         let param = user[0].id;
                 
-        this.data.getCustomerProfile(param).subscribe(result=>{
+        this.data.getCustomerProfile(token).subscribe(result=>{
           if(result.status == 'OK')
           {
             if(result.success.profile.customer_details.profile == null || result.success.profile.customer_details.profile == undefined || result.success.profile.customer_details.profile == '')
@@ -181,7 +223,8 @@ export class MyApp {
               this.avatar = 'assets/imgs/kisspng-user-profile-computer-icons-girl-customer-5af32956696762.8139603615258852704317.png';
             }
             else{
-              this.avatar = 'http://transport.walstarmedia.com/public/storage/images/customer/profile_image/'+result.success.profile.customer_details.profile;
+            //  this.avatar = 'http://transport.walstarmedia.com/public/storage/images/customer/profile_image/'+result.success.profile.customer_details.profile;
+            this.avatar = this.data.imgURL+"customer/profile_image/"+result.success.profile.customer_details.profile;
             }
           }
           else{}
@@ -189,16 +232,26 @@ export class MyApp {
       }
       else if(user[0].role==3)
       {
+        console.log("I am Driver");
+        console.log(user);
         let param = user[0].id;
-        this.data.getDriverProfile(param).subscribe(result=>{
+        this.data.getDriverProfile(token).subscribe(result=>{
+          console.log("I am Driver");
+          console.log(result);
+
           if(result.status == 'OK')
           {
+
+            console.log("I am Driver");
+            console.log(result.success.profile.driver_details.profile);
+
             if(result.success.profile.driver_details.profile == null || result.success.profile.driver_details.profile == undefined || result.success.profile.driver_details.profile == '')
             {
               this.avatar = 'assets/imgs/kisspng-user-profile-computer-icons-girl-customer-5af32956696762.8139603615258852704317.png';
             }
             else{
-              this.avatar = 'http://transport.walstarmedia.com/public/storage/images/driver/profile_image/'+result.success.profile.driver_details.profile;
+            //  this.avatar = 'http://transport.walstarmedia.com/public/storage/images/driver/profile_image/'+result.success.profile.driver_details.profile;
+            this.avatar = this.data.imgURL+"driver/profile_image/"+result.success.profile.driver_details.profile;
             }
           }
           else{}
@@ -239,11 +292,30 @@ export class MyApp {
       packageBooking:PackageBookingPage,
       notificationsPage : NotificationsPage,
       driverTransactionsPage : DriverTransactionsPage             
-    }            
+    }
+    
+  this.activePage = this.pages.homePage;
+
+  this.events.subscribe('active-menu',()=>{
+        this.activePage = HomePage;
+  });
+
+
+  this.events.subscribe('activeItem',()=>{
+      this.activePage = HomePage;
+      this.checkActive(HomePage);
+  });
 }
 
 /* Log Out */
 private signOut(){
+
+  console.log("#########################")
+  console.log(this.data.isStarted);
+
+  if(this.data.isStarted && this.role == 3){
+    this.service.presentToast("You can't sign out until ride completed.");
+  }else{
   let modal = this.modalCtrl.create(ModalpagePage,{modalAct : 'signout'});
   let me = this;
              
@@ -251,42 +323,50 @@ private signOut(){
     if(data == true)
     {
       //this.oneSignal.deleteTag('user_id');
-      this.storage.set('isRemember', false); 
-      this.storage.get('user').then(data=>{   
-        let param = data[0].id;
+        this.storage.set('isRemember', false); 
+        this.storage.get('user').then(data=>{   
+          console.log("!@#@!@#!@#");
+          console.log(data);
+          let param = data[0].id;
 
-        let role = data[0].role;
-        console.log(role);    
-        if(role == 3)
-        {
-          this.oneSignal.deleteTag('driver_id');
-          this.data.getDriverToggle(param).subscribe(result=>{
-            if(result.status == 'OK')
-            {
-              if(result.success.available == 'on')
+          let role = data[0].role;
+          console.log(role);    
+          if(role == 3)
+          {
+            this.oneSignal.deleteTag('driver_id');
+            this.data.getDriverToggle(param).subscribe(result=>{
+              if(result.status == 'OK')
               {
-                this.data.AvailableToggle().subscribe(result=>{
-                  if(result.status == 'OK')
-                  {}
-                  else{
-                    this.data.presentToast('Error');
-                  }
-                });
+                if(result.success.available == 'on')
+                {
+                  this.data.AvailableToggle().subscribe(result=>{
+                    console.log(result);
+                    if(result.status == 'OK')
+                    {}
+                    else{
+                      this.data.presentToast('Error');
+                    }
+                  });
+                }
               }
-            }
-          });
-        }
-        else{
-          this.oneSignal.deleteTag('customer_id');
-        }
-      });
-      this.storage.set('user',undefined);
-      this.storage.set('token',undefined);
-      this.rootPage = SigninPage;
-    }  
-    else{}     
-  });
-  modal.present();
+            });
+          }
+          else{
+            this.oneSignal.deleteTag('customer_id');
+          }
+
+
+          this.storage.set('user',undefined);
+          this.storage.set('token',undefined);
+          //this.rootPage = SigninPage;
+          this.nav.setRoot(SigninPage);
+        });
+        
+      }  
+      else{}     
+    });
+    modal.present();
+  }
 }  
 /* End Log Out */
 
@@ -298,6 +378,7 @@ private onPushReceived(payload: OSNotificationPayload) {
   }
 
   if(payload.additionalData.action == 'start_ride'){
+    console.log("I am from the app component start ride");
     this.events.publish('start_ride:created', payload.additionalData, Date.now());
   }
 
@@ -321,6 +402,7 @@ private onPushReceived(payload: OSNotificationPayload) {
       title: 'Customer Request',
       cssClass:'b_r_request',
       message: '<div class="c_name">'+payload.additionalData.customer+'</div><div class="title">Location</div><div class="desc">'+payload.additionalData.source+'</div><div class="title">Time</div><div class="desc">'+payload.additionalData.pick_up+'</div>',
+      enableBackdropDismiss:false,
       buttons: [
         {
           text: 'Accept',
@@ -345,15 +427,15 @@ private onPushReceived(payload: OSNotificationPayload) {
                       this.data.presentToast('Post Notification fail');
                     }
                     else{
-                      this.data.presentToast('Post Notification Success');
+                      //this.data.presentToast('Post Notification Success');
                       this.events.publish('live_tracking:created',payload.additionalData, Date.now());
-                    }    
+                    }
                   });
                   this.data.presentToast('Request accepted successfully!'); 
               }        
               else{
                 this.data.presentToast('You can not accept this ride!');
-              }                 
+              }
             });          
           }
         },      
@@ -405,6 +487,7 @@ private onPushOpened(payload: OSNotificationPayload) {
           title: 'Customer Request',
           cssClass:'b_r_request',
           message: '<div class="c_name">'+payload.additionalData.customer+'</div><div class="title">Location</div><div class="desc">'+payload.additionalData.source+'</div><div class="title">Time</div><div class="desc">'+payload.additionalData.pick_up+'</div>',
+          enableBackdropDismiss:false,
           buttons: [
             {
               text: 'Accept',
@@ -429,7 +512,7 @@ private onPushOpened(payload: OSNotificationPayload) {
                           this.data.presentToast('Post Notification Fail');
                         }
                         else{
-                          this.data.presentToast('Post Notification Success');
+                          //this.data.presentToast('Post Notification Success');
                           this.events.publish('live_tracking:created',payload.additionalData, Date.now());
                         }    
                       });
@@ -458,5 +541,15 @@ private onPushOpened(payload: OSNotificationPayload) {
         });
         alert1.present();
       }
+  }
+
+  openPage(page){
+    this.activePage = page;
+    this.nav.setRoot(page);
+  }
+
+  checkActive(page){
+
+    return page == this.activePage;
   }
 }         

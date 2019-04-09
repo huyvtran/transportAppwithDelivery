@@ -34,7 +34,8 @@
 
         <ion-item>
             <ion-label stacked>Password</ion-label>
-            <ion-input type="password" [(ngModel)]="pass" formControlName="password" [class.invalid]="!signin.valid && (signin.controls.password.dirty || submitAttempt)" ></ion-input>
+            <ion-input [type]="passwordType" [(ngModel)]="pass" formControlName="password" [class.invalid]="!signin.valid && (signin.controls.password.dirty || submitAttempt)" ></ion-input>
+            <ion-icon item-end [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()' style="height:32px;"></ion-icon>
         </ion-item>
 
         <div class="error" *ngIf="signin.get('password').hasError('required')  && signin.get('password').touched">
@@ -43,7 +44,7 @@
 
         <ion-item>
             <ion-label>Remember Me</ion-label>
-            <ion-checkbox (ionChange)="notify(isRemember)"></ion-checkbox>
+            <ion-checkbox (ionChange)="notify(isRemember)" [checked]="isRemember"></ion-checkbox>
         </ion-item>
     
         <ion-item class="submit_btn_item">

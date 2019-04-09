@@ -1,12 +1,21 @@
 .ios, .md{
     page-autocomplete {
+
+        .header-md::after{
+            background-image: none;
+        }
+
+        .scroll-content{
+            padding: 0 8px;
+        }
+
         ion-item{
             padding-bottom: 15px !important;
     
             ion-icon{
                 font-size: 2.2rem !important;
                 color: #278DF8;
-            }
+            } 
     
             ion-label{
                 font-size: 14px !important;
@@ -16,7 +25,7 @@
             }
     
             ion-input{
-                border-bottom: 1px solid lightgray;
+                //border-bottom: 1px solid lightgray;
             }
 
             .favLoc_label {
@@ -48,7 +57,7 @@
                 margin-bottom: 0px !important;
                 margin-top: 10px !important;
                 background: transparent;
-
+                box-shadow: none;
                 ion-icon{
                     transform: none;
                     margin-bottom: 0px;
@@ -65,7 +74,7 @@
                 margin-bottom: 0px !important;
                 margin-top: 10px !important;
                 background: transparent;
-
+                box-shadow: none;
                 ion-icon{
                     transform: none;
                     margin-bottom: 0px;
@@ -80,6 +89,10 @@
             font-size: 18px;
             padding: 10px;
             padding-bottom: 0;
+            margin: 0 8px 11px 0;
+            ion-icon{
+                font-size: 1.5em;
+            }
         }    
 
         .list-ios > .item-block:last-child {
@@ -93,7 +106,7 @@
 .ios {
     page-autocomplete {
         .scroll-content {
-            margin-top: 100px !important;
+          //  margin-top: 100px !important;
         }
     }
 }

@@ -15,11 +15,14 @@ import { map } from 'rxjs/operators';
 */
 @Injectable()
 export class DataProvider {    
-
+//"http://ccd965c3.ngrok.io/Michael_quinn/transportride/api/"//
   baseURL:string = "http://transportride.walstarmedia.com/api/";
+  imgURL:string = "http://transportride.walstarmedia.com/storage/app/public/images/";
   token : string;
   headers:any;
   isRide : any = 'yes';
+
+  isStarted = false;
 
   constructor(public ht: Http, public http: HttpClient, private toast: ToastController, private storage: Storage) {
     console.log('Hello DataProvider Provider');
@@ -59,11 +62,14 @@ export class DataProvider {
 
   userSignIn(param)
   {
+    let headers = new Headers({
+      'Accept' : 'application/json'
+    });
     
-    return this.ht.post(this.baseURL+"login",param).map(res=> res.json());
+    return this.ht.post(this.baseURL+"login",param,{headers: headers}).map(res=> res.json());
   }
 
-  getCustomerProfile(param){
+  getCustomerProfile(token){
    //return this.http.post(this.baseURL+"customer/profile",param).map(res=> res.json());
 
    //console.log("Token Here "+ this.token);
@@ -72,7 +78,7 @@ export class DataProvider {
     let headers = new Headers({
 
         'Accept' : 'application/json',
-        'Authorization' : 'Bearer '+this.token
+        'Authorization' : 'Bearer '+token
    });
 
     //return this.http.post(this.baseURL+"customer/profile",header,param);
@@ -110,19 +116,19 @@ export class DataProvider {
   }  
 
 
-  getDriverProfile(param)    
+  getDriverProfile(token)    
   {
    
-    this.storage.get('token').then(data=>{
+    // this.storage.get('token').then(data=>{
 
-      this.token = data;
-     // console.log("Token here"+this.token);
-    });
+    //   this.token = data;
+    //  // console.log("Token here"+this.token);
+    // });
     
     let headers = new Headers({
 
       'Accept' : 'application/json',
-      'Authorization' : 'Bearer '+this.token
+      'Authorization' : 'Bearer '+token
     });
 
    return this.ht.post(this.baseURL+"driver/profile",'',{headers: headers}).map(res=> res.json());
@@ -288,7 +294,7 @@ export class DataProvider {
     this.storage.get('token').then(data=>{
 
       this.token = data;
-      //console.log("Token here"+this.token);
+      console.log("Token here"+this.token);
     });
     let headers = new Headers({
 

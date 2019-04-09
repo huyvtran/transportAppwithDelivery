@@ -75,18 +75,18 @@
                     <img *ngIf="item.payment_method == 'paypal'" class="list_item_icon" src="assets/imgs/credit-card.png"/>
                   </div> 
                 </ion-col>
-                <ion-col class="list_content" col-8>
+                <ion-col class="list_content" col-7>
                     <h4 text-wrap *ngIf="item.payment_method == 'wallets'">Payment By Wallet</h4>
                     <h4 text-wrap *ngIf="item.payment_method == 'cash_payments'">Payment By Cash</h4>
                     <h4 text-wrap *ngIf="item.payment_method == 'paypal'">Payment By Paypal</h4>
                     <span class="span_left">{{item.created_at | date:'dd MMM yyyy, H:mm'}}</span>  
                     <!--<span class="span_right">6.56</span>-->
                 </ion-col>
-                <ion-col col-2>
-                  <div [ngClass]="item?.transaction_status == 'Credited' ? 'g_color' : 'r_color'" *ngIf="item.payment_method == 'cash_payments'" class="t_amount">
+                <ion-col col-3>
+                  <div text-right [ngClass]="item?.transaction_status == 'Credited' ? 'g_color' : 'r_color'" *ngIf="item.payment_method == 'cash_payments'" class="t_amount">
                     <span>-</span>${{item.amount}}
                   </div>  
-                  <div [ngClass]="item?.transaction_status == 'Credited' ? 'g_color' : 'r_color'" *ngIf="item.payment_method != 'cash_payments'" class="t_amount">
+                  <div text-right [ngClass]="item?.transaction_status == 'Credited' ? 'g_color' : 'r_color'" *ngIf="item.payment_method != 'cash_payments'" class="t_amount">
                     <span *ngIf="item?.transaction_status == 'Credited'">+</span>
                     <span *ngIf="item?.transaction_status != 'Credited'">-</span>
                     ${{item.balance}}
@@ -99,9 +99,9 @@
         <div class="nulldiv emptyDiv" *ngIf='no_transactions == true'>
           <img src="assets/imgs/empty_booking.png"/>
           There is not any transactions yet.
-      </div>
+        </div>
     </ion-list>
-    <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" *ngIf='no_transactions'>
       <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </div>

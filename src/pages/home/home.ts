@@ -143,16 +143,17 @@ export class HomePage {
     };
       
     this.eve.subscribe('live_tracking:created', (live_tracking_data, time) => {
+      console.log("FIRST TIME "+this.id);
       this.leave = false;
       this.isnowenabled = true;
       this.watchMethod(live_tracking_data);
       this.liveRide_bookingId = live_tracking_data.booking_id;
       this.liveRide_customerId = live_tracking_data.customer_id;
       firebase.database().ref('driver/'+this.id).set({ 'status': 'live_tracking','booking_id':live_tracking_data.booking_id});
-
+      this.eve.unsubscribe('live_tracking:created');
       let param = new FormData();
       param.append("booking_id",this.liveRide_bookingId);
-        this.data.getBookingDetails(param).subscribe(result=>{                          
+        this.data.getBookingDetails(param).subscribe(result=>{
           if(result.status == "OK")
           {
             this.maps.startNavigating(result.success.booking.source,result.success.booking.destination,this.directionsPanel.nativeElement);
@@ -180,9 +181,13 @@ export class HomePage {
       }*/
       firebase.database().ref('driver/'+this.id).remove();
       firebase.database().ref(this.liveRide_bookingId).remove();
+      this.leave = true;
       this.data.presentToast('Request cancelled by customer');
       this.eve.unsubscribe('cancelled_request:created');
-      this.navCtrl.setRoot(this.navCtrl.getActive().component);
+      setTimeout(()=>{
+        this.navCtrl.setRoot(this.navCtrl.getActive().component);
+      },3000);
+      
 
       this.data.AvailableToggle().subscribe(result=>{
         console.log(result);
@@ -214,14 +219,19 @@ export class HomePage {
   }
 
   ionViewDidLoad(){
+
+      //console.log(new Date("2019-02-01" + ' ' + "12:15"));
+      //console.log(new Date(new Date("2019-02-01" + ' ' + "12:15")).toISOString());
       console.log("First log");
       google.maps.event.trigger( this.maps.map, 'resize' );
+      setTimeout(() => {
       this.maps.init(this.mapElement.nativeElement,this.pleaseConnect.nativeElement).then((data) => { 
         this.map = data;
         this.autocompleteService = new google.maps.places.AutocompleteService();
         this.searchDisabled = false;
         console.log("Middle log");
       });
+    },3000);
       console.log("Last log");
    
       this.eve.subscribe('ride_later_alert:created', (ride_later_alert, time) => {
@@ -253,6 +263,7 @@ export class HomePage {
             let param = new FormData();
               let x = this.calculated_distance.split("km");
               x = x[0].split("m");
+              x = x[0].replace(",","");
               param.append("distance",x);
               if(this.role == 2)
               {
@@ -320,7 +331,7 @@ export class HomePage {
               content :"Please wait...",  
               spinner : 'crescent'
             });
-        
+
             this.loadingCtr.present();
 
             let param = new FormData();   
@@ -429,6 +440,7 @@ export class HomePage {
               {
                 if(data_val['status'] == 'live_tracking')
                 {
+                  console.log("SECOND TIME");
                   var payload = {'booking_id':data_val['booking_id'],'customer_id':result.success.booking.customer_id};
                   this.eve.publish('live_tracking:created',payload, Date.now());
                   this.loadingCtr.dismiss();
@@ -793,6 +805,7 @@ export class HomePage {
 
   rideNow(dist,selected_vehicle_type)
   {
+    console.log(this.address.place+" "+this.address.drop_place+" "+this.vehicle_type+" "+this.selected_cost);
     if( this.address.place != '' && this.address.drop_place != '' && this.vehicle_type != '' && this.selected_cost > 0 )
     {       
       let param ;
@@ -887,7 +900,7 @@ export class HomePage {
 
   watchMethod(live_tracking_data)
   {
-    this.eve.unsubscribe('live_tracking:created');
+    //this.eve.unsubscribe('live_tracking:created');
     var options = {
       enableHighAccuracy: true,
       timeout: 20000,
@@ -941,6 +954,7 @@ export class HomePage {
       {     
         firebase.database().ref('driver/'+this.yourId).set({ 'status': 'ongoing','booking_id':this.liveRide_bookingId});
         console.log(result);
+        this.data.isStarted = true;
         this.islaterenabled = true;
         this.isnowenabled = false;
         this.endRide = true;
@@ -958,6 +972,7 @@ export class HomePage {
 
   finishRide()
   {
+    this.data.isStarted = false;
     this.leave = true;
     this.stopTracking();
     this.islaterenabled = false;

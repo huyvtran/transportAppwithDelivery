@@ -2,12 +2,12 @@
 <ion-menu [content]="content">
     <ion-header> 
       <!-- User Profile Info Card -->
-      <ion-card class="menu-card" menuClose (click)="nav.setRoot(pages.customerProfilePage)">
+      <ion-card class="menu-card" menuClose (click)="openPage(pages.customerProfilePage)">
         <ion-item text-center>
           <ion-avatar>
             <img class="menu_header_avtar" src="{{avatar}}">
           </ion-avatar>
-          <h2>{{fname}} {{lname}}</h2>
+          <h2 class="txt-capt">{{fname}} {{lname}}</h2>
           <p>{{email}}</p>
         </ion-item>
       </ion-card>
@@ -18,7 +18,7 @@
     <ion-content *ngIf="role==2" class="sideMenu">
       <ion-list class="menu-list" no-lines>
         <!-- Book a Ride -->
-        <button class="sideMenuItem" menuClose detail-none ion-item icon-left (click)="nav.setRoot(pages.homePage)">
+        <button class="sideMenuItem" menuClose detail-none ion-item icon-left [class.activeItem]="checkActive(pages.homePage)" (click)="openPage(pages.homePage)">
             <ion-grid>
               <ion-row>
                 <ion-col col-3>
@@ -31,7 +31,7 @@
             </ion-grid>
           </button>
         <!-- Book a Delivery -->
-          <button class="sideMenuItem" menuClose detail-none ion-item icon-left (click)="nav.setRoot(pages.packageBooking)">
+          <button class="sideMenuItem" menuClose detail-none ion-item icon-left [class.activeItem]="checkActive(pages.packageBooking)" (click)="openPage(pages.packageBooking)">
             <ion-grid>
               <ion-row>
                 <ion-col col-3>
@@ -44,7 +44,7 @@
             </ion-grid>
           </button>
         <!-- Profile -->
-          <button class="sideMenuItem" menuClose detail-none ion-item icon-left (click)="nav.setRoot(pages.customerProfilePage)">  
+          <button class="sideMenuItem" menuClose detail-none ion-item icon-left [class.activeItem]="checkActive(pages.customerProfilePage)" (click)="openPage(pages.customerProfilePage)">  
             <ion-grid>
                 <ion-row>
                   <ion-col col-3>
@@ -57,20 +57,20 @@
               </ion-grid>
           </button>
         <!-- Your Bookings -->
-          <button class="sideMenuItem" menuClose detail-none ion-item icon-left (click)="nav.setRoot(pages.bookinghistoryPage)">  
+          <button class="sideMenuItem" menuClose detail-none ion-item icon-left [class.activeItem]="checkActive(pages.bookinghistoryPage)" (click)="openPage(pages.bookinghistoryPage)">  
               <ion-grid>
                   <ion-row>
                     <ion-col col-3>
                       <img class="list_item_icon" src="assets/imgs/calendar-page-with-circular-clock-symbol.png"/>
                     </ion-col>
                     <ion-col col-9>
-                        <div class="list_item_title">Your Bookings</div>
+                        <div class="list_item_title">My Bookings</div>
                     </ion-col>
                   </ion-row>
                 </ion-grid>
           </button>
         <!-- My Wallet -->
-          <button class="sideMenuItem" menuClose detail-none ion-item icon-left (click)="nav.setRoot(pages.paymentwalletPage)">  
+          <button class="sideMenuItem" menuClose detail-none ion-item icon-left [class.activeItem]="checkActive(pages.paymentwalletPage)" (click)="openPage(pages.paymentwalletPage)">  
               <ion-grid>
                   <ion-row>
                     <ion-col col-3>
@@ -83,7 +83,7 @@
                 </ion-grid> 
           </button>
         <!-- Settings -->
-          <button class="sideMenuItem" menuClose detail-none ion-item icon-left (click)="nav.setRoot(pages.settingsPage)">  
+          <button class="sideMenuItem" menuClose detail-none ion-item icon-left [class.activeItem]="checkActive(pages.settingsPage)" (click)="openPage(pages.settingsPage)">  
               <ion-grid>
                   <ion-row>
                     <ion-col col-3>   
@@ -96,7 +96,7 @@
                 </ion-grid>
           </button>
         <!-- Help -->
-          <button class="sideMenuItem" menuClose detail-none ion-item icon-left (click)="nav.setRoot(pages.helpPage)">  
+          <button class="sideMenuItem" menuClose detail-none ion-item icon-left [class.activeItem]="checkActive(pages.helpPage)" (click)="openPage(pages.helpPage)">  
               <ion-grid>
                   <ion-row>      
                     <ion-col col-3>
@@ -116,7 +116,7 @@
                       <img class="list_item_icon" src="assets/imgs/menu_logout.png"/>
                     </ion-col>
                     <ion-col col-9>
-                        <div class="list_item_title">Log Out</div>
+                        <div class="list_item_title">Sign out</div>
                     </ion-col>
                   </ion-row>
                 </ion-grid>
@@ -129,7 +129,7 @@
     <ion-content *ngIf="role==3" class="sideMenu">
         <ion-list class="menu-list" no-lines>
         <!-- Dashboard -->
-          <button class="sideMenuItem" menuClose detail-none ion-item icon-left (click)="nav.setRoot(pages.homePage)">
+          <button class="sideMenuItem" menuClose detail-none ion-item icon-left [class.activeItem]="checkActive(pages.homePage)" (click)="openPage(pages.homePage)">
             <ion-grid>
               <ion-row>
                 <ion-col col-3>
@@ -142,7 +142,7 @@
             </ion-grid>
           </button>
         <!-- Profile -->
-            <button class="sideMenuItem" menuClose detail-none ion-item icon-left (click)="nav.setRoot(pages.customerProfilePage)">  
+            <button class="sideMenuItem" menuClose detail-none ion-item icon-left [class.activeItem]="checkActive(pages.customerProfilePage)" (click)="openPage(pages.customerProfilePage)">  
               <ion-grid>
                   <ion-row>
                     <ion-col col-3>
@@ -155,7 +155,7 @@
                 </ion-grid>
             </button>
           <!-- Transactions -->
-            <button class="sideMenuItem" menuClose detail-none ion-item icon-left (click)="nav.setRoot(pages.driverTransactionsPage)">  
+            <button class="sideMenuItem" menuClose detail-none ion-item icon-left [class.activeItem]="checkActive(pages.driverTransactionsPage)" (click)="openPage(pages.driverTransactionsPage)">  
                 <ion-grid>
                     <ion-row>
                       <ion-col col-3>
@@ -168,7 +168,7 @@
                   </ion-grid> 
             </button>
           <!-- Settings -->
-            <button class="sideMenuItem" menuClose detail-none ion-item icon-left (click)="nav.setRoot(pages.driversettingPage)">  
+            <button class="sideMenuItem" menuClose detail-none ion-item icon-left [class.activeItem]="checkActive(pages.driversettingPage)" (click)="openPage(pages.driversettingPage)">  
                 <ion-grid>
                     <ion-row>
                       <ion-col col-3>   
@@ -181,7 +181,7 @@
                   </ion-grid>
             </button>
           <!-- History -->
-            <button class="sideMenuItem" menuClose detail-none ion-item icon-left (click)="nav.setRoot(pages.bookingListPage)">  
+            <button class="sideMenuItem" menuClose detail-none ion-item icon-left [class.activeItem]="checkActive(pages.bookingListPage)" (click)="openPage(pages.bookingListPage)">  
               <ion-grid>
                   <ion-row>
                     <ion-col col-3>
@@ -194,7 +194,7 @@
                 </ion-grid>
           </button>
         <!-- Notifications -->
-          <button class="sideMenuItem" menuClose detail-none ion-item icon-left (click)="nav.setRoot(pages.notificationsPage)">  
+          <button class="sideMenuItem" menuClose detail-none ion-item icon-left [class.activeItem]="checkActive(pages.notificationsPage)" (click)="openPage(pages.notificationsPage)">  
             <ion-grid>
                 <ion-row>
                   <ion-col col-3>
@@ -207,14 +207,14 @@
               </ion-grid>
         </button>
       <!-- Log Out -->
-        <button class="sideMenuItem" menuClose detail-none ion-item icon-left (click)="signOut()">  
+        <button *ngIf="!data.isStarted" class="sideMenuItem" menuClose detail-none ion-item icon-left (click)="signOut()">  
             <ion-grid>
                 <ion-row>
                   <ion-col col-3>
                     <img class="list_item_icon" src="assets/imgs/menu_logout.png"/>
                   </ion-col>
                   <ion-col col-9>
-                      <div class="list_item_title">Log Out</div>
+                      <div class="list_item_title">Sign out</div>
                   </ion-col>
                 </ion-row>
               </ion-grid>

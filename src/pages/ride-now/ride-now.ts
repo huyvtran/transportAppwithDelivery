@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import { DataProvider } from '../../providers/data/data';
 import { Storage } from '@ionic/storage';
 import { ConfirmPaymentPage } from '../confirm-payment/confirm-payment';
@@ -39,7 +39,7 @@ export class RideNowPage {
   public active: string; 
   isnowenabled:boolean=true;
   
-  constructor(private nativeGeocoder: NativeGeocoder, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public data : DataProvider, private storage: Storage) {
+  constructor(private nativeGeocoder: NativeGeocoder, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public data : DataProvider, private storage: Storage, public alertCtrl:AlertController) {
     console.log('navParams.get(param)==>'+navParams.get('param'));
     this.data1 = navParams.get('param');
     this.distance =this.data1.distance;
@@ -172,7 +172,31 @@ export class RideNowPage {
         alert('Geocode was not successful for the following reason: ' + status);
         }
     });     
-  }    
+  }
+  
+  showAlert(){
+
+    const confirm = this.alertCtrl.create({
+      title: 'Confirm Booking Request!',
+      message: 'Do you want to book a ride?',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this.confirmPayment();
+          }
+        }
+      ]
+    });
+    confirm.present();
+
+  }
 
   confirmPayment(){ 
     if(this.active != '')
@@ -187,13 +211,15 @@ export class RideNowPage {
             this.data.presentToast("Your wallet balance is in minus, So you can't take Ride");
           }
           else{
-            this.isnowenabled = false;      
+            this.isnowenabled = false; 
+            let temp = this.distance.replace(",","");
+            temp = temp.split(" ");     
             let param = new FormData();
   
             param.append("customer_id",this.customer_id);
             param.append("schedule","0");
             param.append("schedule_time",null);
-            param.append("distance",this.distance);
+            param.append("distance",temp[0]);
             param.append("vehicle_type",this.vehicle_types);
             param.append("source",this.pick_up);
             param.append("source_lat",this.pick_up_lt);
@@ -209,6 +235,7 @@ export class RideNowPage {
             param.append("cost",this.cost);   
             param.append("driver_id",'');
             param.append("payment_method",this.active);
+            param.append("type","ride");
 
             this.data.bookingRequest(param).subscribe(result=>{
                 console.log(result);    
@@ -222,10 +249,10 @@ export class RideNowPage {
                 else 
                 {
                   //this.storage.set("customer_data",data.msg[0]);
-                  this.data.presentToast('Booking Request Successfull!');
+                  this.data.presentToast('Booking request send successfully!');
 
                   let param1 = new FormData();
-                  param1.append("driver_Id",this.Did);
+                  param1.append("driver_id",this.Did);
                   param1.append("customer_id",this.customer_id);
                   param1.append("booking_id",result.success.booking_request.id);
                   param1.append("pick_up",'now');
@@ -257,7 +284,7 @@ export class RideNowPage {
       })
     }
     else{
-        this.data.presentToast('Please select Payment method');
+        this.data.presentToast('Please select payment method');
         return false;
     }
 

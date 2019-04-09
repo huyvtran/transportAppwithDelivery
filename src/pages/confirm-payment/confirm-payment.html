@@ -23,7 +23,8 @@
     <ion-row>
       <ion-col col-12>
         <div class="signoutcontentdiv" text-center>
-          <h1> Your Ride Confirmation Successful! </h1>
+          <!-- <h1> Your Ride Confirmation Successful! </h1> -->
+          <h1> Your request has been sent successfully. Please wait for response. </h1>
         </div>
       </ion-col>
      
@@ -61,5 +62,5 @@
 </ion-content>
 
 <ion-footer>
-  <button (click)='confirm_cancel()' class="login-btn" ion-button color="primary" block >Cancel Booking</button>
+  <button (click)='confirm_cancel()' class="login-btn" ion-button color="primary" *ngIf="!isStarted" block [disabled]="cancel_btn">Cancel Booking</button>
 </ion-footer>

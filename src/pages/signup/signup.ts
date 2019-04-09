@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,LoadingController, MenuController } from 'ionic-angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataProvider } from '../../providers/data/data';
 import { SigninPage } from '../signin/signin';
@@ -33,10 +33,10 @@ export class SignupPage {
   signup : any;
   roles : any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ServiceProvider, public data : DataProvider,private loading: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private service: ServiceProvider, public data : DataProvider,private loading: LoadingController, public menu:MenuController) {
     this.signup = new FormGroup({    
-      fname: new FormControl('', [Validators.required]),
-      lname: new FormControl('', [Validators.required]),
+      fname: new FormControl('', [Validators.required,Validators.pattern('[a-zA-Z ]*')]),
+      lname: new FormControl('', [Validators.required,Validators.pattern('[a-zA-Z ]*')]),
       email: new FormControl('', [Validators.required,Validators.email]),
       password: new FormControl('', [Validators.required,Validators.minLength(6)]),
       c_password: new FormControl('', [Validators.required]),
@@ -77,6 +77,14 @@ export class SignupPage {
           this.data.presentToast(result.status);
         }
       });
+  }
+
+  ionViewCanLeave(){
+    this.menu.swipeEnable(true);
+  }
+
+  ionViewWillEnter(){
+    this.menu.swipeEnable(false);
   }
 
   ionViewDidLoad() {
@@ -130,6 +138,9 @@ export class SignupPage {
             this.navCtrl.remove(currentIndex);
           });
         }                    
+      },err=>{
+        loader.dismiss();
+        this.data.presentToast("Network error");
       });
     }
   }  

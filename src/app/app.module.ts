@@ -87,6 +87,8 @@ import { PackageBookingPage } from '../pages/package-booking/package-booking';
 import { NotificationsPageModule} from '../pages/notifications/notifications.module';
 import { ServiceProvider } from '../providers/service/service';
 import { DriverTransactionsPageModule } from '../pages/driver-transactions/driver-transactions.module';
+import { DatePipe } from '@angular/common';
+import { AES256 } from '@ionic-native/aes-256';
 
                     
 @NgModule({                   
@@ -203,7 +205,9 @@ import { DriverTransactionsPageModule } from '../pages/driver-transactions/drive
     InAppBrowser,
     BackgroundMode,
     AndroidPermissions,
-    CallNumber
+    CallNumber,
+    DatePipe,
+    AES256
   ]       
 })  
 //export class AppModule {} 

@@ -15,7 +15,7 @@
         }
         button.profile-btn {
             width: 100%;
-            padding: 25px 30px !important;
+            padding: 20px 30px !important;
             margin: 15px auto;
             font-size: 20px !important;
             //background-color: #ffec19;
@@ -30,8 +30,8 @@
             padding: 10px;   
         }
 
-        .social_icons ion-item{	   
-            padding: 0;
+        .social_icons ion-item{
+            padding: 0!important;
             padding-bottom: 12px;
             color: #5f5656;
             margin-left: 11%;
@@ -47,13 +47,42 @@
             letter-spacing: 0.5px;
         }
 
-        .submit_btn_item ion-label {
-            margin: 0;
+        .submit_btn_item{
+            ion-label {
+                margin: 0;
+            }
+            .item-inner{
+                padding-right: 0;
+            }
         }
         ion-item.social_icons {
             border-bottom: 1px solid #dcd9d9;
             box-shadow: 0 0 2px #d4d2d2;
             margin-top: 15px;
+        }
+
+        .social_list{
+            margin: 10px ;
+            .social_icons{
+                padding: 0px 10px!important;
+            }
+            ion-label{
+                font-size: 16px;
+                letter-spacing: 0.5px;
+            }
+        }
+
+        .error{
+            padding-left: 10px;
+            color: red;
+        }
+
+        .txt-capt{
+            text-transform: capitalize;
+
+            .text-input{
+                text-transform: capitalize;
+            }
         }
     }
     

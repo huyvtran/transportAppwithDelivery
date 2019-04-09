@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import { DataProvider } from '../../providers/data/data';
 import { Storage } from '@ionic/storage';
 import { ConfirmPaymentPage } from '../confirm-payment/confirm-payment';
@@ -42,7 +42,7 @@ export class RideLaterPage {
   vehicle_img :any;
   isnowenabled:boolean=true;
 
-  constructor(private nativeGeocoder: NativeGeocoder, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public data : DataProvider, private storage: Storage) {
+  constructor(private nativeGeocoder: NativeGeocoder, public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public data : DataProvider, private storage: Storage, public alertCtrl:AlertController) {
     console.log('navParams.get(param)==>'+navParams.get('param'));
     this.data1 = navParams.get('param');
     this.distance =this.data1.distance;
@@ -131,6 +131,30 @@ export class RideLaterPage {
     this.active = name;       
   }
 
+  showAlert(){
+
+    const confirm = this.alertCtrl.create({
+      title: 'Confirm Booking Request!',
+      message: 'Do you want to book a ride?',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this.confirmPayment();
+          }
+        }
+      ]
+    });
+    confirm.present();
+
+  }
+
   confirmPayment(){
     if(this.active != '')
     {
@@ -145,15 +169,19 @@ export class RideLaterPage {
           }
           else{
             this.isnowenabled = false;
+            let temp = this.distance.replace(",","");
+            temp = temp.split(" ");  
             let param = new FormData();
             
             var dateObj = new Date(this.date + ' ' + this.time);
-            var date = new Date(dateObj).toISOString();
+            //var date = new Date(dateObj).toISOString();
+            var date1 = new Date(dateObj).toDateString();
             param.append("customer_id",this.customer_id);
             param.append("schedule","0");
             param.append("pickup_date",this.date);
-            param.append("schedule_time",date);
-            param.append("distance",this.distance);
+            //param.append("schedule_time",date);
+            param.append("schedule_time",this.date + ' ' + this.time);
+            param.append("distance",temp[0]);
             param.append("vehicle_type",this.vehicle_type);
             param.append("source",this.pick_up);
             param.append("source_lat",this.pick_up_lt);
@@ -166,8 +194,13 @@ export class RideLaterPage {
             param.append("is_completed","0");
             param.append("is_paid","0");
             param.append("status","0");
-            param.append("cost",this.cost);   
+            param.append("cost",this.cost);
             param.append("driver_id",'');
+            param.append("type","ride");
+
+            console.log("#######");
+            console.log(param);
+            console.log("#######");
 
             this.data.rideLaterbookingRequest(param).subscribe(result=>{
                 console.log(result);    
@@ -194,7 +227,10 @@ export class RideLaterPage {
                   });
                   //this.storage.set("customer_data",data.msg[0]);*/
                   this.data.presentToast('Booking Request Successfull!');
-                  this.navCtrl.setRoot(HomePage);
+                  setTimeout(()=>{
+                    this.navCtrl.setRoot(HomePage);
+                  },3000);
+                  
                   //this.navCtrl.setRoot(ConfirmPaymentPage,{'booking_id':result.success.booking_request.id,rideType:'later'});
                 }                                   
             });

@@ -6,6 +6,8 @@ import { IonicPage, Events, NavController, NavParams, Platform, ViewController, 
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 import { AutocompletePage } from '../autocomplete/autocomplete';
 import { AlertController } from 'ionic-angular';
+import { storage } from 'Firebase';
+import { ServiceProvider } from '../../providers/service/service';
 
 /**
  * Generated class for the SettingsPage page.
@@ -30,12 +32,12 @@ export class SettingsPage {
   showdrivers : boolean = false;
   showNotifications : boolean = false;
   public isNotificationOff: boolean;
-  fav_drivers : any;
+  fav_drivers : any = '';
   hideBackButton : any;
   id : any;
   role : any;
 
-  constructor(public alertCtrl: AlertController, private loading: LoadingController, private eve: Events,public navCtrl: NavController, private modalCtrl: ModalController, private storage : Storage, public data : DataProvider, public geolocation: Geolocation, public navParams: NavParams, public zone: NgZone, public maps: GoogleMapsProvider, public platform: Platform, public viewCtrl: ViewController) {
+  constructor(public alertCtrl: AlertController, private loading: LoadingController, private eve: Events,public navCtrl: NavController, private modalCtrl: ModalController, private storage : Storage, public data : DataProvider, public geolocation: Geolocation, public navParams: NavParams, public zone: NgZone, public maps: GoogleMapsProvider, public platform: Platform, public viewCtrl: ViewController, public service:ServiceProvider) {
     //this.searchDisabled = true;
     //this.saveDisabled = true;
 
@@ -67,7 +69,7 @@ export class SettingsPage {
     });
 
     this.hideBackButton = false;
-     let loader = this.loading.create({
+    let loader = this.loading.create({
       content :"Please wait...",
       spinner : 'crescent'
     });
@@ -103,6 +105,19 @@ export class SettingsPage {
       });
 
     loader.dismiss();
+
+    this.storage.get('fav_place').then(data=>{
+        if(data){
+          this.movetoFavlocations();
+        }
+    });
+
+    this.storage.get('fav_driver').then(data=>{
+      if(data){
+        this.movetoFavdrivers();
+      }
+  });
+
   }
 
   ionViewDidLoad() {
@@ -209,8 +224,10 @@ export class SettingsPage {
                     this.data.addCustomerFavLocation(param).subscribe(result=>{
                       console.log(result);  
                         if(result.status == "OK")
-                        {   
-                          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                        {
+                          this.storage.set('fav_place',true);
+                          this.favLocation();   
+                        //  this.navCtrl.setRoot(this.navCtrl.getActive().component);
                         }                 
                     });
                   });
@@ -233,7 +250,9 @@ export class SettingsPage {
                   console.log(result);  
                     if(result.status == "OK")
                     {
-                      this.navCtrl.setRoot(this.navCtrl.getActive().component);
+                      this.storage.set('fav_place',true);
+                      this.favLocation();
+                    //  this.navCtrl.setRoot(this.navCtrl.getActive().component);
                     }                 
                 });
               });
@@ -253,6 +272,7 @@ export class SettingsPage {
       this.data.removeCustomerFavLocation(param).subscribe(result=>{
         if(result.status == "OK")
         {
+          this.storage.set('fav_place',true);
           this.navCtrl.setRoot(this.navCtrl.getActive().component);
         }                 
       });
@@ -338,6 +358,50 @@ export class SettingsPage {
     });
   }
 
+  ionViewDidLeave(){
+    console.log("I am called");
+    this.storage.remove('fav_place');
+    this.storage.remove('fav_driver');
+  }
 
+  removeDriver(driver_id){
+
+    let param = new FormData();
+    param.append("driver_id",driver_id);
+    this.data.removeFavDriver(param).subscribe(data=>{
+        console.log("############");
+        console.log(data);
+        console.log("############");
+        this.storage.set('fav_driver',true);
+        this.navCtrl.setRoot(this.navCtrl.getActive().component); 
+    });
+  }
+
+  favLocation(){
+
+      this.service.presentLoader("Please wait...");
+      this.data.getCustomerFavLocation().subscribe(result=>{
+        if(result.status == "OK")
+        {
+          this.service.dismissLoader();
+          this.fav_locations = result.success.favlocations;
+          this.getHomelocation(this.fav_locations).then(data=>{
+            this.homelocation = data;
+          });
+          
+          this.getWorklocation(this.fav_locations).then(data=>{
+            this.worklocation = data;
+          });
+
+          this.getOtherlocation(this.fav_locations).then(data=>{
+            this.otherlocations = data;
+          });
+        }else{
+          this.service.dismissLoader();
+        }                 
+      },err=>{
+        this.service.dismissLoader();
+      });
+  }
 
 }

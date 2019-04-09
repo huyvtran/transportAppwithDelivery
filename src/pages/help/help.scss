@@ -1,5 +1,11 @@
 .ios,.md{
     page-help {
+
+        .scroll-content{
+            margin-bottom: 30px;
+            padding-bottom: 30px !important;
+        }
+
         ion-item{
              padding: 0;
          }
@@ -16,9 +22,10 @@
          .inner_last_div{
             text-align: center;
             //background: #FFEC19;
-            background: #1A237E;
+            //background: #1A237E;
+            background: #3a4189;
             font-weight: 500;  
-            padding: 7px 0 !important;
+            //padding: 7px 0 !important;
              //padding: 10px;
             p{
                margin: 0;
@@ -66,7 +73,7 @@
         }    
 
         .searchbar-input {
-            padding: 15px 48px !important;
+            //padding: 15px 48px !important;
             font-size: 1.6rem !important;
         }
 
@@ -76,11 +83,11 @@
             margin-bottom: 20px !important;
         }
         .searchbar-search-icon {
-            top : 10px !important;
-            margin-top: 10px;
-            position: absolute;
-            background-repeat: no-repeat;
-            background-size: 22px;
+            // top : 10px !important;
+            // margin-top: 10px;
+            // position: absolute;
+            // background-repeat: no-repeat;
+            // background-size: 22px;
         }
 
         button.suggestion-btn {
@@ -111,6 +118,16 @@
 
         .card {
             box-shadow: 0 0px 2px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        .tabs{
+            ion-col{
+                padding: 10px 5px;
+            }
+
+            .custom-tab{
+                background-color:#1A237E;
+            }
         }
 
         /*ion-content{

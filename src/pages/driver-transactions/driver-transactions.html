@@ -50,9 +50,9 @@
               </ion-row>
             </ion-grid>  
           </div>
-        </ion-item>
+      </ion-item>
     </ion-list>
-    <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" *ngIf='noTransaction'>
       <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>
     <div class="nulldiv emptyDiv" *ngIf='noTransaction == true'>

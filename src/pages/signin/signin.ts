@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, LoadingController,Events } from 'ionic-angular';
+import { NavController, AlertController, LoadingController,Events, MenuController } from 'ionic-angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { DataProvider } from '../../providers/data/data';
@@ -12,6 +12,7 @@ import { ForgotpasswoedPage } from '../forgotpasswoed/forgotpasswoed';
 import { EmailverificationPage } from '../emailverification/emailverification';
 import { CustomerProfilePage } from '../customer-profile/customer-profile';
 import { EditProfilePage } from '../edit-profile/edit-profile';
+import { ServiceProvider } from '../../providers/service/service';
 
 @Component({
   selector: 'page-signin',
@@ -22,8 +23,16 @@ export class SigninPage {
   lat : any;
   long : any;
   isRemember :any = false;
+  uname:string = '';
+  pass:string = '';
+  flag = 0;
 
-  constructor( private oneSignal: OneSignal, public navCtrl: NavController,private androidPermissions: AndroidPermissions, public alertCtrl: AlertController, public data : DataProvider, private storage: Storage, private loading: LoadingController,public events: Events, public geolocation: Geolocation) {
+  passwordType: string = 'password';
+  passwordIcon: string = 'eye-off';
+
+  constructor( private oneSignal: OneSignal, public navCtrl: NavController,private androidPermissions: AndroidPermissions, public alertCtrl: AlertController, public data : DataProvider, private storage: Storage, private loading: LoadingController,public events: Events, public geolocation: Geolocation, public menu:MenuController,public service:ServiceProvider) {
+
+    
     this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
       result => {console.log('Has permission?',result.hasPermission); 
       //alert('result.hasPermission==>'+result.hasPermission);
@@ -41,12 +50,30 @@ export class SigninPage {
   }      
 
   ionViewCanLeave(){
-    
+    this.menu.swipeEnable(true);
   }
 
-  createUser(user) {
+  ionViewWillEnter(){
+    this.menu.swipeEnable(false);
+    this.storage.get("isChecked").then(data=>{
+        if(data != null){
+          this.isRemember = true;
+          this.flag = 1;
+          this.storage.get('isChecked').then(data=>{
+            console.log("!@#!@!@#@!@#@!@#@@!@#@!@!");
+            console.log(data);
+            this.uname = data.uname;
+            this.pass = data.pass;
+
+            console.log(this.uname+" "+this.pass);
+          });
+        }
+    })
+  }
+
+  createUser(user,token) {
     console.log('User created!')
-    this.events.publish('user:created', user, Date.now());
+    this.events.publish('user:created', user, Date.now(),token);
   }
  
   red_list(){
@@ -66,7 +93,7 @@ export class SigninPage {
     param.append("password",pass);  
         
      let loader = this.loading.create({
-        content :"",
+        content :"Please wait...",
         spinner : 'crescent'
       });
 
@@ -76,24 +103,44 @@ export class SigninPage {
            console.log(result);  
             if(result.status == "ERROR")
             {
-                this.data.presentToast('Invalid Username or Password!');
+                //this.data.presentToast('Invalid Username or Password!');
+                this.data.presentToast(result.error);
                 loader.dismiss(); 
             }
             else   
             {
               console.log(result.success.user);
-              this.createUser(result.success.user);
+            //  this.createUser(result.success.user);
             
-              if(result.success.user[0].active == 1)    
+              if(result.success.user[0].active == 1)
               {   
-                this.storage.set("token",result.success.token);
-                this.storage.set("user",result.success.user);
+
+                console.log(result.success.token);
+
+                this.storage.set("token",result.success.token).then(()=>{
+                    this.createUser(result.success.user,result.success.token);
+                });
                 
-                setTimeout(() => {
+                this.storage.set("user",result.success.user);
+
+                if(this.isRemember == true){
+
+                  let data = { "uname": this.uname, "pass": this.pass };
+                  this.storage.set("isChecked",data); 
+
+
+                }else{
+                  this.storage.remove("isChecked");
+                }
+                  
+                
+                
+              //  setTimeout(() => {
                 if(result.success.user[0].role == 2)
                 {
                   this.oneSignal.sendTag('customer_id',result.success.user[0].id);
                   this.navCtrl.setRoot(HomePage); 
+                  this.events.publish('active-menu');
                   loader.dismiss();
                 }else if(result.success.user[0].role == 3){
                   this.oneSignal.sendTag('driver_id',result.success.user[0].id);
@@ -106,13 +153,16 @@ export class SigninPage {
                       {
                         this.data.getToken();
                         loader.dismiss(); 
-                        this.navCtrl.push(EditProfilePage);  
+                        //this.navCtrl.push(EditProfilePage);
+                        this.navCtrl.setRoot(HomePage); 
+                        this.events.publish('active-menu');
                       }
                       else
                       {
                         this.data.getToken();
                         loader.dismiss(); 
                         this.navCtrl.setRoot(HomePage);  
+                        this.events.publish('active-menu');
                       }
                       
                     }   
@@ -125,18 +175,21 @@ export class SigninPage {
                           //show slide logic should run
                           this.data.getToken();
                           loader.dismiss();
-                          this.navCtrl.push(EditProfilePage);       
+                          //this.navCtrl.push(EditProfilePage);       
+                          this.navCtrl.setRoot(HomePage);
+                          this.events.publish('active-menu');
                         }    
                         else{
                           this.data.getToken();
                           loader.dismiss();
                           this.navCtrl.setRoot(HomePage);
+                          this.events.publish('active-menu');
                         }
                       });
                     }
                  }); 
                 }  
-                }, 2500);   
+              //  }, 2500);   
                 
               }
               else
@@ -148,17 +201,31 @@ export class SigninPage {
               }    
             }                           
  
+     },err=>{
+        loader.dismiss(); 
+        this.service.presentToast("Network error");
      });
   }    
   
   public notify(isRemember) {
     //console.log("Toggled: "+ isRemember);
-    this.isRemember = !isRemember
-    //console.log("Toggled: "+ this.isRemember); 
+    if(this.flag == 0){
+      this.isRemember = !isRemember;
+    }else{
+      this.flag = 0;
+    //  this.isRemember = false;
+    }
+    
+   console.log("Toggled: "+ this.isRemember); 
   }
           
   gotoForgotPass()    
   {
     this.navCtrl.push(ForgotpasswoedPage);            
   }   
+
+  hideShowPassword() {
+    this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
+    this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
+  }
 }

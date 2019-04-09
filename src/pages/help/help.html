@@ -93,17 +93,17 @@
         <div class = "tabs">
           <ion-grid>
             <ion-row>
-              <ion-col col-4 (click)='changeTab("1")'>
+              <ion-col col-4 [ngClass]="showDiv == 1 ? 'custom-tab': ''" (click)='changeTab("1")'>
                   <a class = "tab-item">
                       FAQ
                    </a>
               </ion-col>
-              <ion-col col-4 (click)='changeTab("2")'>
+              <ion-col col-4 [ngClass]="showDiv == 2 ? 'custom-tab': ''" (click)='changeTab("2")'>
                   <a class = "tab-item active">
                       Help
                     </a>
               </ion-col>
-              <ion-col col-4 (click)='changeTab("3")'>
+              <ion-col col-4 [ngClass]="showDiv == 3 ? 'custom-tab': ''" (click)='changeTab("3")'>
                   <a class = "tab-item">
                       Suggestions
                    </a>

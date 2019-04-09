@@ -25,6 +25,7 @@ export class NotificationsPage {
   last_index : any = 0;
   loadingCtr : any;
   isNotification : any;
+  isEmpty = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage : Storage, public data : DataProvider, private loading: LoadingController) {
     this.storage.get('user').then(data=>{   
@@ -47,7 +48,7 @@ export class NotificationsPage {
   ionViewDidEnter()
   {
     this.loadUsers();
-    this.loadingCtr.dismiss();
+    
   }
 
   loadUsers(infiniteScroll?){
@@ -55,12 +56,14 @@ export class NotificationsPage {
       let param = new FormData();
       param.append("user_id",data[0].id);
 
-      this.data.driverNotifications(param,this.page).subscribe(result=>{                          
+      this.data.driverNotifications(param,this.page).subscribe(result=>{
+        this.loadingCtr.dismiss();                  
         if(result.status == "OK")  
         {   
           if(result.success.data.length == 0)
           {
             this.data.presentToast('There is no more data available');
+            this.isEmpty = true;
             if(this.users.length == 0){
               this.isNotification = true;
             }
@@ -73,6 +76,8 @@ export class NotificationsPage {
             }
           }
         }
+      },err=>{
+        this.loadingCtr.dismiss();
       });
     });
   }

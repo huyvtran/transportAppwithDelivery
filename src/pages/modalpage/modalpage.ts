@@ -32,7 +32,7 @@ export class ModalpagePage {
   lat : any;
   lng : any;
   social_account : any;
-  social_account_details: any = {} ;
+  social_account_details: any = {facebook:"", twitter:"", instagram:"", linkedin:""} ;
   prev_social_accounts :any = [];
   rating : any;
   feedback : any;
@@ -112,10 +112,10 @@ export class ModalpagePage {
     }
 
     this.social_account = new FormGroup({    
-      linkedin: new FormControl(''),
-      facebook: new FormControl(''),
-      twitter: new FormControl(''),
-      instagram: new FormControl('')
+      linkedin: new FormControl('',[Validators.pattern('(https?:\/\/)?(www\.)?linkedin.com\/[a-zA-Z0-9]*')]),
+      facebook: new FormControl('',[Validators.pattern('(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9]*')]),
+      twitter: new FormControl('',[Validators.pattern('(https?:\/\/)?(www\.)?twitter.com\/[a-zA-Z0-9]*')]),
+      instagram: new FormControl('',[Validators.pattern('(https?:\/\/)?(www\.)?instagram.com\/[a-zA-Z0-9]*')])
     });	
     
     if(this.driverId && this.driverId != '')
@@ -146,7 +146,9 @@ export class ModalpagePage {
             this.driver.profile = 'assets/imgs/kisspng-user-profile-computer-icons-girl-customer-5af32956696762.8139603615258852704317.png';
           }
           else{
-            this.driver.profile = 'http://transport.walstarmedia.com/public/storage/images/driver/profile_image/'+result.success.driver.profile;
+            //this.driver.profile = 'http://transport.walstarmedia.com/public/storage/images/driver/profile_image/'+result.success.driver.profile;
+
+            this.driver.profile = this.data.imgURL+"driver/profile_image/"+result.success.driver.profile;
           }
         }
         else{

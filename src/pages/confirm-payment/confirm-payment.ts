@@ -10,6 +10,7 @@ import * as firebase from 'Firebase';
 import { PaymentPage } from '../payment/payment';
 import { ModalpagePage } from '../modalpage/modalpage';
 import { ServiceProvider } from  '../../providers/service/service';
+import { DatePipe } from '@angular/common';
 
 /**
  * Generated class for the ConfirmPaymentPage page.
@@ -64,7 +65,9 @@ export class ConfirmPaymentPage {
   destination_lng : any = 0;
   intervalVar :any;
 
-  constructor(public service:ServiceProvider,public geolocation: Geolocation, private modalCtrl: ModalController, private loading: LoadingController, private device: Device, public navParams: NavParams, public zone: NgZone, public platform: Platform, public viewCtrl: ViewController,public actionSheetCtrl: ActionSheetController, public eve: Events,public navCtrl: NavController,public data : DataProvider, private storage: Storage,private alertCtrl: AlertController, public maps: GoogleMapsProvider) {
+  cancel_btn:boolean = false;
+
+  constructor(public service:ServiceProvider,public geolocation: Geolocation, private modalCtrl: ModalController, private loading: LoadingController, private device: Device, public navParams: NavParams, public zone: NgZone, public platform: Platform, public viewCtrl: ViewController,public actionSheetCtrl: ActionSheetController, public eve: Events,public navCtrl: NavController,public data : DataProvider, private storage: Storage,private alertCtrl: AlertController, public maps: GoogleMapsProvider, public datepipe:DatePipe) {
     this.booking_id = navParams.get('booking_id');
     this.rideType = navParams.get('rideType');
     this.source = navParams.get('source');
@@ -84,9 +87,10 @@ export class ConfirmPaymentPage {
       });
 
       this.eve.subscribe('start_ride:created', (finished_ride_data, time) => {
-        this.isStarted = true; 
+        console.log("I am from the confirm payment start ride");
+        this.isStarted = true;
+        this.eve.unsubscribe('start_ride:created'); 
         this.service.presentAlert('Ride Started');
-        this.eve.unsubscribe('start_ride:created');
       });
 
       this.eve.subscribe('finished_ride:created', (finished_ride_data, time) => {
@@ -135,7 +139,7 @@ export class ConfirmPaymentPage {
     }); 
   
     setTimeout(()=>{
-    if(this.driver_id == '')
+    if(this.driver_id == '' && this.leave == false)
     {
         this.data.presentToast("Unfortunately, Your request is not accepted by any driver. Please request a new ride and we'll get you moving shortly.");
         let param = new FormData();
@@ -148,7 +152,11 @@ export class ConfirmPaymentPage {
           param.append("driver_id",'0');
         }
         param.append("booking_id",this.booking_id);
+
+        console.log(this.booking_id+" "+this.driver_id+" "+this.customer_id);
         this.data.customerRejectBooking(param).subscribe(result=>{
+          console.log("@@@@@@@@@@@@@@@@@");
+          console.log(result);
           if(result.status == 'OK')
           {
             /*if(this.watch && this.watch !== undefined)
@@ -174,7 +182,7 @@ export class ConfirmPaymentPage {
   {
     if(this.leave == false){
       return new Promise((resolve: Function, reject: Function) => {
-        this.data.presentToast('You can not leave this page until Ride Complete');
+        this.data.presentToast('You can not leave this page until ride complete');
         reject();
       });
     }
@@ -326,27 +334,43 @@ export class ConfirmPaymentPage {
 
   confirm_cancel()
   { 
-    var CancelDuration1;
-    var CancelCharge1;
-    var CancelDuration2;
-    var CancelCharge2;
-    var CancelDuration3;
-    var CancelCharge3;
+    this.cancel_btn = true;
+    // var CancelDuration1;
+    // var CancelCharge1;
+    // var CancelDuration2;
+    // var CancelCharge2;
+    // var CancelDuration3;
+    // var CancelCharge3;
+    let current_date = new Date();
+    let cancel_time =this.datepipe.transform(current_date, 'yyyy-MM-dd h:mm:ss');
+
+    console.log("#################");
+    console.log(current_date);
+    console.log(cancel_time);
+    console.log("#################");
+
     let param = new FormData();
     param.append("booking_id",this.booking_id);
+  //  param.append("cancellation_time",cancel_time);
     this.data.RideCancelCharges(param).subscribe(result=>{
+      console.log("I am cancel booking");
+      console.log(result);
+      console.log(result.success.Charges_list);
+
       if(result.status == 'OK')
       {
-        CancelDuration1 = result.success.Charges_list[0].cancellation_time;
-        CancelCharge1 = result.success.Charges_list[0].charges;
-        CancelDuration2 = result.success.Charges_list[1].cancellation_time;
-        CancelCharge2 = result.success.Charges_list[1].charges;
-        CancelDuration3 = result.success.Charges_list[2].cancellation_time;
-        CancelCharge3 = result.success.Charges_list[2].charges;
+        //CancelDuration1 = result.success.Charges_list[0].cancellation_time;
+        //CancelCharge1 = result.success.Charges_list[0].charges;
+        //CancelDuration2 = result.success.Charges_list[1].cancellation_time;
+        //CancelCharge2 = result.success.Charges_list[1].charges;
+        // CancelDuration3 = result.success.Charges_list[2].cancellation_time;
+        // CancelCharge3 = result.success.Charges_list[2].charges;
+        
         let alert = this.alertCtrl.create({
-          title: 'Cancellation charges',
+          title: 'Cancellation Charges',
           cssClass:'cancel_booking_alert',
-          message:'<div class="info">There are some cancellation charges as per following.</div><div class="min">For '+CancelDuration1+' min : </div><div class="charge">$'+CancelCharge1+'</div> <div class="min">For '+CancelDuration2+' min : </div><div class="charge"> $'+CancelCharge2+'</div><div class="min"> For '+CancelDuration3+' min : </div><div class="charge">$'+CancelCharge3+' </div><div class="que">Do you Really want to cancel Ride?</div>',
+          // message:'<div class="info">There are some cancellation charges as per following.</div><div class="min">For '+CancelDuration1+' min : </div><div class="charge">$'+CancelCharge1+'</div> <div class="min">For '+CancelDuration2+' min : </div><div class="charge"> $'+CancelCharge2+'</div><div class="min"> For '+CancelDuration3+' min : </div><div class="charge">$'+CancelCharge3+' </div><div class="que">Do you Really want to cancel Ride?</div>',
+          message:'<div class="info">You will be charged <span class="charge">$'+result.success.Charges_list+' </span>for cancellation of this trip.</div>',
           buttons: [
             {
               text: 'Yes',
@@ -362,10 +386,13 @@ export class ConfirmPaymentPage {
                   param.append("driver_id",'0');
                 }
                 param.append("booking_id",this.booking_id);
+                console.log(this.booking_id+" "+this.driver_id+" "+this.customer_id);
                 this.data.customerRejectBooking(param).subscribe(result=>{
+                  console.log("@@@@@@@@@@@@@@@@@");
+                  console.log(result);
                   if(result.status == 'OK')
                   {
-                    this.data.presentToast('Request Canceled Successfully');
+                    this.data.presentToast('Request cancelled successfully');
                     clearInterval(this.intervalVar);
                     this.eve.unsubscribe('finished_ride:created');
                     /*if(this.watch && this.watch !== undefined)
@@ -375,18 +402,25 @@ export class ConfirmPaymentPage {
                     firebase.database().ref('customer/'+this.customer_id).remove();
                     firebase.database().ref(this.booking_id).remove();
                     this.leave = true;
-                    this.navCtrl.setRoot(HomePage);
+                    setTimeout(()=>{
+                      this.navCtrl.setRoot(HomePage);
+                      this.eve.publish('activeItem');
+                    },3000);
+                    
                   }
-                });        
+                });    
+                this.cancel_btn = false;    
               }
             },
             {
               text: 'No',
-              handler: () => {
-                console.log('reject clicked'); 
+              handler: () => { 
+                this.cancel_btn = false;
+                console.log('reject clicked '+this.cancel_btn);
               }
             }
-          ]
+          ],
+          enableBackdropDismiss: false
         });
         alert.present();
       }

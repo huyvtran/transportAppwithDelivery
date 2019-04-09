@@ -227,6 +227,13 @@
         .login-btn{
             margin: 0 !important;
         }
+
+        .spin-center{
+            position: absolute;
+            width: 100%;
+            transform: translateY(35%);
+            top:35%;
+        }
     }
     
 }

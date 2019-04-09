@@ -113,7 +113,7 @@ export class PaymentPage {
               console.log(result);
               if(result.status == 'OK')
               {
-                this.data.presentToast('Notification success');
+              //  this.data.presentToast('Notification success');
                 this.payUsingWallet();
               }
             });
@@ -133,7 +133,7 @@ export class PaymentPage {
               console.log(result);
               if(result.status == 'OK')
               {
-                this.data.presentToast('Notification success');
+              //  this.data.presentToast('Notification success');
                 this.payUsingPaypal();
               }
               
@@ -197,7 +197,11 @@ export class PaymentPage {
                 firebase.database().ref(this.booking_id).remove();
                 firebase.database().ref('customer/'+this.id).remove();
                 firebase.database().ref('driver/'+this.driver_id).remove();
-                this.moveForward();
+
+                setTimeout(()=>{
+                  this.moveForward();
+                },3000);
+                
               }
             });
           }
@@ -260,7 +264,9 @@ export class PaymentPage {
             firebase.database().ref(this.booking_id).remove();
             firebase.database().ref('customer/'+this.id).remove();
             firebase.database().ref('driver/'+this.driver_id).remove();
-            this.moveForward();
+            setTimeout(()=>{
+              this.moveForward();
+            },3000);
           }
           else
           {
@@ -335,7 +341,9 @@ export class PaymentPage {
                                           firebase.database().ref(this.booking_id).remove();
                                           firebase.database().ref('customer/'+this.id).remove();
                                           firebase.database().ref('driver/'+this.driver_id).remove();
-                                          this.moveForward();
+                                          setTimeout(()=>{
+                                            this.moveForward();
+                                          },3000);
                                         }
                                       });
                                       loader.dismiss();
@@ -411,7 +419,7 @@ export class PaymentPage {
       console.log(result);
       if(result.status == 'OK')
       {
-        this.data.presentToast('Notification success');
+        //this.data.presentToast('Notification success');
       }
     });
   }

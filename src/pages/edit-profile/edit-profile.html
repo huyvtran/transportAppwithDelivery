@@ -16,16 +16,19 @@
 </ion-header>
 
          
-<ion-content padding>
+<ion-content >
   <form  *ngIf='role == 2' class="profile_form" [formGroup]="profile" (ngSubmit)="ProfileForm(user_details)"> 
     <ion-list>
- <div></div>
+ 
     <ion-item>
         <ion-label stacked>First Name</ion-label>
       <ion-input type="text" [(ngModel)]="user_details.fname" value="{{user_details.fname}}" formControlName="fname" [class.invalid]="!profile.valid && (profile.controls.fname.dirty || submitAttempt)" ></ion-input>
       </ion-item>
       <div class="error" *ngIf="profile.get('fname').hasError('required')  && profile.get('fname').touched">
           Please fill out this field
+      </div>
+      <div class="error" *ngIf="profile.get('fname').hasError('pattern') && !profile.get('fname').hasError('required')  ">
+        Please enter valid first name
       </div>
         
       <ion-item>
@@ -35,6 +38,9 @@
       <div class="error" *ngIf="profile.get('lname').hasError('required')  && profile.get('lname').touched">
           Please fill out this field
       </div>
+      <div class="error" *ngIf="profile.get('lname').hasError('pattern') && !profile.get('lname').hasError('required') ">
+        Please enter valid last name
+      </div>
 
       <ion-item>
           <ion-label stacked>Phone No.</ion-label>
@@ -43,8 +49,8 @@
         <div class="error" *ngIf="profile.get('phone').hasError('required')  && profile.get('phone').touched">
             Please fill out this field
         </div>
-        <div class="error" *ngIf="profile.get('phone').hasError('maxlength') && profile.get('phone').touched">
-            Maximum Length of Phone No. must be 11    
+        <div class="error" *ngIf="profile.get('phone').hasError('maxlength') || profile.get('phone').hasError('minlength')">
+            Phone number must be 10 digits.    
         </div>
 
       <ion-item>
@@ -55,9 +61,13 @@
                Please fill out this field
           </div>
 
-        <ion-list>
+        <ion-list class="social_list">
             <ion-item ion-item class="social_icons" no-lines (click)="addSocialLink()" > 
-                <span class="add_social_link">Add Social Media Account Links</span>
+                <!-- <span class="add_social_link">Add Social Media Account Links</span> -->
+                <ion-label text-center *ngIf=" social_media['facebook'] == '' && social_media['twitter'] == '' && social_media['linkedin'] == '' && social_media['instagram'] == '' ? true : false ">Add Social Media Account Links</ion-label>
+
+                <ion-label text-center *ngIf=" social_media['facebook'] != '' || social_media['twitter'] != '' || social_media['linkedin'] != '' || social_media['instagram'] != '' ? true : false ">Update Social Media Account Links</ion-label>
+
             </ion-item>
         </ion-list>
 
@@ -109,12 +119,12 @@
    
         <ion-item>
             <ion-label stacked></ion-label>
-            <ion-input type="text" [(ngModel)]="user_details.type" formControlName="type" [class.invalid]="!Dprofile.valid && (Dprofile.controls.type.dirty || submitAttempt)"></ion-input>
+            <ion-input type="text" class="txt-capt" [(ngModel)]="user_details.type" formControlName="type" [class.invalid]="!Dprofile.valid && (Dprofile.controls.type.dirty || submitAttempt)"></ion-input>
         </ion-item>
 
         <ion-item *ngIf="user_details.type == 'ride'">
             <ion-label stacked></ion-label>
-            <ion-select placeholder="Vehicle Type"  [(ngModel)]="user_details.vehicle_type" formControlName="vehicle_type" [class.invalid]="!Dprofile.valid && (Dprofile.controls.vehicle_type.dirty || submitAttempt)"  >
+            <ion-select placeholder="Vehicle Type" class="txt-capt"  [(ngModel)]="user_details.vehicle_type" formControlName="vehicle_type" [class.invalid]="!Dprofile.valid && (Dprofile.controls.vehicle_type.dirty || submitAttempt)"  >
                 <ion-option *ngFor="let types of vehicle_types" value="{{types.id}}">{{types.type}}</ion-option>
             </ion-select>
         </ion-item>
@@ -124,7 +134,7 @@
         
         <ion-item *ngIf="user_details.type == 'delivery'">
             <ion-label stacked></ion-label>
-            <ion-select placeholder="Vehicle Type"  [(ngModel)]="user_details.vehicle_type" formControlName="vehicle_type" [class.invalid]="!Dprofile.valid && (Dprofile.controls.vehicle_type.dirty || submitAttempt)"  >
+            <ion-select placeholder="Vehicle Type" class="txt-capt"  [(ngModel)]="user_details.vehicle_type" formControlName="vehicle_type" [class.invalid]="!Dprofile.valid && (Dprofile.controls.vehicle_type.dirty || submitAttempt)"  >
                 <ion-option *ngFor="let types of delivery_vehicle_types" value="{{types.id}}">{{types.vehicle_name}}</ion-option>
             </ion-select>
         </ion-item>
@@ -140,9 +150,10 @@
             Please fill out this field
         </div>
 
-        <ion-list>
+        <ion-list class="social_list">
             <ion-item ion-item class="social_icons" no-lines (click)="addSocialLink()" > 
-                <span class="add_social_link">Add Social Media Account Links</span>
+                <!-- <span class="add_social_link">Add Social Media Account Links</span> -->
+                <ion-label text-center>Update Social Media Account Links</ion-label>
             </ion-item>
         </ion-list>
 
