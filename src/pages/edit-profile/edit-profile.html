@@ -19,7 +19,7 @@
 <ion-content padding>
   <form  *ngIf='role == 2' class="profile_form" [formGroup]="profile" (ngSubmit)="ProfileForm(user_details)"> 
     <ion-list>
- 
+ <div></div>
     <ion-item>
         <ion-label stacked>First Name</ion-label>
       <ion-input type="text" [(ngModel)]="user_details.fname" value="{{user_details.fname}}" formControlName="fname" [class.invalid]="!profile.valid && (profile.controls.fname.dirty || submitAttempt)" ></ion-input>
